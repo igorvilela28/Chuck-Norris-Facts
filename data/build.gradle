@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: "${project.rootDir}/buildsystem/jacoco.gradle"
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+
+    defaultConfig {
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        versionCode globalConfiguration["androidVersionCode"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
+}
+
+dependencies {
+
+    def dataDependencies = rootProject.ext.dataDependencies
+    def dataKapt = rootProject.ext.dataKapt
+    def testDependencies = rootProject.ext.dataTestDependencies
+    def allDependencies = rootProject.ext.allDependencies
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+
+    dataDependencies.each { v -> implementation v }
+    dataKapt.each { v -> kapt v }
+
+    //network
+    implementation (allDependencies.retrofit2GsonConverter) {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
+
+    //unit tests
+    testDependencies.each { v -> testImplementation v }
+}

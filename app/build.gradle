@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: "${project.rootDir}/buildsystem/jacoco.gradle"
+
+android {
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+
+    defaultConfig {
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        applicationId globalConfiguration["androidApplicationId"]
+        versionCode globalConfiguration["androidVersionCode"]
+        versionName globalConfiguration["androidVersionName"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug //must be replaced, just for testing
+        }
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            applicationIdSuffix '.debug'
+            multiDexEnabled true
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('../buildsystem/debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+    implementation project(':data')
+
+    def appDependencies = rootProject.ext.appDependencies
+    def developmentDependencies = rootProject.ext.developmentDependencies
+    def appTestDependencies = rootProject.ext.appTestDependencies
+    def appAndroidTestDependencies = rootProject.ext.appAndroidTestDependencies
+    def appKapt = rootProject.ext.appKapt
+
+    appDependencies.each { v -> implementation v }
+    developmentDependencies.each { v -> implementation v }
+    appKapt.each { v -> kapt v }
+
+    //unit test
+    appTestDependencies.each { v -> testImplementation v }
+
+    //integration tests
+    appAndroidTestDependencies.each { v -> androidTestImplementation v }
+    androidTestImplementation('androidx.test:runner:1.1.0') {
+        exclude group: 'androidx.legacy', module: 'legacy-support-v4'
+        exclude group: 'com.google.android.material', module: 'material'
+    }
+
+}
+
+androidExtensions {
+    experimental = true
+}
+
+kapt {
+    mapDiagnosticLocations = true
+}

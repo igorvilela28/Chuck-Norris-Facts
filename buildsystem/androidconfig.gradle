@@ -1,0 +1,10 @@
+ext {
+
+    //Android
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
+    androidApplicationId = 'com.igorvd.chuckfacts'
+    androidVersionCode = 1
+    androidVersionName = "1.0.0"
+}
