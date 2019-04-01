@@ -1,0 +1,25 @@
+<?androidExtensions {
+    experimental = true
+}xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="yellow">#ffd102</color>
+    <color name="grey35">#595959</color>
+
+    <color name="colorPrimary">@color/yellow</color>
+    <color name="colorPrimaryDark">#ffc306</color>
+    <color name="colorAccent">@color/yellow</color>
+
+    <color name="colorBackground">#f5f5f5</color>
+    <color name="semi_transparent_background">#99fdfdfd</color>
+
+    <color name="hint">#808080</color>
+
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextPrimaryUnselected">#999999</color>
+    
+    <color name="colorHintUnselected">#808080</color>
+
+
+
+</resources>
