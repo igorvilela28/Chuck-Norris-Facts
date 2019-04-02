@@ -1,19 +1,20 @@
 package com.igorvd.chuckfacts.utils.transition
 
 import androidx.transition.AutoTransition
+import androidx.transition.ChangeBounds
 import androidx.transition.Transition
 
 object TransitionsFactory {
 
-    private val FADE_OUT_DURATION = 150L
+    private val CHANGE_BOUNDS_DURATION = 150L
     private val FADE_IN_DURATION = 100L
 
     /**
-     * Creates a AutoTransition that calls the
+     * Creates a [ChangeBounds] transition that calls the
      * [Transition.TransitionListener.onTransitionEnd]
      * of the passing Listener when complete
      */
-    fun fadeOutwithActionOnEnd(duration: Long = FADE_OUT_DURATION, action: () -> Unit): Transition {
+    fun changeBoundsWithActionOnEnd(duration: Long = CHANGE_BOUNDS_DURATION, action: () -> Unit): Transition {
 
         val finishingAction = object : SimpleTransitionListener() {
             override fun onTransitionEnd(transition: Transition) {
@@ -21,7 +22,7 @@ object TransitionsFactory {
             }
         }
 
-        val transition = AutoTransition().apply {
+        val transition = ChangeBounds().apply {
             this.duration = duration
             addListener(finishingAction)
         }
