@@ -29,7 +29,8 @@
         <activity
             android:name=".features.search.SearchJokeActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".features.jokes.JokesActivity" />
+            android:parentActivityName=".features.jokes.JokesActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
     </application>
 
 </manifest>
