@@ -20,11 +20,6 @@ class ApiClientBuilder {
 
     companion object {
 
-        //  private val HEADER_TIMEZONE = "Timezone"
-
-        private lateinit var sRetrofit: Retrofit
-        private lateinit var sHttpClientBuilder: OkHttpClient.Builder
-
         fun <S> createService(
                 serviceClass: Class<S>,
                 baseUrl: String,
@@ -32,24 +27,25 @@ class ApiClientBuilder {
                 vararg interceptors: Interceptor
         ): S {
 
-            sHttpClientBuilder = OkHttpClient.Builder()
+            val httpClientBuilder = OkHttpClient.Builder()
 
-            interceptors.forEach { interceptor -> sHttpClientBuilder.addInterceptor(interceptor) }
+            interceptors.forEach { interceptor -> httpClientBuilder.addInterceptor(interceptor) }
 
             if (BuildConfig.DEBUG) {
 
                 // Critical part, LogClient must be last one if you have more interceptors
-                sHttpClientBuilder.addInterceptor(HttpLoggingInterceptor().getSimpleLogging())
+                httpClientBuilder.addInterceptor(HttpLoggingInterceptor().getSimpleLogging())
 
             }
 
-            val client = sHttpClientBuilder
+            val client = httpClientBuilder
                     .readTimeout(15, TimeUnit.SECONDS)
                     .connectTimeout(5, TimeUnit.SECONDS)
                     .build()
-            sRetrofit = getClientBuilder(baseUrl, gson).client(client)
+            val retrofit = getClientBuilder(baseUrl, gson)
+                    .client(client)
                     .build()
-            return sRetrofit.create(serviceClass)
+            return retrofit.create(serviceClass)
         }
 
         private fun getClientBuilder(baseUrl: String, gson: Gson): Retrofit.Builder {
