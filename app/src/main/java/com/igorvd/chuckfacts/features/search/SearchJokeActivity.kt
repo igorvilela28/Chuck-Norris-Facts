@@ -57,7 +57,7 @@ class SearchJokeActivity : AppCompatActivity() {
 
     private fun animateToolbar() {
 
-        val transition = TransitionsFactory.fadeOutTransitionWithActionOnEnd(action = ::navigateUp)
+        val transition = TransitionsFactory.fadeOutWithActionOnEnd(action = ::navigateUp)
         TransitionManager.beginDelayedTransition(toolbar, transition)
 
         (toolbar.layoutParams as LayoutParams).apply {
