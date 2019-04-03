@@ -6,25 +6,22 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:visibility="gone"
-    tools:visibility="visible"
     android:translationZ="4dp"
-    >
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <!--this is a workaround to obfuscate the views behind the progress-->
     <FrameLayout
         android:id="@+id/flForegroundAlpha"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@color/semi_transparent_background"
-        />
+        android:foreground="@color/semi_transparent_background" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:indeterminate="true"
-        />
+        android:indeterminate="true" />
 
 </FrameLayout>

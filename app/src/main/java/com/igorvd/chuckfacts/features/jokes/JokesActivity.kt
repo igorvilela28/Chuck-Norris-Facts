@@ -1,6 +1,5 @@
 package com.igorvd.chuckfacts.features.jokes
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -8,13 +7,11 @@ import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import kotlinx.android.synthetic.main.activity_jokes.*
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.utils.extensions.hideContent
 import com.igorvd.chuckfacts.utils.extensions.showContent
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
-
-typealias LayoutParams = ConstraintLayout.LayoutParams
 
 class JokesActivity : AppCompatActivity() {
 
@@ -37,7 +34,7 @@ class JokesActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setOriginalBar()
+        setOriginalBarProperties()
     }
 
     //endregion
@@ -55,7 +52,7 @@ class JokesActivity : AppCompatActivity() {
         }
     }
 
-    private fun setOriginalBar() {
+    private fun setOriginalBarProperties() {
         cvSearchBar.layoutParams = paramsHolder.first
         ((cvSearchBar as CardView).getChildAt(0) as ViewGroup).showContent()
     }

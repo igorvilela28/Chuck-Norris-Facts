@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,10 +23,10 @@
             android:background="@android:color/transparent"
             android:drawableEnd="@drawable/ic_search"
             android:drawablePadding="@dimen/margin_padding_small"
+            android:enabled="false"
             android:gravity="center_vertical"
             android:hint="@string/search_joke_hint"
             android:textSize="18sp"
-            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

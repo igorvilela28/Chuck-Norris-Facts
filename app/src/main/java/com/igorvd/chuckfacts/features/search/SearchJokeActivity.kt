@@ -4,9 +4,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+import androidx.core.app.NavUtils
+import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.R
-import kotlinx.android.synthetic.main.search_toolbar.*
-
+import com.igorvd.chuckfacts.utils.extensions.hideContent
+import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
+import kotlinx.android.synthetic.main.activity_search_joke.*
 
 class SearchJokeActivity : AppCompatActivity() {
 
@@ -45,6 +49,27 @@ class SearchJokeActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
+
+        toolbar.setNavigationOnClickListener {
+            animateToolbar()
+        }
+    }
+
+    private fun animateToolbar() {
+
+        val transition = TransitionsFactory.fadeOutTransitionWithActionOnEnd(action = ::navigateUp)
+        TransitionManager.beginDelayedTransition(toolbar, transition)
+
+        (toolbar.layoutParams as LayoutParams).apply {
+            val dimen = resources.getDimension(R.dimen.margin_padding_medium).toInt()
+            setMargins(dimen, dimen, dimen, 0)
+        }
+        toolbar.hideContent()
+    }
+
+    private fun navigateUp() {
+        NavUtils.navigateUpFromSameTask(this)
+        overridePendingTransition(0, 0)
     }
 
     //endregion

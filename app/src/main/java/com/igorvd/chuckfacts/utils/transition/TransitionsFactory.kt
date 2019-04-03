@@ -7,14 +7,39 @@ import androidx.transition.Transition
 object TransitionsFactory {
 
     private val CHANGE_BOUNDS_DURATION = 150L
-    private val FADE_IN_DURATION = 100L
+    private val FADE_OUT_DURATION = 150L
 
     /**
      * Creates a [ChangeBounds] transition that calls the
      * [Transition.TransitionListener.onTransitionEnd]
      * of the passing Listener when complete
      */
-    fun changeBoundsWithActionOnEnd(duration: Long = CHANGE_BOUNDS_DURATION, action: () -> Unit): Transition {
+    fun changeBoundsWithActionOnEnd(
+            duration: Long = CHANGE_BOUNDS_DURATION,
+            action: () -> Unit): ChangeBounds {
+
+        return transitionWithActionOnEnd(ChangeBounds(), duration, action)
+
+    }
+
+    /**
+     * Creates a [AutoTransition] transition that calls the
+     * [Transition.TransitionListener.onTransitionEnd]
+     * of the passing Listener when complete
+     */
+
+    fun fadeOutTransitionWithActionOnEnd(
+            duration: Long = FADE_OUT_DURATION,
+            action: () -> Unit): AutoTransition {
+
+        return transitionWithActionOnEnd(AutoTransition(), duration, action)
+
+    }
+
+    private fun <T : Transition> transitionWithActionOnEnd(
+            transition: T,
+            duration: Long,
+            action: () -> Unit): T {
 
         val finishingAction = object : SimpleTransitionListener() {
             override fun onTransitionEnd(transition: Transition) {
@@ -22,17 +47,12 @@ object TransitionsFactory {
             }
         }
 
-        val transition = ChangeBounds().apply {
+        transition.apply {
             this.duration = duration
             addListener(finishingAction)
         }
-        return transition
-    }
 
-    fun fadeInTransition(duration: Long = FADE_IN_DURATION): Transition {
-        val transition = AutoTransition().apply {
-            this.duration = duration
-        }
         return transition
+
     }
 }
