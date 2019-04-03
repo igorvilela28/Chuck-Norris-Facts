@@ -26,11 +26,13 @@ ext {
     zxing = '3.5.0'
 
     //Testing
+    androidTestVersion = '1.1.0'
     espresso = '3.1.0'
     jUnit = '4.12'
     mockito = '2.8.47'
     mockk = '1.9.3'
     mockwebserver = '3.9.1'
+    roboletric = '4.2'
 
     //Development
     stetho = '1.5.0'
@@ -88,7 +90,9 @@ ext {
             mockk          : "io.mockk:mockk:${mockk}",
             coroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesVersion}",
             archCoreTesting: "androidx.arch.core:core-testing:${archLifeCycle}",
+            androidTest    : "androidx.test:core:$androidTestVersion",
             mockwebserver  : "com.squareup.okhttp3:mockwebserver:${mockwebserver}",
+            roboletric     : "org.robolectric:robolectric:$roboletric",
             room           : "androidx.room:room-testing:${archRoom}",
     ]
 
@@ -193,12 +197,14 @@ ext {
     ]
 
     dataTestDependencies = [
+            allTestDependencies.androidTest,
             allTestDependencies.junit,
             allTestDependencies.mockito,
             allTestDependencies.mockk,
             allTestDependencies.coroutinesCore,
             allTestDependencies.mockwebserver,
             allTestDependencies.archCoreTesting,
+            allTestDependencies.roboletric,
             allTestDependencies.room
     ]
 
