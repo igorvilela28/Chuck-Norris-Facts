@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.domain.jokes
+package com.igorvd.chuckfacts.domain.jokes.entity
 
 data class Joke(
         val id: String,
