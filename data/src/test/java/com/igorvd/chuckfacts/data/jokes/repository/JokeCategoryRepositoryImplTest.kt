@@ -38,7 +38,7 @@ class JokeCategoryRepositoryImplTest {
     }
 
     @Test
-    fun `should load categories from remote when data source is empty`() = runBlocking {
+    fun `should load categories from remote when local source is empty`() = runBlocking {
 
         every { localDataSource.retrieveAll() } returns emptyList()
         coEvery { remoteDataSource.retrieveAll() } returns DUMMY_CATEGORIES
