@@ -1,20 +1,15 @@
 package com.igorvd.chuckfacts.domain.utils.extensions
 
+import java.lang.IllegalArgumentException
+
 /**
  *
  * @author Igor Vilela
- * @since 29/01/2018
+ * @since 03/04/2018
  */
 
-
-fun<T> List<T>?.isNullOrEmpty(): Boolean = (this == null) || this.isEmpty()
-
-fun<T> List<T>?.isNotNullOrEmpty(): Boolean = this?.isNotEmpty() ?: false
-
-fun<T> MutableList<T>.removeIff(predicate: (T) -> Boolean) {
-
-    val filtered = this.filter(predicate)
-
-    filtered.forEach { this.remove(it) }
-
-}
+/**
+ * Return a list that contains random elements from the original list.
+ * @param [amount] the amount of random elements to be added on the new list
+ */
+fun <T> List<T>.getRandomElements(amount: Int): List<T> = this.shuffled().take(amount)
