@@ -2,8 +2,8 @@ package com.igorvd.chuckfacts.di.core
 
 import android.content.Context
 import com.igorvd.chuckfacts.MyApplication
-import com.igorvd.chuckfacts.di.data.DatabaseModule
-import com.igorvd.chuckfacts.di.data.NetworkModule
+import com.igorvd.chuckfacts.di.data.LocalModule
+import com.igorvd.chuckfacts.di.data.RemoteModule
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -18,8 +18,8 @@ import javax.inject.Singleton
  * @since 28/12/17
  */
 @Module(includes = [
-    DatabaseModule::class,
-    NetworkModule::class
+    LocalModule::class,
+    RemoteModule::class
 ])
 class AppModule {
 
