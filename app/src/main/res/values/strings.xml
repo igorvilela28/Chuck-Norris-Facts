@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BaseProject</string>
+    <string name="search_joke_hint">Search a joke</string>
 </resources>

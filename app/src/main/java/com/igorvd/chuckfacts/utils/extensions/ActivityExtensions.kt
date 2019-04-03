@@ -1,6 +1,7 @@
 package com.igorvd.chuckfacts.utils.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -13,6 +14,13 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import timber.log.Timber
+import android.content.Context.INPUT_METHOD_SERVICE
+import androidx.core.content.ContextCompat.getSystemService
+import kotlin.math.roundToInt
+import android.util.TypedValue
+
+
+
 
 /**
  *
@@ -59,10 +67,6 @@ inline fun <reified T: Fragment> FragmentManager.findFragmentByTagOrNull(tag: St
     }
 }
 
-fun Activity.putKeyboardHidden(){
-    this.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-}
-
 fun Activity.requestPermission(permission: String, requestCode: Int) {
 
     //User already has the requested permission
@@ -76,17 +80,23 @@ fun Activity.requestPermission(permission: String, requestCode: Int) {
         requestCode)
 }
 
-fun Activity.hideSoftKeyboard() {
-
+ fun Activity.hideKeyboard() {
     try {
-
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0)
-
-    } catch (e: NullPointerException) {
-        Timber.w("NPE when hiding soft keyboard")
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+    } catch (e: Exception) {
+        Timber.e(e, "Error while hiding keyboard")
     }
 
+}
+
+fun Activity.showKeyboard() {
+    try {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+    } catch (e: Exception) {
+        Timber.e(e, "Error while showing keyboard")
+    }
 }
 
 fun Activity.showAlertDialog(
