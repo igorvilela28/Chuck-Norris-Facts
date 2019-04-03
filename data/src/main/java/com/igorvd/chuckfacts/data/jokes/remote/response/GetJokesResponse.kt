@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.data.jokes.response
+package com.igorvd.chuckfacts.data.jokes.remote.response
 
 import com.google.gson.annotations.SerializedName
 
