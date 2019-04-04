@@ -27,7 +27,11 @@ ext {
 
     //Testing
     androidTestVersion = '1.1.0'
-    espresso = '3.1.0'
+    espresso = '3.1.1'
+    espressoIntents = '3.1.1'
+    espressoIdling = "3.1.1"
+    androidxTruth = '1.1.0'
+    androidxJunit = '1.1.0'
     jUnit = '4.12'
     mockito = '2.8.47'
     mockk = '1.9.3'
@@ -97,7 +101,11 @@ ext {
     ]
 
     allAndroidTestDependencies = [
-            espresso: "androidx.test.espresso:espresso-core:${espresso}",
+            espresso        : "androidx.test.espresso:espresso-core:${espresso}",
+            espressoIntents : "androidx.test.espresso:espresso-intents:${espressoIntents}",
+            espressoIdling  : "androidx.test.espresso:espresso-idling-resource:${espressoIdling}",
+            androidxJunit   : "androidx.test.ext:truth:${androidxTruth}",
+            androidxTruth   : "androidx.test.ext:junit:${androidxJunit}",
     ]
 
     //**************************************************************************
@@ -143,7 +151,17 @@ ext {
     ]
 
     appAndroidTestDependencies = [
-            allAndroidTestDependencies.espresso
+            allAndroidTestDependencies.espresso,
+            allAndroidTestDependencies.espressoIntents,
+            allAndroidTestDependencies.espressoIdling,
+            allAndroidTestDependencies.androidxJunit,
+            allAndroidTestDependencies.androidxTruth,
+            allTestDependencies.mockwebserver
+    ]
+
+    appAndroidKapt = [
+            allDependencies.daggerCompiler,
+            allDependencies.daggerAndroidProcessor,
     ]
 
     //**************************************************************************

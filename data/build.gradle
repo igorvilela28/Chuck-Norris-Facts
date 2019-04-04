@@ -12,7 +12,6 @@ android {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         versionCode globalConfiguration["androidVersionCode"]
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         kapt {
             arguments {
