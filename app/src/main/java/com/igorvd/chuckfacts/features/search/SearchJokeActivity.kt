@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.utils.ViewModelFactory
-import com.igorvd.chuckfacts.utils.extensions.addChip
-import com.igorvd.chuckfacts.utils.extensions.hideContent
-import com.igorvd.chuckfacts.utils.extensions.observeNotNull
+import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
 import dagger.android.AndroidInjection
@@ -55,20 +53,33 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_joke)
         setupViews()
+        setupObservers()
+
+        launch {
+            viewModel.retrieveJokesCategories()
+        }
+    }
+
+    private fun setupObservers() {
+
+        viewModel.showProgressEvent.observeNullable(this) {
+            progressBar.isVisible = true
+        }
+
+        viewModel.hideProgressEvent.observeNullable(this) {
+            progressBar.isVisible = false
+        }
 
         viewModel.categories.observeNotNull(this) { categories ->
-            Timber.d(categories.toString())
+
+            tvSuggestions.isVisible = true
+            chipGroup.isVisible = true
 
             for (category in categories) {
                 chipGroup.addChip(this, category) {
                     Timber.d("chip clicked: $category")
                 }
             }
-
-        }
-
-        launch {
-            viewModel.retrieveJokesCategories()
         }
     }
 
