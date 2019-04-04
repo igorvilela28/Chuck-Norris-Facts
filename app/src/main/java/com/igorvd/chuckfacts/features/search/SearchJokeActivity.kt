@@ -54,33 +54,7 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_search_joke)
         setupViews()
         setupObservers()
-
-        launch {
-            viewModel.retrieveJokesCategories()
-        }
-    }
-
-    private fun setupObservers() {
-
-        viewModel.showProgressEvent.observeNullable(this) {
-            progressBar.isVisible = true
-        }
-
-        viewModel.hideProgressEvent.observeNullable(this) {
-            progressBar.isVisible = false
-        }
-
-        viewModel.categories.observeNotNull(this) { categories ->
-
-            tvSuggestions.isVisible = true
-            chipGroup.isVisible = true
-
-            for (category in categories) {
-                chipGroup.addChip(this, category) {
-                    Timber.d("chip clicked: $category")
-                }
-            }
-        }
+        loadCategories()
     }
 
     //endregion
@@ -116,6 +90,38 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
     private fun navigateUp() {
         NavUtils.navigateUpFromSameTask(this)
         overridePendingTransition(0, 0)
+    }
+
+    private fun setupObservers() {
+
+        viewModel.showProgressEvent.observeNullable(this) {
+            progressBar.isVisible = true
+        }
+
+        viewModel.hideProgressEvent.observeNullable(this) {
+            progressBar.isVisible = false
+        }
+
+        viewModel.categories.observeNotNull(this) { categories ->
+
+            tvSuggestions.isVisible = true
+            chipGroup.isVisible = true
+
+            for (category in categories) {
+                chipGroup.addChip(this, category) {
+                    Timber.d("chip clicked: $category")
+                }
+            }
+        }
+    }
+
+    private fun loadCategories() {
+        //when observing a liveData, it automatically receives the current values
+        if (viewModel.categories.value.isNullOrEmpty()) {
+            launch {
+                viewModel.retrieveJokesCategories()
+            }
+        }
     }
 
     //endregion
