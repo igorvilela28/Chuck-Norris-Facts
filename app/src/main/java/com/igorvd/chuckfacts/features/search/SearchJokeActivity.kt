@@ -1,5 +1,6 @@
 package com.igorvd.chuckfacts.features.search
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.core.app.NavUtils
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.R
+import com.igorvd.chuckfacts.features.jokes.JokesActivity
 import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
@@ -18,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_search_joke.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -71,11 +72,11 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         }
 
         toolbar.setNavigationOnClickListener {
-            animateToolbar()
+            finishAnimatingToolbar()
         }
     }
 
-    private fun animateToolbar() {
+    private fun finishAnimatingToolbar() {
 
         val transition = TransitionsFactory.fadeOutWithActionOnEnd(action = ::navigateUp)
         TransitionManager.beginDelayedTransition(toolbar, transition)
@@ -109,7 +110,11 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
 
             for (category in categories) {
                 chipGroup.addChip(this, category) {
-                    Timber.d("chip clicked: $category")
+                    val intent = Intent().apply {
+                        putExtra(JokesActivity.EXTRA_JOKE_QUERY, category)
+                    }
+                    setResult(Activity.RESULT_OK, intent)
+                    finishAnimatingToolbar()
                 }
             }
         }
