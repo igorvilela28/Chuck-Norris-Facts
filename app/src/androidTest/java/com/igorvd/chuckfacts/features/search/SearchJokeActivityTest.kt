@@ -53,4 +53,15 @@ class SearchJokeActivityTest {
             .thenSuggestionLabelIsNotDisplayed()
             .thenCategoriesArentDisplayed()
     }
+
+    @Test
+    fun shouldReturnToJokesScreenWithResult_whenClickOnCategory() {
+
+        robot
+            .givenCategories200Response()
+            .launchActivity()
+            .whenClickOnCategory(robot.categories.first())
+            .thenActivityResultWithCategory(robot.categories.first())
+
+    }
 }
