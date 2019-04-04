@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.di.features
+package com.igorvd.chuckfacts.di.domain
 
 
 import com.igorvd.chuckfacts.data.jokes.local.JokeCategoryLocalDataSource

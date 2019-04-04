@@ -14,7 +14,10 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/material_grey500</item>
     </style>
-
+    
+    <style name="ChipTextStyle">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
 
 
 
