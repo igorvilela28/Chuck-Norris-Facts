@@ -6,7 +6,9 @@ import java.lang.Exception
 
 object AssetsLoader {
 
-
+    /**
+     * Load a json stored in the assets folder and returns the content string
+     */
     fun loadAsset(assetName: String): String {
         return InstrumentationRegistry
             .getInstrumentation()
@@ -16,9 +18,8 @@ object AssetsLoader {
             .readContent()
     }
 
-
     /**
-     * Reads the data for the given file
+     * Reads the data for the given input stream
      */
     private fun InputStream.readContent(): String {
 
@@ -39,5 +40,4 @@ object AssetsLoader {
 
         return content
     }
-
 }
