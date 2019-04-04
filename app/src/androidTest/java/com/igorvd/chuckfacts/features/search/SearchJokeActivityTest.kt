@@ -51,7 +51,7 @@ class SearchJokeActivityTest {
     }
 
     @Test
-    fun shouldReturnToJokesScreenWithResult_whenClickOnCategory() {
+    fun shouldFinishWithResult_WhenClickOnCategory() {
         robot
             .givenCategories200Response()
             .launchActivity()
