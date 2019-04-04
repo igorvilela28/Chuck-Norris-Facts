@@ -15,9 +15,6 @@ import com.igorvd.chuckfacts.utils.PreferencesUtils
 @RunWith(AndroidJUnit4::class)
 class SearchJokeActivityTest {
 
-    /*@get:Rule
-    val activityRule = ActivityTestRule(SearchJokeActivity::class.java, false, false)*/
-
     lateinit var server: MockWebServer
     private lateinit var robot: SearchJokeActivityRobot
 
@@ -42,7 +39,6 @@ class SearchJokeActivityTest {
             .launchActivity()
             .thenSuggestionLabelIsDisplayed()
             .thenCategoriesAreDisplayed()
-
     }
 
     @Test
@@ -56,7 +52,6 @@ class SearchJokeActivityTest {
 
     @Test
     fun shouldReturnToJokesScreenWithResult_whenClickOnCategory() {
-
         robot
             .givenCategories200Response()
             .launchActivity()
