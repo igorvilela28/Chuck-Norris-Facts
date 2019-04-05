@@ -5,6 +5,8 @@ import com.igorvd.chuckfacts.data.jokes.local.JokeCategoryLocalDataSource
 import com.igorvd.chuckfacts.data.jokes.local.JokeCategoryLocalDataSourceImpl
 import com.igorvd.chuckfacts.data.jokes.remote.JokeCategoryRemoteDataSource
 import com.igorvd.chuckfacts.data.jokes.remote.JokeCategoryRemoteDataSourceImpl
+import com.igorvd.chuckfacts.data.jokes.remote.JokeRemoteDataSource
+import com.igorvd.chuckfacts.data.jokes.remote.JokeRemoteDataSourceImpl
 import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
@@ -22,10 +24,13 @@ import dagger.Provides
 @Module
 class RemoteModule {
 
-
-
     @Provides
     fun providesCategoryRemoteDataSource(
         dataSource: JokeCategoryRemoteDataSourceImpl
     ): JokeCategoryRemoteDataSource = dataSource
+
+    @Provides
+    fun providesJokeRemoteDataSource(
+        dataSource: JokeRemoteDataSourceImpl
+    ): JokeRemoteDataSource = dataSource
 }
