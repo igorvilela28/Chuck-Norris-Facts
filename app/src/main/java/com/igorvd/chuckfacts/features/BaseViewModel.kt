@@ -17,6 +17,7 @@ abstract class BaseViewModel() : ViewModel() {
     protected val _showProgressEvent = SingleLiveEvent<Void>()
     val showProgressEvent: LiveData<Void>
         get() = _showProgressEvent
+
     protected val _hideProgressEvent = SingleLiveEvent<Void>()
     val hideProgressEvent: LiveData<Void>
         get() = _hideProgressEvent
