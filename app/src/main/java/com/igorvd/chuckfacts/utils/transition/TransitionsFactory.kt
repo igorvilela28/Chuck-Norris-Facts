@@ -28,7 +28,7 @@ object TransitionsFactory {
      * of the passing Listener when complete
      */
 
-    fun fadeOutTransitionWithActionOnEnd(
+    fun fadeOutWithActionOnEnd(
             duration: Long = FADE_OUT_DURATION,
             action: () -> Unit): AutoTransition {
 

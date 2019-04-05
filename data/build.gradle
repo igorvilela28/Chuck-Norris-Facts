@@ -12,7 +12,6 @@ android {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         versionCode globalConfiguration["androidVersionCode"]
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         kapt {
             arguments {
@@ -40,7 +39,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':domain')
 
-    dataDependencies.each { v -> implementation v }
+    dataDependencies.each { v -> api v }
     dataKapt.each { v -> kapt v }
 
     //network

@@ -1,6 +1,7 @@
 package com.igorvd.chuckfacts.features
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.exceptions.MyServerErrorException
@@ -13,8 +14,13 @@ import com.igorvd.chuckfacts.utils.extensions.throwOrLog
  */
 abstract class BaseViewModel() : ViewModel() {
 
-    val showProgressEvent = SingleLiveEvent<Void>()
-    val hideProgressEvent = SingleLiveEvent<Void>()
+    protected val _showProgressEvent = SingleLiveEvent<Void>()
+    val showProgressEvent: LiveData<Void>
+        get() = _showProgressEvent
+
+    protected val _hideProgressEvent = SingleLiveEvent<Void>()
+    val hideProgressEvent: LiveData<Void>
+        get() = _hideProgressEvent
 
     /**
      * This method should be used when we the view model is asked to do some long running task.
@@ -26,7 +32,7 @@ abstract class BaseViewModel() : ViewModel() {
      */
     protected suspend fun doWorkWithProgress(work: suspend () -> Unit) {
 
-        showProgressEvent.call()
+        _showProgressEvent.call()
         try {
             work()
         } catch (e: MyIOException) {
@@ -40,16 +46,8 @@ abstract class BaseViewModel() : ViewModel() {
         } catch (e: Exception) {
             e.throwOrLog()
         } finally {
-            hideProgressEvent.call()
+            _hideProgressEvent.call()
         }
-    }
-
-    fun observe(
-            owner: LifecycleOwner, showProgress: () -> Unit, hideProgress: () -> Unit
-    ) {
-
-        showProgressEvent.observe(owner, showProgress)
-        hideProgressEvent.observe(owner, hideProgress)
     }
 }
 

@@ -1,6 +1,10 @@
 package com.igorvd.chuckfacts.utils.extensions
 
+import android.content.Context
 import android.view.ViewGroup
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.igorvd.chuckfacts.R
 
 /**
  *
@@ -18,4 +22,16 @@ fun ViewGroup.showContent() {
     for (i in 0 .. childCount) {
         getChildAt(i)?.isVisible = true
     }
+}
+
+fun ChipGroup.addChip(context: Context, text: String, onClick: () -> Unit) {
+
+    val chip = Chip(context).apply {
+        setText(text)
+        setTextAppearanceResource(R.style.ChipTextStyle)
+        setOnClickListener { onClick() }
+    }
+
+    this.addView(chip)
+
 }

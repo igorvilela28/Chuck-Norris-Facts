@@ -2,6 +2,9 @@ package com.igorvd.chuckfacts.di.core
 
 import android.app.Activity
 import android.app.Service
+import com.igorvd.chuckfacts.di.domain.CategoryModule
+import com.igorvd.chuckfacts.di.features.SearchJokeModule
+import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -20,10 +23,13 @@ abstract class BuilderModule {
     // region: Modules list
     //**************************************************************************
 
-   /* @ContributesAndroidInjector(modules = arrayOf(
-            ListModulesModule::class
-    ))
-    abstract fun contributesModule(): ModuleActivity*/
+    @ContributesAndroidInjector(
+        modules = arrayOf(
+            CategoryModule::class,
+            SearchJokeModule::class
+        )
+    )
+    abstract fun contributesSearchJokeActivity(): SearchJokeActivity
 
     //endregion
 }

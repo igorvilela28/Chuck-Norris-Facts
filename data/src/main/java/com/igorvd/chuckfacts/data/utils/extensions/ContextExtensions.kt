@@ -14,28 +14,9 @@ import java.io.InputStreamReader
  * @since 02/01/2018
  */
 
-
-fun Context.readAssets(fileName: String): String? {
-
-    var reader: BufferedReader? = null
-    var content = ""
-    try {
-        reader = BufferedReader(InputStreamReader(assets.open(fileName), "UTF-8"))
-
-        // do reading, usually loop until end of file reading
-        var line: String? = reader.readLine()
-        while (line != null) {
-            content += line
-            line = reader.readLine()
-        }
-        return content
-    } catch (e: IOException) {
-        Timber.e(e, "IO Exception while reading assets")
-    } finally {
-        IOUtils.close(reader)
-    }
-    return null
-}
-
 val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
+
+fun Context.sharedPreferences(name: String): SharedPreferences {
+    return getSharedPreferences(name, Context.MODE_PRIVATE)
+}
