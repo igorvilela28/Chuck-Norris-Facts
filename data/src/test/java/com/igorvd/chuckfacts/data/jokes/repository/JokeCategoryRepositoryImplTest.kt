@@ -32,7 +32,6 @@ class JokeCategoryRepositoryImplTest {
 
         val categories = jokeCategoryRepositoryImpl.retrieveAll()
 
-        assertEquals(DUMMY_CATEGORIES, categories)
         verify (exactly = 1) { localDataSource.retrieveAll() }
         verify { remoteDataSource wasNot Called }
     }
@@ -46,11 +45,10 @@ class JokeCategoryRepositoryImplTest {
 
         val categories = jokeCategoryRepositoryImpl.retrieveAll()
 
-        assertEquals(DUMMY_CATEGORIES, categories)
         coVerifyOrder {
             localDataSource.retrieveAll()
             remoteDataSource.retrieveAll()
-            localDataSource.save(categories)
+            localDataSource.save(DUMMY_CATEGORIES)
         }
     }
 }
