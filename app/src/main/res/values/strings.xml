@@ -3,4 +3,5 @@
 
     <string name="search_joke_hint">Search a joke</string>
     <string name="search_suggestions">Suggestions</string>
+    <string name="search_error_type_query">Type a query to search!</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.app.NavUtils
 import androidx.lifecycle.ViewModelProviders
@@ -74,6 +75,20 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         toolbar.setNavigationOnClickListener {
             finishAnimatingToolbar()
         }
+
+        etSearchJoke.setOnEditorActionListener {tv, actionId, event ->
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (etSearchJoke.content.isEmpty()) {
+                    showToast(R.string.search_error_type_query)
+                } else {
+                    finishWithQueryResult(etSearchJoke.content)
+                }
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun finishAnimatingToolbar() {
@@ -110,11 +125,7 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
 
             for (category in categories) {
                 chipGroup.addChip(this, category) {
-                    val intent = Intent().apply {
-                        putExtra(JokesActivity.EXTRA_JOKE_QUERY, category)
-                    }
-                    setResult(Activity.RESULT_OK, intent)
-                    finishAnimatingToolbar()
+                    finishWithQueryResult(category)
                 }
             }
         }
@@ -127,6 +138,14 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
                 viewModel.retrieveJokesCategories()
             }
         }
+    }
+
+    private fun finishWithQueryResult(query: String) {
+        val intent = Intent().apply {
+            putExtra(JokesActivity.EXTRA_JOKE_QUERY, query)
+        }
+        setResult(Activity.RESULT_OK, intent)
+        finishAnimatingToolbar()
     }
 
     //endregion
