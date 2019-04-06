@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
 import com.igorvd.chuckfacts.features.BaseViewModel
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class JokesViewModel @Inject constructor(
@@ -15,7 +16,7 @@ class JokesViewModel @Inject constructor(
     val jokes: LiveData<List<Joke>>
         get() = _jokes
 
-    suspend fun retrieveJokes(query: String) {
+    suspend fun retrieveJokes(query: String) = doWorkWithProgress {
         val params = RetrieveJokesInteractor.Params(query)
         val jokes = retrieveJokesInteractor.execute(params)
         _jokes.value = jokes
