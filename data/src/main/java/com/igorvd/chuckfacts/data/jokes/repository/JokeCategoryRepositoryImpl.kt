@@ -10,19 +10,19 @@ import javax.inject.Inject
  */
 class JokeCategoryRepositoryImpl @Inject constructor(
     private val remoteDataSource: JokeCategoryRemoteDataSource,
-    private val localDataDataSource: JokeCategoryLocalDataSource
+    private val localDataSource: JokeCategoryLocalDataSource
 ) : JokeCategoryRepository {
 
     override suspend fun retrieveAll(): List<String> {
 
-        val localCategories = localDataDataSource.retrieveAll()
+        val localCategories = localDataSource.retrieveAll()
 
         if (localCategories.isNotEmpty()) {
             return localCategories
         }
 
         val remoteCategories = remoteDataSource.retrieveAll()
-        localDataDataSource.save(remoteCategories)
+        localDataSource.save(remoteCategories)
         return remoteCategories
     }
 }
