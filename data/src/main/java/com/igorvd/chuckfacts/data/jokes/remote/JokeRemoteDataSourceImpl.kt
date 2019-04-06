@@ -6,6 +6,7 @@ import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.jokes.remote.response.JokeResponse
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -23,12 +24,11 @@ class JokeRemoteDataSourceImpl @Inject constructor(
 
     private fun JokeResponse.toJoke(): Joke {
 
-        val category = this.category ?: context.getString(R.string.default_category).capitalize()
+        val newCategories = this.categories ?: listOf(context.getString(R.string.default_category).capitalize())
 
         return Joke(
             this.id,
-            category,
-            this.iconUrl,
+            newCategories,
             this.url,
             this.value
         )

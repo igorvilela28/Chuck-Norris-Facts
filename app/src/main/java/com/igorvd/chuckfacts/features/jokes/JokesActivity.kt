@@ -14,11 +14,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.hideContent
+import com.igorvd.chuckfacts.utils.extensions.observeNotNull
 import com.igorvd.chuckfacts.utils.extensions.showContent
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
+import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -51,9 +54,15 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     //**************************************************************************
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jokes)
         setupViews()
+
+        viewModel.jokes.observeNotNull(this) {
+            Timber.d("jokes " + it.toString())
+        }
+
     }
 
     override fun onResume() {
@@ -72,6 +81,12 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
 
             val query = data?.getStringExtra(EXTRA_JOKE_QUERY)
             Timber.d("received query: $query")
+
+            query?.let {
+                launch {
+                    viewModel.retrieveJokes(query)
+                }
+            }
 
         }
 
