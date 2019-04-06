@@ -14,12 +14,11 @@ import org.junit.Test
 class JokeCategoryRemoteDataSourceImplTest : BaseRemoteTest() {
 
     private lateinit var jokeCategoryRemoteDataSourceImpl: JokeCategoryRemoteDataSourceImpl
-    private lateinit var requestMaker: RequestMaker
+    private val requestMaker: RequestMaker = RequestMakerImpl()
 
     @Before
     override fun setUp() {
         super.setUp()
-        requestMaker = RequestMakerImpl()
         jokeCategoryRemoteDataSourceImpl = JokeCategoryRemoteDataSourceImpl(chuckNorrisApi, requestMaker)
     }
 

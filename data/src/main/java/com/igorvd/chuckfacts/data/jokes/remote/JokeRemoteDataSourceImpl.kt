@@ -24,7 +24,7 @@ class JokeRemoteDataSourceImpl @Inject constructor(
 
     private fun JokeResponse.toJoke(): Joke {
 
-        val newCategories = this.categories ?: listOf(context.getString(R.string.default_category).capitalize())
+        val newCategories = this.categories ?: listOf(context.getString(R.string.default_category).toUpperCase())
 
         return Joke(
             this.id,

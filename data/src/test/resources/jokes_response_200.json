@@ -1,0 +1,21 @@
+{
+  "total": 2,
+  "result": [
+    {
+      "category": null,
+      "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+      "id": "kscxjliptieuza9q5i5azg",
+      "url": "https://api.chucknorris.io/jokes/kscxjliptieuza9q5i5azg",
+      "value": "TNT was originally developed by Chuck Norris to cure indigestion."
+    },
+    {
+      "category": [
+        "dev"
+      ],
+      "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+      "id": "p4tviyvmrbkcjbqsydybuq",
+      "url": "https://api.chucknorris.io/jokes/p4tviyvmrbkcjbqsydybuq",
+      "value": "Chuck Norris can retrieve anything from /dev/null."
+    }
+  ]
+}
