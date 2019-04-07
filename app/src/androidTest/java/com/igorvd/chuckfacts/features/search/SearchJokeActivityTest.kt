@@ -65,6 +65,7 @@ class SearchJokeActivityTest {
         robot
             .givenCategories200Response()
             .launchActivity()
+            .thenSearchEditTextIsDisplayed()
             .whenTypeQuery("dev")
             .whenSearchImeClicked()
             .thenActivityResultWithQuery("dev")
@@ -75,6 +76,7 @@ class SearchJokeActivityTest {
         robot
             .givenCategories200Response()
             .launchActivity()
+            .thenSearchEditTextIsDisplayed()
             .whenSearchImeClicked()
             .thenTypeQueryErrorIsDisplayed()
 
