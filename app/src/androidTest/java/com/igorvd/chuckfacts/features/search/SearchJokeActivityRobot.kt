@@ -1,9 +1,10 @@
 package com.igorvd.chuckfacts.features.search
 
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.rule.IntentsTestRule
@@ -17,11 +18,18 @@ import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.Matchers.not
 import org.junit.Assert
 import org.junit.Rule
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
+import androidx.test.espresso.Espresso.onView
+import org.hamcrest.Matchers.`is`
+
 
 class SearchJokeActivityRobot(private val server: MockWebServer) {
 
-    val categories = listOf( "explicit", "dev", "movie", "food", "celebrity", "science",
-        "sport", "political")
+    val categories = listOf(
+        "explicit", "dev", "movie", "food", "celebrity", "science",
+        "sport", "political"
+    )
 
     lateinit var scenario: ActivityScenario<SearchJokeActivity>
 
@@ -48,6 +56,16 @@ class SearchJokeActivityRobot(private val server: MockWebServer) {
     fun whenClickOnCategory(category: String) = apply {
         onView(withText(category))
             .perform(click())
+    }
+
+    fun whenTypeQuery(query: String) = apply {
+        onView(withId(R.id.etSearchJoke))
+            .perform(typeText(query))
+    }
+
+    fun whenSearchImeClicked() = apply {
+        onView(withId(R.id.etSearchJoke))
+            .perform(pressImeActionButton())
     }
 
     //endregion
@@ -83,12 +101,27 @@ class SearchJokeActivityRobot(private val server: MockWebServer) {
         }
     }
 
-    fun thenActivityResultWithCategory(category: String) = apply {
+    fun thenTypeQueryErrorIsDisplayed() = apply {
+
+        lateinit var activity: Activity
+        scenario.onActivity { activity = it }
+
+        onView(withText(R.string.search_error_type_query))
+            .inRoot(withDecorView(not(activity.window.decorView)))
+            .check(matches(isDisplayed()))
+
+
+    }
+
+    fun thenActivityResultWithQuery(category: String) = apply {
         val result = scenario.result
         Assert.assertEquals(Activity.RESULT_OK, result.resultCode)
-        Assert.assertEquals(category, result.resultData.getStringExtra(JokesActivity.EXTRA_JOKE_QUERY))
+        Assert.assertEquals(
+            category,
+            result.resultData.getStringExtra(JokesActivity.EXTRA_JOKE_QUERY)
+        )
     }
 
     //endregion
-    
+
 }
