@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Service
 import com.igorvd.chuckfacts.di.domain.CategoryModule
 import com.igorvd.chuckfacts.di.domain.JokeModule
+import com.igorvd.chuckfacts.di.domain.SearchHistoricModule
 import com.igorvd.chuckfacts.di.features.JokesModule
 import com.igorvd.chuckfacts.di.features.SearchJokeModule
 import com.igorvd.chuckfacts.features.jokes.JokesActivity
@@ -37,7 +38,8 @@ abstract class BuilderModule {
     @ContributesAndroidInjector(
         modules = arrayOf(
             CategoryModule::class,
-            SearchJokeModule::class
+            SearchJokeModule::class,
+            SearchHistoricModule::class
         )
     )
     abstract fun contributesSearchJokeActivity(): SearchJokeActivity

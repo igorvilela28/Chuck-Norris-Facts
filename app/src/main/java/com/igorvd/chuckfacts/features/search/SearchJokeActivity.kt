@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_search_joke.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -34,6 +35,8 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
     private val viewModel by lazy {
         ViewModelProviders.of(this, viewModelFactory).get(SearchJokeViewModel::class.java)
     }
+
+    private val adapter by lazy { SearchHistoricAdapter(::finishWithQueryResult) }
 
     companion object {
 
@@ -57,6 +60,7 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         setupViews()
         setupObservers()
         loadCategories()
+        loadSearchHistoric()
     }
 
     //endregion
@@ -89,6 +93,8 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
                 false
             }
         }
+
+        rvPastSearches.setup(context = this, adapter =  adapter, isNestedScrollingEnabled = false)
     }
 
     private fun finishAnimatingToolbar() {
@@ -129,6 +135,16 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
                 }
             }
         }
+
+        viewModel.searchHistoric.observeNotNull(this) {
+            tvPastSearches.isVisible = it.isNotEmpty()
+            rvPastSearches.isVisible = it.isNotEmpty()
+            adapter.submitList(it)
+        }
+
+        viewModel.onQueryAddedToHistoric.observeNullable(this) {
+            finishAnimatingToolbar()
+        }
     }
 
     private fun loadCategories() {
@@ -140,12 +156,25 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
+    private fun loadSearchHistoric() {
+        //when observing a liveData, it automatically receives the current values
+        if (viewModel.searchHistoric.value.isNullOrEmpty()) {
+            launch {
+                viewModel.retrieveSearchHistoric()
+            }
+        }
+    }
+
     private fun finishWithQueryResult(query: String) {
+
         val intent = Intent().apply {
             putExtra(JokesActivity.EXTRA_JOKE_QUERY, query)
         }
         setResult(Activity.RESULT_OK, intent)
-        finishAnimatingToolbar()
+
+        //when the query is added, the observer is called and the screen finished
+        launch { viewModel.addQueryToSearchHistoric(query) }
+
     }
 
     //endregion

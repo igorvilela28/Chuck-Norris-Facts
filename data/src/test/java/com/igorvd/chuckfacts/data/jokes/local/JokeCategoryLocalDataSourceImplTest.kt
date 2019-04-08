@@ -29,4 +29,10 @@ class JokeCategoryLocalDataSourceImplTest {
         assertEquals(DUMMY_CATEGORIES, categories)
     }
 
+    @Test
+    fun `should retrieve empty categories`() {
+        val historic = jokeCategoryLocalDataSourceImpl.retrieveAll()
+        assertEquals(emptyList<String>(), historic)
+    }
+
 }

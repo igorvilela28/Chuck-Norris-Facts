@@ -81,4 +81,35 @@ class SearchJokeActivityTest {
             .thenTypeQueryErrorIsDisplayed()
 
     }
+
+    @Test
+    fun shouldNotShowSearchHistoric_WhenHistoricIsEmpty() {
+        robot
+            .givenCategories200Response()
+            .launchActivity()
+            .thenPastSearchLabelIsNotDisplayed()
+            .thenPastSearchesItemCount(0)
+    }
+
+    @Test
+    fun shouldShowSearchHistoric_WhenHasItemsOnHistoric() {
+        robot
+            .givenCategories200Response()
+            .givenSearchHistoric(3)
+            .launchActivity()
+            .thenPastSearchLabelIsDisplayed()
+            .thenPastSearchesItemCount(3)
+    }
+
+    @Test
+    fun shouldFinishWithPastSearchResult_WhenPastSearchItemClicked() {
+        val expectedResult = robot.historic.first()
+        robot
+            .givenCategories200Response()
+            .givenSearchHistoric(3)
+            .launchActivity()
+            .whenClickOnPastSearchItem(0)
+            .thenActivityResultWithQuery(expectedResult)
+    }
+
 }

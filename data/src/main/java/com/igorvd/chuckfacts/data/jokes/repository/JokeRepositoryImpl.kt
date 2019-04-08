@@ -9,7 +9,7 @@ import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import javax.inject.Inject
 
 /**
- * Repository that fetch categories. It has a local first policy.
+ * Repository that fetch jokes.
  */
 class JokeRepositoryImpl @Inject constructor(
     private val remoteDataSource: JokeRemoteDataSource
