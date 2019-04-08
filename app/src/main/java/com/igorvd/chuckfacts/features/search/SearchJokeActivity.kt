@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_search_joke.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -57,6 +58,7 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         setupViews()
         setupObservers()
         loadCategories()
+        loadSearchHistoric()
     }
 
     //endregion
@@ -129,6 +131,14 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
                 }
             }
         }
+
+        viewModel.searchHistoric.observeNotNull(this) {
+            Timber.d("historic: ${it}")
+        }
+
+        viewModel.onQueryAddedToHistoric.observeNullable(this) {
+            finishAnimatingToolbar()
+        }
     }
 
     private fun loadCategories() {
@@ -140,12 +150,23 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
+    private fun loadSearchHistoric() {
+        //when observing a liveData, it automatically receives the current values
+        if (viewModel.searchHistoric.value.isNullOrEmpty()) {
+            launch {
+                viewModel.retrieveSearchHistoric()
+            }
+        }
+    }
+
     private fun finishWithQueryResult(query: String) {
+
+        launch { viewModel.addQueryToSearchHistoric(query) }
+
         val intent = Intent().apply {
             putExtra(JokesActivity.EXTRA_JOKE_QUERY, query)
         }
         setResult(Activity.RESULT_OK, intent)
-        finishAnimatingToolbar()
     }
 
     //endregion
