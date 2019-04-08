@@ -15,6 +15,7 @@ import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.hideContent
 import com.igorvd.chuckfacts.utils.extensions.observeNotNull
+import com.igorvd.chuckfacts.utils.extensions.observeNullable
 import com.igorvd.chuckfacts.utils.extensions.showContent
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
@@ -58,11 +59,27 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jokes)
         setupViews()
+        setupObservers()
 
-        viewModel.jokes.observeNotNull(this) {
-            Timber.d("jokes " + it.toString())
+    }
+
+    private fun setupObservers() = with(viewModel) {
+
+        showEmptyJokesResult.observeNullable(this@JokesActivity) {
+            Timber.d("no jokes result")
         }
 
+        showNetworkingError.observeNullable(this@JokesActivity) {
+            Timber.d("networking error")
+        }
+
+        showHttpError.observeNullable(this@JokesActivity) {
+            Timber.d("http error")
+        }
+
+        jokes.observeNotNull(this@JokesActivity) {
+            Timber.d("jokes " + it.toString())
+        }
     }
 
     override fun onResume() {
