@@ -161,12 +161,14 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
 
     private fun finishWithQueryResult(query: String) {
 
-        launch { viewModel.addQueryToSearchHistoric(query) }
-
         val intent = Intent().apply {
             putExtra(JokesActivity.EXTRA_JOKE_QUERY, query)
         }
         setResult(Activity.RESULT_OK, intent)
+
+        //when the query is added, the observer is called and the screen finished
+        launch { viewModel.addQueryToSearchHistoric(query) }
+
     }
 
     //endregion
