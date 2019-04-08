@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">BaseProject</string>
+    <string name="try_again">Try again</string>
 
     <string name="search_joke_hint">Search a joke</string>
     <string name="search_suggestions">Suggestions</string>
     <string name="search_error_type_query">Type a query to search!</string>
+
+    <string name="jokes_error_network">Looks like you have a connection issue. Try again!</string>
+    <string name="jokes_error_server">Looks like we could not reach our servers. Try again!</string>
+    <string name="jokes_no_results">We could not find any results for your query. Try to search for a new one!</string>
+
+
 </resources>
