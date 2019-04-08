@@ -1,10 +1,9 @@
 package com.igorvd.chuckfacts.features
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
-import com.igorvd.chuckfacts.domain.exceptions.MyServerErrorException
 import com.igorvd.chuckfacts.utils.SingleLiveEvent
 import com.igorvd.chuckfacts.utils.extensions.throwOrLog
 
@@ -12,7 +11,7 @@ import com.igorvd.chuckfacts.utils.extensions.throwOrLog
  * @author Igor Vilela
  * @since 28/12/17
  */
-abstract class BaseViewModel() : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     protected val _showProgressEvent = SingleLiveEvent<Void>()
     val showProgressEvent: LiveData<Void>
@@ -39,7 +38,7 @@ abstract class BaseViewModel() : ViewModel() {
 
             //TODO: show network error message
 
-        } catch (e: MyServerErrorException) {
+        } catch (e: MyHttpErrorException) {
 
             //TODO: show server error message
 

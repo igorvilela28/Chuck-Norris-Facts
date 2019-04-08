@@ -13,6 +13,6 @@ import retrofit2.Call
 interface RequestMaker {
 
     @Throws(MyException::class)
-    suspend fun <T> getResult(call: Call<T>): T
+    suspend fun <T : Any> getResult(call: Call<T>): T
 
 }
