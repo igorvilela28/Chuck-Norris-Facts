@@ -1,11 +1,10 @@
 package com.igorvd.chuckfacts.data.network.requests
 
-import com.igorvd.chuckfacts.domain.exceptions.MyException
+import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
-import com.igorvd.chuckfacts.domain.exceptions.MyServerErrorException
 import retrofit2.Call
-import retrofit2.Response
-import ru.gildor.coroutines.retrofit.awaitResponse
+import retrofit2.HttpException
+import ru.gildor.coroutines.retrofit.await
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -18,12 +17,20 @@ import javax.inject.Inject
  */
 class RequestMakerImpl @Inject constructor() : RequestMaker {
 
-    override suspend fun <T> getResult(call: Call<T>): T {
+    override suspend fun <T : Any> getResult(call: Call<T>): T {
 
         try {
 
-            val response: Response<T> = call.awaitResponse()
-            return parseResponse(call, response)
+            val result = call.await()
+            return result
+
+        } catch (e: HttpException) {
+
+            val exception = when (e.code()) {
+                in 400..499 -> MyHttpErrorException.HttpClientErrorException(e.message(), e.code(), e)
+                else -> MyHttpErrorException.HttpServerErrorException(e.message(), e.code(), e)
+            }
+            throw exception
 
         } catch (e: IOException) {
 
@@ -35,28 +42,8 @@ class RequestMakerImpl @Inject constructor() : RequestMaker {
         } catch (e: Exception) {
 
             //we are only retrowing it to be more clear while debugging
-            Timber.e(e, "Exception %s on SyncRequestManagerImpl", e.javaClass.simpleName)
+            Timber.e(e, "unexpected exception on request maker ${e.javaClass.simpleName}")
             throw e
-        }
-
-    }
-
-    @Throws(MyException::class)
-    private fun <T> parseResponse(call: Call<T>, response: Response<T>): T {
-
-        val url = call.request().url().toString()
-
-        if (response.isSuccessful) {
-
-            Timber.d("call completed successfuly for url: $url")
-
-            return response.body()!!
-
-        } else {
-            val message = "Http error, code: ${response.code()}, url: $url"
-            throw MyServerErrorException(message)
-
-            //TODO: altera quando precisarmos tratar códigos de erro http em separado.
         }
     }
 }

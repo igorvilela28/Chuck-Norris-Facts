@@ -1,7 +1,7 @@
 package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeCategoryRepository
-import com.testutils.DUMMY_CATEGORIES
+import com.igorvd.chuckfacts.domain.utils.DUMMY_CATEGORIES
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

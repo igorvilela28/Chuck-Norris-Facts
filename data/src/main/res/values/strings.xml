@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">data</string>
+    <string name="default_category">Uncategorized</string>
 </resources>

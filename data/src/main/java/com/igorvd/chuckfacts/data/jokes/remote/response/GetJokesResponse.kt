@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 
 data class GetJokesResponse(
-        @SerializedName("jokeResponse")
+        @SerializedName("result")
         val jokeResponse: List<JokeResponse>,
         @SerializedName("total")
         val total: Int
@@ -14,9 +14,7 @@ data class JokeResponse(
         @SerializedName("id")
         val id: String,
         @SerializedName("category")
-        val category: String?,
-        @SerializedName("icon_url")
-        val iconUrl: String,
+        val categories: List<String>?,
         @SerializedName("url")
         val url: String,
         @SerializedName("value")

@@ -10,13 +10,33 @@ import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import kotlinx.android.synthetic.main.activity_jokes.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
+import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.hideContent
+import com.igorvd.chuckfacts.utils.extensions.observeNotNull
+import com.igorvd.chuckfacts.utils.extensions.observeNullable
 import com.igorvd.chuckfacts.utils.extensions.showContent
+import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
+import dagger.android.AndroidInjection
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class JokesActivity : AppCompatActivity() {
+class JokesActivity : AppCompatActivity(), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+    get() = lifecycle.job + Dispatchers.Main
+
+    @Inject
+    protected lateinit var viewModelFactory: ViewModelFactory
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(JokesViewModel::class.java)
+    }
 
     private val paramsHolder: Pair<LayoutParams, LayoutParams> by lazy {
         val originalParams = cvSearchBar.layoutParams as LayoutParams
@@ -35,9 +55,31 @@ class JokesActivity : AppCompatActivity() {
     //**************************************************************************
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jokes)
         setupViews()
+        setupObservers()
+
+    }
+
+    private fun setupObservers() = with(viewModel) {
+
+        showEmptyJokesResult.observeNullable(this@JokesActivity) {
+            Timber.d("no jokes result")
+        }
+
+        showNetworkingError.observeNullable(this@JokesActivity) {
+            Timber.d("networking error")
+        }
+
+        showHttpError.observeNullable(this@JokesActivity) {
+            Timber.d("http error")
+        }
+
+        jokes.observeNotNull(this@JokesActivity) {
+            Timber.d("jokes " + it.toString())
+        }
     }
 
     override fun onResume() {
@@ -56,6 +98,12 @@ class JokesActivity : AppCompatActivity() {
 
             val query = data?.getStringExtra(EXTRA_JOKE_QUERY)
             Timber.d("received query: $query")
+
+            query?.let {
+                launch {
+                    viewModel.retrieveJokes(query)
+                }
+            }
 
         }
 

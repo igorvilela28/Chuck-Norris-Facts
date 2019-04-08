@@ -56,7 +56,29 @@ class SearchJokeActivityTest {
             .givenCategories200Response()
             .launchActivity()
             .whenClickOnCategory(robot.categories.first())
-            .thenActivityResultWithCategory(robot.categories.first())
+            .thenActivityResultWithQuery(robot.categories.first())
+
+    }
+
+    @Test
+    fun shouldFinishWithQueryResult_WhenTypeQuery() {
+        robot
+            .givenCategories200Response()
+            .launchActivity()
+            .thenSearchEditTextIsDisplayed()
+            .whenTypeQuery("dev")
+            .whenSearchImeClicked()
+            .thenActivityResultWithQuery("dev")
+    }
+
+    @Test
+    fun shouldShowQueryEmptyError_WhenClickOnSearchIme() {
+        robot
+            .givenCategories200Response()
+            .launchActivity()
+            .thenSearchEditTextIsDisplayed()
+            .whenSearchImeClicked()
+            .thenTypeQueryErrorIsDisplayed()
 
     }
 }

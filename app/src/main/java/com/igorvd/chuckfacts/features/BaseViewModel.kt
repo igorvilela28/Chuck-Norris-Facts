@@ -1,10 +1,9 @@
 package com.igorvd.chuckfacts.features
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
-import com.igorvd.chuckfacts.domain.exceptions.MyServerErrorException
 import com.igorvd.chuckfacts.utils.SingleLiveEvent
 import com.igorvd.chuckfacts.utils.extensions.throwOrLog
 
@@ -12,7 +11,7 @@ import com.igorvd.chuckfacts.utils.extensions.throwOrLog
  * @author Igor Vilela
  * @since 28/12/17
  */
-abstract class BaseViewModel() : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
     protected val _showProgressEvent = SingleLiveEvent<Void>()
     val showProgressEvent: LiveData<Void>
@@ -21,6 +20,15 @@ abstract class BaseViewModel() : ViewModel() {
     protected val _hideProgressEvent = SingleLiveEvent<Void>()
     val hideProgressEvent: LiveData<Void>
         get() = _hideProgressEvent
+
+    protected val _showNetworkingError = SingleLiveEvent<Void>()
+    val showNetworkingError: LiveData<Void>
+        get() = _showNetworkingError
+
+    protected val _showHttpError = SingleLiveEvent<Void>()
+    val showHttpError: LiveData<Void>
+        get() = _showHttpError
+
 
     /**
      * This method should be used when we the view model is asked to do some long running task.
@@ -36,13 +44,9 @@ abstract class BaseViewModel() : ViewModel() {
         try {
             work()
         } catch (e: MyIOException) {
-
-            //TODO: show network error message
-
-        } catch (e: MyServerErrorException) {
-
-            //TODO: show server error message
-
+            _showNetworkingError.call()
+        } catch (e: MyHttpErrorException) {
+            _showHttpError.call()
         } catch (e: Exception) {
             e.throwOrLog()
         } finally {
