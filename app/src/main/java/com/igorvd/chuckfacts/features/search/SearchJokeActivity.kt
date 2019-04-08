@@ -36,6 +36,8 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         ViewModelProviders.of(this, viewModelFactory).get(SearchJokeViewModel::class.java)
     }
 
+    private val adapter by lazy { SearchHistoricAdapter(::finishWithQueryResult) }
+
     companion object {
 
         fun newIntent(context: Context): Intent {
@@ -91,6 +93,8 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
                 false
             }
         }
+
+        rvPastSearches.setup(context = this, adapter =  adapter, isNestedScrollingEnabled = false)
     }
 
     private fun finishAnimatingToolbar() {
@@ -133,7 +137,9 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         }
 
         viewModel.searchHistoric.observeNotNull(this) {
-            Timber.d("historic: ${it}")
+            tvPastSearches.isVisible = true
+            rvPastSearches.isVisible = true
+            adapter.submitList(it)
         }
 
         viewModel.onQueryAddedToHistoric.observeNullable(this) {

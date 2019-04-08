@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tvSearchHistoric"
+    style="@style/TextAppearance.AppCompat.Body1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:drawableStart="@drawable/ic_history"
+    android:drawablePadding="@dimen/margin_padding_medium"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:paddingTop="@dimen/margin_padding_small"
+    android:paddingBottom="@dimen/margin_padding_small"
+    tools:text="Infinite">
+
+</TextView>
