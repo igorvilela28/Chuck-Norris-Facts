@@ -137,8 +137,8 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
         }
 
         viewModel.searchHistoric.observeNotNull(this) {
-            tvPastSearches.isVisible = true
-            rvPastSearches.isVisible = true
+            tvPastSearches.isVisible = it.isNotEmpty()
+            rvPastSearches.isVisible = it.isNotEmpty()
             adapter.submitList(it)
         }
 

@@ -19,7 +19,7 @@ class SearchHistoricRepositoryImpl @Inject constructor(
     private val gson by lazy { Gson() }
 
     companion object {
-        private const val SEARCH_HISTORY_KEY = "search_history"
+        const val SEARCH_HISTORY_KEY = "search_history"
     }
 
     override fun save(history: List<String>) {

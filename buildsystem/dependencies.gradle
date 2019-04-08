@@ -102,6 +102,7 @@ ext {
 
     allAndroidTestDependencies = [
             espresso        : "androidx.test.espresso:espresso-core:${espresso}",
+            espressoContrib : "androidx.test.espresso:espresso-contrib:${espresso}",
             espressoIntents : "androidx.test.espresso:espresso-intents:${espressoIntents}",
             espressoIdling  : "androidx.test.espresso:espresso-idling-resource:${espressoIdling}",
             androidxJunit   : "androidx.test.ext:truth:${androidxTruth}",
@@ -152,6 +153,7 @@ ext {
 
     appAndroidTestDependencies = [
             allAndroidTestDependencies.espresso,
+            allAndroidTestDependencies.espressoContrib,
             allAndroidTestDependencies.espressoIntents,
             allAndroidTestDependencies.espressoIdling,
             allAndroidTestDependencies.androidxJunit,

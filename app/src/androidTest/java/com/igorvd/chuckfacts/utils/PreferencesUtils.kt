@@ -2,6 +2,9 @@ package com.igorvd.chuckfacts.utils
 
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
+import com.igorvd.chuckfacts.data.jokes.repository.SearchHistoricRepositoryImpl
+import com.igorvd.chuckfacts.data.utils.extensions.edit
+import com.igorvd.chuckfacts.data.utils.extensions.sharedPreferences
 import java.io.File
 
 object PreferencesUtils {
@@ -24,5 +27,13 @@ object PreferencesUtils {
                 .clear()
                 .commit()
         }
+    }
+
+    fun putSearchHistoric(historic: List<String>) {
+        val targetContext = InstrumentationRegistry
+            .getInstrumentation()
+            .getTargetContext()
+        val repo = SearchHistoricRepositoryImpl(targetContext)
+        repo.save(historic)
     }
 }
