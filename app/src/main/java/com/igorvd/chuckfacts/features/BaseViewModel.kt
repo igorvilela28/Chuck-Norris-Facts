@@ -21,6 +21,15 @@ abstract class BaseViewModel : ViewModel() {
     val hideProgressEvent: LiveData<Void>
         get() = _hideProgressEvent
 
+    protected val _showNetworkingError = SingleLiveEvent<Void>()
+    val showNetworkingError: LiveData<Void>
+        get() = _showNetworkingError
+
+    protected val _showHttpError = SingleLiveEvent<Void>()
+    val showHttpError: LiveData<Void>
+        get() = _showHttpError
+
+
     /**
      * This method should be used when we the view model is asked to do some long running task.
      * Because we're running a long task, the user should see a progress indicator, and when the
@@ -35,13 +44,9 @@ abstract class BaseViewModel : ViewModel() {
         try {
             work()
         } catch (e: MyIOException) {
-
-            //TODO: show network error message
-
+            _showNetworkingError.call()
         } catch (e: MyHttpErrorException) {
-
-            //TODO: show server error message
-
+            _showHttpError.call()
         } catch (e: Exception) {
             e.throwOrLog()
         } finally {
