@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
 import com.igorvd.chuckfacts.features.BaseViewModel
+import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.utils.SingleLiveEvent
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -13,8 +14,8 @@ class JokesViewModel @Inject constructor(
     private val retrieveJokesInteractor: RetrieveJokesInteractor
 ): BaseViewModel() {
 
-    private val _jokes = MutableLiveData<List<Joke>>()
-    val jokes: LiveData<List<Joke>>
+    private val _jokes = MutableLiveData<List<JokeView>>()
+    val jokes: LiveData<List<JokeView>>
         get() = _jokes
 
     private val _showEmptyJokesResult = SingleLiveEvent<Void>()
@@ -28,7 +29,7 @@ class JokesViewModel @Inject constructor(
         if (jokes.isEmpty()) {
             _showEmptyJokesResult.call()
         } else {
-            _jokes.value = jokes
+            _jokes.value = jokes.map { JokesMapper.jokeToJokeView(it) }
         }
     }
 

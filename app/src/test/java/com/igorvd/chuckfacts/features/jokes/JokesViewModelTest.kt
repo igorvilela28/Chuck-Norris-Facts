@@ -6,7 +6,9 @@ import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
+import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.testutils.DUMMY_JOKES
+import com.igorvd.chuckfacts.testutils.DUMMY_JOKESVIEW
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
@@ -33,7 +35,7 @@ class JokesViewModelTest {
     @RelaxedMockK
     private lateinit var observerHideProgress: Observer<Void>
     @RelaxedMockK
-    private lateinit var observerJokes: Observer<List<Joke>>
+    private lateinit var observerJokes: Observer<List<JokeView>>
     @RelaxedMockK
     private lateinit var observerEmptyJokesResult: Observer<Void>
     @RelaxedMockK
@@ -78,7 +80,7 @@ class JokesViewModelTest {
 
         verifySequence {
             observerShowProgress.onChanged(null)
-            observerJokes.onChanged(DUMMY_JOKES)
+            observerJokes.onChanged(DUMMY_JOKESVIEW)
             observerHideProgress.onChanged(null)
         }
 
