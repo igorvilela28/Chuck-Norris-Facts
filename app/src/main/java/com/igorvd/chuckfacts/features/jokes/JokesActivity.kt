@@ -13,10 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.utils.ViewModelFactory
-import com.igorvd.chuckfacts.utils.extensions.hideContent
-import com.igorvd.chuckfacts.utils.extensions.observeNotNull
-import com.igorvd.chuckfacts.utils.extensions.observeNullable
-import com.igorvd.chuckfacts.utils.extensions.showContent
+import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
 import dagger.android.AndroidInjection
@@ -30,7 +27,7 @@ import kotlin.coroutines.CoroutineContext
 class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-    get() = lifecycle.job + Dispatchers.Main
+        get() = lifecycle.job + Dispatchers.Main
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelFactory
@@ -43,6 +40,12 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         val newParams = LayoutParams(originalParams)
         newParams.setMargins(0, 0, 0, 0)
         originalParams to newParams
+    }
+
+    private val adapter by lazy {
+        JokesAdapter(this) {
+
+        }
     }
 
     companion object {
@@ -65,6 +68,16 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     private fun setupObservers() = with(viewModel) {
 
+        showProgressEvent.observeNullable(this@JokesActivity) {
+            errorLayout.isVisible = false
+            progressBarContainer.isVisible = true
+            adapter.submitList(emptyList())
+        }
+
+        hideProgressEvent.observeNullable(this@JokesActivity) {
+            progressBarContainer.isVisible = false
+        }
+
         showEmptyJokesResult.observeNullable(this@JokesActivity) {
             Timber.d("no jokes result")
         }
@@ -78,7 +91,7 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         }
 
         jokes.observeNotNull(this@JokesActivity) {
-            Timber.d("jokes " + it.toString())
+            adapter.submitList(it)
         }
     }
 
@@ -119,11 +132,14 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     private fun setupViews() {
         cvSearchBar.setOnClickListener {
-            val transition = TransitionsFactory.changeBoundsWithActionOnEnd(action = ::startSearchActivity)
+            val transition =
+                TransitionsFactory.changeBoundsWithActionOnEnd(action = ::startSearchActivity)
             TransitionManager.beginDelayedTransition(cvSearchBar as CardView, transition)
             cvSearchBar.layoutParams = paramsHolder.second
             ((cvSearchBar as CardView).getChildAt(0) as ViewGroup).hideContent()
         }
+
+        rvJokes.setup(context = this, adapter = adapter)
     }
 
     private fun setOriginalBarProperties() {
