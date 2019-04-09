@@ -121,12 +121,7 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
 
             val query = data?.getStringExtra(EXTRA_JOKE_QUERY)
             Timber.d("received query: $query")
-
-            query?.let {
-                launch {
-                    viewModel.retrieveJokes(query)
-                }
-            }
+            retrieveJokes(query)
 
         }
 
@@ -150,6 +145,8 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         }
 
         rvJokes.setup(context = this, adapter = adapter)
+
+        btTryAgain.setOnClickListener { retrieveJokes(viewModel.lastQuery) }
     }
 
     private fun setOriginalBarProperties() {
@@ -160,6 +157,14 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     private fun startSearchActivity() {
         val intent = SearchJokeActivity.newIntent(this)
         startActivityForResult(intent, RC_JOKE_QUERY)
+    }
+
+    private fun retrieveJokes(query: String?) {
+        query?.let {
+            launch {
+                viewModel.retrieveJokes(query)
+            }
+        }
     }
 
     //endregion

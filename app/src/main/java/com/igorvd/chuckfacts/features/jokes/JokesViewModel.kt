@@ -14,6 +14,8 @@ class JokesViewModel @Inject constructor(
     private val retrieveJokesInteractor: RetrieveJokesInteractor
 ): BaseViewModel() {
 
+    var lastQuery: String? = null
+
     private val _jokes = MutableLiveData<List<JokeView>>()
     val jokes: LiveData<List<JokeView>>
         get() = _jokes
@@ -23,6 +25,7 @@ class JokesViewModel @Inject constructor(
             get() = _showEmptyJokesResult
 
     suspend fun retrieveJokes(query: String) = doWorkWithProgress {
+        lastQuery = query
         val params = RetrieveJokesInteractor.Params(query)
         val jokes = retrieveJokesInteractor.execute(params)
 
