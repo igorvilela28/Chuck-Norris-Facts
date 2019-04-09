@@ -6,6 +6,7 @@ import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
+import com.igorvd.chuckfacts.features.*
 import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.testutils.DUMMY_JOKES
 import com.igorvd.chuckfacts.testutils.DUMMY_JOKESVIEW
@@ -35,13 +36,7 @@ class JokesViewModelTest {
     @RelaxedMockK
     private lateinit var observerHideProgress: Observer<Void>
     @RelaxedMockK
-    private lateinit var observerJokes: Observer<List<JokeView>>
-    @RelaxedMockK
-    private lateinit var observerEmptyJokesResult: Observer<Void>
-    @RelaxedMockK
-    private lateinit var observerNetworkingError: Observer<Void>
-    @RelaxedMockK
-    private lateinit var observerHttpError: Observer<Void>
+    private lateinit var observerState: Observer<ScreenState>
 
     @Before
     fun setUp() {
@@ -51,10 +46,7 @@ class JokesViewModelTest {
         with (viewModel) {
             showProgressEvent.observeForever(observerShowProgress)
             hideProgressEvent.observeForever(observerHideProgress)
-            jokes.observeForever(observerJokes)
-            showEmptyJokesResult.observeForever(observerEmptyJokesResult)
-            showNetworkingError.observeForever(observerNetworkingError)
-            showHttpError.observeForever(observerHttpError)
+            screenState.observeForever(observerState)
         }
     }
 
@@ -63,10 +55,7 @@ class JokesViewModelTest {
         with (viewModel) {
             showProgressEvent.removeObserver(observerShowProgress)
             hideProgressEvent.removeObserver(observerHideProgress)
-            jokes.removeObserver(observerJokes)
-            showEmptyJokesResult.removeObserver(observerEmptyJokesResult)
-            showNetworkingError.removeObserver(observerNetworkingError)
-            showHttpError.removeObserver(observerHttpError)
+            screenState.removeObserver(observerState)
         }
     }
 
@@ -80,11 +69,9 @@ class JokesViewModelTest {
 
         verifySequence {
             observerShowProgress.onChanged(null)
-            observerJokes.onChanged(DUMMY_JOKESVIEW)
+            observerState.onChanged(JokeScreenState.Result(DUMMY_JOKESVIEW))
             observerHideProgress.onChanged(null)
         }
-
-        verify { observerEmptyJokesResult wasNot Called }
     }
 
     @Test
@@ -97,11 +84,9 @@ class JokesViewModelTest {
 
         verifySequence {
             observerShowProgress.onChanged(null)
-            observerEmptyJokesResult.onChanged(null)
+            observerState.onChanged(EmptyResult)
             observerHideProgress.onChanged(null)
         }
-
-        verify { listOf(observerJokes, observerNetworkingError, observerHttpError) wasNot Called }
     }
 
     @Test
@@ -114,11 +99,9 @@ class JokesViewModelTest {
 
         verifySequence {
             observerShowProgress.onChanged(null)
-            observerNetworkingError.onChanged(null)
+            observerState.onChanged(NetworkError)
             observerHideProgress.onChanged(null)
         }
-
-        verify { listOf(observerJokes, observerEmptyJokesResult, observerHttpError) wasNot Called }
     }
 
     @Test
@@ -132,10 +115,8 @@ class JokesViewModelTest {
 
         verifySequence {
             observerShowProgress.onChanged(null)
-            observerHttpError.onChanged(null)
+            observerState.onChanged(HttpError)
             observerHideProgress.onChanged(null)
         }
-
-        verify { listOf(observerJokes, observerEmptyJokesResult, observerNetworkingError) wasNot Called }
     }
 }

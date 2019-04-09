@@ -7,6 +7,7 @@ import com.igorvd.chuckfacts.domain.jokes.interactor.AddQueryToSearchHistoricInt
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveCategoriesInteractor
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveSearchHistoricInteractor
+import com.igorvd.chuckfacts.features.ScreenState
 import com.igorvd.chuckfacts.features.jokes.JokesViewModel
 import com.igorvd.chuckfacts.testutils.DUMMY_CATEGORIES
 import com.igorvd.chuckfacts.testutils.DUMMY_JOKES
@@ -40,9 +41,7 @@ class SearchJokeViewModelTest {
     @RelaxedMockK
     private lateinit var observerHideProgress: Observer<Void>
     @RelaxedMockK
-    private lateinit var observerNetworkingError: Observer<Void>
-    @RelaxedMockK
-    private lateinit var observerHttpError: Observer<Void>
+    private lateinit var observerScreenState: Observer<ScreenState>
 
     @RelaxedMockK
     private lateinit var observerCategories: Observer<List<String>>
@@ -67,8 +66,7 @@ class SearchJokeViewModelTest {
             categories.observeForever(observerCategories)
             searchHistoric.observeForever(observerSearchHistoric)
             onQueryAddedToHistoric.observeForever(observerOnQueryAddedToHistoric)
-            showNetworkingError.observeForever(observerNetworkingError)
-            showHttpError.observeForever(observerHttpError)
+            screenState.observeForever(observerScreenState)
         }
     }
 
@@ -80,8 +78,7 @@ class SearchJokeViewModelTest {
             categories.removeObserver(observerCategories)
             searchHistoric.removeObserver(observerSearchHistoric)
             onQueryAddedToHistoric.removeObserver(observerOnQueryAddedToHistoric)
-            showNetworkingError.removeObserver(observerNetworkingError)
-            showHttpError.removeObserver(observerHttpError)
+            screenState.removeObserver(observerScreenState)
         }
     }
 
@@ -102,7 +99,7 @@ class SearchJokeViewModelTest {
         verify {
             listOf(
                 observerSearchHistoric, observerOnQueryAddedToHistoric,
-                observerNetworkingError, observerHttpError
+                observerScreenState
             ) wasNot Called
         }
 
@@ -121,8 +118,7 @@ class SearchJokeViewModelTest {
             listOf(
                 observerCategories,
                 observerOnQueryAddedToHistoric,
-                observerNetworkingError,
-                observerHttpError,
+                observerScreenState,
                 observerShowProgress,
                 observerHideProgress
             ) wasNot Called
@@ -144,8 +140,7 @@ class SearchJokeViewModelTest {
             listOf(
                 observerCategories,
                 observerSearchHistoric,
-                observerNetworkingError,
-                observerHttpError,
+                observerScreenState,
                 observerShowProgress,
                 observerHideProgress
             ) wasNot Called
