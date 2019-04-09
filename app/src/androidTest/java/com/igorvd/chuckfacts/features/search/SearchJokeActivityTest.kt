@@ -29,6 +29,7 @@ class SearchJokeActivityTest {
 
     @After
     fun tearDown() {
+        Intents.release()
         server.shutdown()
     }
 

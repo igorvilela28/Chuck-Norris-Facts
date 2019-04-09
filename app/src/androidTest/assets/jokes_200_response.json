@@ -1,0 +1,20 @@
+{
+  "total": 2,
+  "result": [{
+    "category": null,
+    "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+    "id": "D1HKI2A-R0uEPA5j3rIJfw",
+    "url": "https://api.chucknorris.io/jokes/D1HKI2A-R0uEPA5j3rIJfw",
+    "value": "Captain Planet once told Chuck Norris that he had control over all the elements - earth, water, wind and fire. Chuck Norris then drowned him in fire and blew him six feet under, thereby utilizing all four elements to move the good captain asunder. (It should be noted here that Chuck Norris, for the first time ever, deviated from using his signature roundhouse kick.)"
+  },
+    {
+      "category": [
+        "dev"
+      ],
+      "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+      "id": "p4tviyvmrbkcjbqsydybuq",
+      "url": "https://api.chucknorris.io/jokes/p4tviyvmrbkcjbqsydybuq",
+      "value": "Chuck Norris can retrieve anything from /dev/null."
+    }
+  ]
+}
