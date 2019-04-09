@@ -22,6 +22,7 @@ import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import com.igorvd.chuckfacts.utils.*
 import com.igorvd.chuckfacts.utils.matcher.CustomAssertions.Companion.hasItemCount
+import com.igorvd.chuckfacts.utils.matcher.CustomAssertions.Companion.withDrawable
 import kotlinx.android.synthetic.main.activity_jokes.*
 
 
@@ -107,15 +108,15 @@ class JokesActivityRobot(private val server: MockWebServer) {
     }
 
    fun thenErrorIconIsDisplayed(errorIconRes: Int) = apply {
-        //TODO
+       onView(withId(R.id.ivErrorIcon))
+           .check(matches(isDisplayed()))
+           .check(matches(withDrawable(errorIconRes)))
     }
 
     fun thenJokesItemCount(count: Int) = apply {
         onView(withId(R.id.rvJokes))
             .check(hasItemCount(count))
     }
-
-
 
     //endregion
 

@@ -2,11 +2,9 @@ package com.igorvd.chuckfacts.features.jokes
 
 import androidx.test.espresso.intent.Intents
 import com.igorvd.chuckfacts.R
-import com.igorvd.chuckfacts.features.search.SearchJokeActivityRobot
 import com.igorvd.chuckfacts.utils.PreferencesUtils
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -30,10 +28,9 @@ class JokesActivityTest {
         Intents.release()
     }
 
-
     @Test
     fun shouldShowJokesResult_WhenApiResponse200() {
-        
+
         robot
             .givenJokes200Response()
             .launchActivity()
@@ -57,7 +54,6 @@ class JokesActivityTest {
             .thenErrorIconIsDisplayed(R.drawable.empty_results)
             .thenErrorMessageHasText(R.string.jokes_no_results)
             .thenTryAgainButtonIsNotDisplayed()
-
     }
 
     @Test
