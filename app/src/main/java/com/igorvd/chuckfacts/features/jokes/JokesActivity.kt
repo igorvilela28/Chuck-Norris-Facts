@@ -17,6 +17,7 @@ import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -79,15 +80,24 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         }
 
         showEmptyJokesResult.observeNullable(this@JokesActivity) {
-            Timber.d("no jokes result")
+            errorLayout.isVisible = true
+            btTryAgain.isVisible = false
+            ivErrorIcon.setImageResource(R.drawable.empty_results)
+            tvErrorMessage.setText(R.string.jokes_no_results)
         }
 
         showNetworkingError.observeNullable(this@JokesActivity) {
-            Timber.d("networking error")
+            errorLayout.isVisible = true
+            btTryAgain.isVisible = true
+            ivErrorIcon.setImageResource(R.drawable.error_networking)
+            tvErrorMessage.setText(R.string.jokes_error_network)
         }
 
         showHttpError.observeNullable(this@JokesActivity) {
-            Timber.d("http error")
+            errorLayout.isVisible = true
+            btTryAgain.isVisible = true
+            ivErrorIcon.setImageResource(R.drawable.error_server)
+            tvErrorMessage.setText(R.string.jokes_error_server)
         }
 
         jokes.observeNotNull(this@JokesActivity) {

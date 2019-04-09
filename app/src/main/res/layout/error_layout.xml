@@ -21,11 +21,14 @@
         android:id="@+id/tvErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_padding_small"
         android:layout_marginTop="@dimen/margin_padding_small"
+        android:layout_marginEnd="@dimen/margin_padding_small"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivErrorIcon"
-        tools:text="@string/jokes_error_network" />
+        tools:text="@string/jokes_no_results" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btTryAgain"
