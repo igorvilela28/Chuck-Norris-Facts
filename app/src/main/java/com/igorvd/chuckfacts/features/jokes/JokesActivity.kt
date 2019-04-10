@@ -9,11 +9,9 @@ import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import kotlinx.android.synthetic.main.activity_jokes.*
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
-import com.igorvd.chuckfacts.features.ScreenState
-import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
@@ -23,7 +21,6 @@ import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -39,25 +36,23 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private val adapter by lazy {
-        JokesAdapter(this) {
-
-        }
+        JokesAdapter(this, ::shareJokeUrl)
     }
 
     private val stateMachine by lazy {
         JokesActivityStateMachine(clJokesRoot, adapter)
     }
 
-    private val paramsHolder: Pair<ConstraintLayout.LayoutParams, ConstraintLayout.LayoutParams> by lazy {
-        val originalParams = cvSearchBar.layoutParams as ConstraintLayout.LayoutParams
-        val newParams = ConstraintLayout.LayoutParams(originalParams)
+    private val paramsHolder: Pair<LayoutParams, LayoutParams> by lazy {
+        val originalParams = cvSearchBar.layoutParams as LayoutParams
+        val newParams = LayoutParams(originalParams)
         newParams.setMargins(0, 0, 0, 0)
         originalParams to newParams
     }
 
     companion object {
-        private const val RC_JOKE_QUERY = 9999
         const val EXTRA_JOKE_QUERY = "query"
+        private const val RC_JOKE_QUERY = 9999
     }
 
     //**************************************************************************
@@ -137,6 +132,16 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     private fun startSearchActivity() {
         val intent = SearchJokeActivity.newIntent(this)
         startActivityForResult(intent, RC_JOKE_QUERY)
+    }
+
+    private fun shareJokeUrl(url: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            setType("text/plain")
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.jokes_share_url))
+            putExtra(Intent.EXTRA_TEXT, url)
+        }
+
+        startActivity(Intent.createChooser(intent, getString(R.string.jokes_share_url)))
     }
 
     private fun retrieveJokes(query: String?) {

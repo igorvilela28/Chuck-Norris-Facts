@@ -9,11 +9,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents.intending
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
-import com.igorvd.chuckfacts.R
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.Matchers.not
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import com.igorvd.chuckfacts.testutils.AssetsLoader
@@ -25,6 +22,10 @@ import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.childVie
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withDrawable
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withFontSize
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withRecyclerViewChildAt
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.*
+import com.igorvd.chuckfacts.R
+import org.hamcrest.Matchers.*
 
 
 class JokesActivityRobot(private val server: MockWebServer) {
@@ -67,6 +68,13 @@ class JokesActivityRobot(private val server: MockWebServer) {
     fun whenClickOnTryAgain() = apply {
         onView(withId(R.id.btTryAgain))
             .perform(click())
+    }
+
+    fun whenClickOnShareUrlAtPosition(position: Int) = apply {
+
+        onView(withRecyclerViewChildAt(R.id.rvJokes, R.id.btShare, position))
+            .perform(click())
+
     }
 
     fun whenActivityResultWithQuery(query: String) = apply {
@@ -151,6 +159,13 @@ class JokesActivityRobot(private val server: MockWebServer) {
 
         onView(childViewAt(withRecyclerViewChildAt(R.id.rvJokes, R.id.chipGroupCategory, position), 0))
             .check(matches(withText(category)))
+
+    }
+
+    fun thenJokeUrlIsShared(url: String) {
+
+        intended(allOf(hasAction(Intent.ACTION_CHOOSER), hasExtra(`is`(Intent.EXTRA_INTENT),
+            allOf(hasAction(Intent.ACTION_SEND),hasExtra(Intent.EXTRA_TEXT, url)))))
 
     }
 
