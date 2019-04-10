@@ -48,12 +48,16 @@ class JokesActivityRobot(private val server: MockWebServer) {
         server.enqueue200Response(response)
     }
 
-    fun givenIOError() = apply {
-        server.enqueueIOError("{}")
+    fun givenIOError(amount: Int = 1) = apply {
+        for (i in 0..amount) {
+            server.enqueueIOError("{}")
+        }
     }
 
-    fun givenJokes500Response() = apply {
-        server.enqueue500Response("{}")
+    fun givenJokes500Response(amount: Int = 1) = apply {
+        for (i in 0..amount) {
+            server.enqueue500Response("{}")
+        }
     }
 
     //endregion

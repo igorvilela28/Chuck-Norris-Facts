@@ -38,7 +38,7 @@ class RequestMakerImplTest {
         server = MockWebServer()
         server.start()
         val url = server.url("/").toString()
-        testApi = ApiClientBuilder.createService(TestApi::class.java, url, 1L)
+        testApi = ApiClientBuilder.createService(TestApi::class.java, url, 300L)
         requestMakerImpl = RequestMakerImpl(callRetryDelay)
     }
 

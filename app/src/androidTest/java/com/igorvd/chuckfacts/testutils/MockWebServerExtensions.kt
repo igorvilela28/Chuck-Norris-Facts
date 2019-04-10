@@ -38,7 +38,7 @@ fun MockWebServer.enqueueIOError(body: String) {
     enqueue(MockResponse()
         .setResponseCode(200)
         .setBodyDelay(BODY_DELAY, TimeUnit.SECONDS)
-        .setSocketPolicy(SocketPolicy.DISCONNECT_AFTER_REQUEST)
+        .setSocketPolicy(SocketPolicy.NO_RESPONSE)
         .setBody(body))
 
 }

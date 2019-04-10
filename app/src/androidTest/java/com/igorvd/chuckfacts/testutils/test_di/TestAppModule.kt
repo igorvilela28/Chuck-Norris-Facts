@@ -37,7 +37,8 @@ class TestAppModule {
 
         return ApiClientBuilder.createService(
             ChuckNorrisApi::class.java,
-            MOCK_SERVER_URL
+            MOCK_SERVER_URL,
+            50L
         )
     }
 

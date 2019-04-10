@@ -154,7 +154,6 @@ ext {
     ]
 
     appAndroidTestDependencies = [
-            allTestDependencies.coroutinesTest,
             allAndroidTestDependencies.espresso,
             allAndroidTestDependencies.espressoContrib,
             allAndroidTestDependencies.espressoIntents,
