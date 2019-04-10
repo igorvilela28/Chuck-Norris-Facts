@@ -144,7 +144,7 @@ class JokesActivityTest {
     }
 
     @Test
-    fun shouldHaveDefaultCategory_WhenJokeHasCategory() {
+    fun shouldHaveDefaultCategory_WhenJokeDoesntHaveCategory() {
 
         val category = "Uncategorized".toUpperCase()
 
@@ -154,5 +154,19 @@ class JokesActivityTest {
             .whenActivityResultWithQuery("dev")
             .whenClickOnSearch()
             .thenJokeAtHasCategory(0, category)
+    }
+
+    @Test
+    fun shouldShareJokeUrl_WhenClickOnShareButton() {
+
+        val url = "https://api.chucknorris.io/jokes/hwWvAN-JQW6Zbndbn6FANg"
+
+        robot
+            .givenJokes200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .whenClickOnShareUrlAtPosition(0)
+            .thenJokeUrlIsShared(url)
     }
 }
