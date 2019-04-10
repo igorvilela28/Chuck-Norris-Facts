@@ -13,6 +13,12 @@ class JokesActivityTest {
     lateinit var server: MockWebServer
     private lateinit var robot: JokesActivityRobot
 
+    companion object {
+        private const val SHORT_JOKE = "Chuck Norris can retrieve anything from /dev/null."
+        private const val LONG_JOKE ="To be the person who Chuck Norris is right now, he never learned " +
+                "from his failures because he never commits failure but success."
+    }
+
     @Before
     fun setUp() {
         Intents.init()
@@ -100,6 +106,27 @@ class JokesActivityTest {
             .thenErrorLayoutIsNotDisplayed()
     }
 
+    @Test
+    fun shouldHaveLargerFont_WhenJokeLengthIsShort() {
 
+        robot
+            .givenJokes200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokeAtPositionHasText(1, SHORT_JOKE)
+            .thenJokeAtPositionHasLargerFont(1)
+    }
 
+    @Test
+    fun shouldHaveSmallerFont_WhenJokeLengthIsLong() {
+
+        robot
+            .givenJokes200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokeAtPositionHasText(0, LONG_JOKE)
+            .thenJokeAtPositionHasSmallerFont(0)
+    }
 }

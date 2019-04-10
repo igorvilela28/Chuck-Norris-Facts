@@ -1,22 +1,16 @@
 package com.igorvd.chuckfacts.utils.matcher
 
 import android.view.View
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.matcher.ViewMatchers
 import org.hamcrest.CoreMatchers
-import org.hamcrest.TypeSafeMatcher
 
 class CustomAssertions {
     companion object {
         fun hasItemCount(count: Int): ViewAssertion {
             return RecyclerViewItemCountAssertion(count)
-        }
-
-        fun withDrawable(@DrawableRes drawableRes: Int): TypeSafeMatcher<View> {
-            return DrawableMatcher(drawableRes)
         }
     }
 

@@ -2,6 +2,7 @@ package com.igorvd.chuckfacts.features.jokes
 
 import android.app.Activity
 import android.app.Instrumentation
+import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -19,10 +20,13 @@ import org.hamcrest.Matchers.not
 import org.junit.Assert
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
+import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import com.igorvd.chuckfacts.utils.*
 import com.igorvd.chuckfacts.utils.matcher.CustomAssertions.Companion.hasItemCount
-import com.igorvd.chuckfacts.utils.matcher.CustomAssertions.Companion.withDrawable
+import com.igorvd.chuckfacts.utils.matcher.CustomMatchers.Companion.withDrawable
+import com.igorvd.chuckfacts.utils.matcher.CustomMatchers.Companion.withFontSize
+import com.igorvd.chuckfacts.utils.matcher.CustomMatchers.Companion.withRecyclerViewChildAt
 import kotlinx.android.synthetic.main.activity_jokes.*
 
 
@@ -116,6 +120,34 @@ class JokesActivityRobot(private val server: MockWebServer) {
     fun thenJokesItemCount(count: Int) = apply {
         onView(withId(R.id.rvJokes))
             .check(hasItemCount(count))
+    }
+
+    fun thenJokeAtPositionHasText(position: Int, text: String) = apply {
+
+        onView(withRecyclerViewChildAt(R.id.rvJokes, R.id.tvJokeValue, position))
+            .check(matches(withText(text)))
+    }
+
+    fun thenJokeAtPositionHasLargerFont(position: Int) = apply {
+
+        lateinit var context: Context
+        scenario.onActivity { context = it }
+        val fontSize = context.resources.getDimension(R.dimen.text_large)
+
+        onView(withRecyclerViewChildAt(R.id.rvJokes, R.id.tvJokeValue, position))
+            .check(matches(withFontSize(fontSize)))
+
+    }
+
+    fun thenJokeAtPositionHasSmallerFont(position: Int) = apply {
+
+        lateinit var context: Context
+        scenario.onActivity { context = it }
+        val fontSize = context.resources.getDimension(R.dimen.text_small)
+
+        onView(withRecyclerViewChildAt(R.id.rvJokes, R.id.tvJokeValue, position))
+            .check(matches(withFontSize(fontSize)))
+
     }
 
     //endregion
