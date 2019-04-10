@@ -42,6 +42,9 @@ captures/
 *.iws
 *.ipr
 
+#Jacoco exec files
+*.exec
+
 
 # If you use Gradle , do not keep .idea under git control
 .idea/
