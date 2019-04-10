@@ -21,6 +21,7 @@ import com.igorvd.chuckfacts.testutils.enqueue200Response
 import com.igorvd.chuckfacts.testutils.enqueue500Response
 import com.igorvd.chuckfacts.testutils.enqueueIOError
 import com.igorvd.chuckfacts.testutils.matcher.CustomAssertions.Companion.hasItemCount
+import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.childViewAt
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withDrawable
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withFontSize
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withRecyclerViewChildAt
@@ -143,6 +144,13 @@ class JokesActivityRobot(private val server: MockWebServer) {
 
         onView(withRecyclerViewChildAt(R.id.rvJokes, R.id.tvJokeValue, position))
             .check(matches(withFontSize(fontSize)))
+
+    }
+
+    fun thenJokeAtHasCategory(position: Int, category: String) = apply {
+
+        onView(childViewAt(withRecyclerViewChildAt(R.id.rvJokes, R.id.chipGroupCategory, position), 0))
+            .check(matches(withText(category)))
 
     }
 

@@ -1,6 +1,8 @@
 package com.igorvd.chuckfacts.features.jokes
 
+import android.content.Context
 import androidx.test.espresso.intent.Intents
+import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.testutils.PreferencesUtils
 import okhttp3.mockwebserver.MockWebServer
@@ -128,5 +130,29 @@ class JokesActivityTest {
             .whenClickOnSearch()
             .thenJokeAtPositionHasText(0, LONG_JOKE)
             .thenJokeAtPositionHasSmallerFont(0)
+    }
+
+    @Test
+    fun shouldHaveCorrectCategory_WhenJokeHasCategory() {
+
+        robot
+            .givenJokes200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokeAtHasCategory(1, "dev")
+    }
+
+    @Test
+    fun shouldHaveDefaultCategory_WhenJokeJasCategory() {
+
+        val category = "Uncategorized".toUpperCase()
+
+        robot
+            .givenJokes200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokeAtHasCategory(0, category)
     }
 }
