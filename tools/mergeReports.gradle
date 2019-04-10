@@ -1,0 +1,66 @@
+apply plugin: 'jacoco'
+
+def coverageExcludes = [
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*',
+        '**/*$ViewInjector*.*',
+        '**/*$ViewBinder*.*',
+        '**/*$Lambda$*.*', // Jacoco can not handle several "$" in class name.
+        '**/*$inlined$*.*', // Kotlin specific, Jacoco can not handle several "$" in class name.
+        '**/*Module.*', // Modules for Dagger.
+        '**/*Dagger*.*', // Dagger auto-generated code.
+        '**/*MembersInjector*.*', // Dagger auto-generated code.
+        '**/*__MembersInjector',
+        '**/*_Provide*Factory*.*'
+]
+
+def coverageSourceDirs = []
+def taskList = []
+def coverageClassDirectories = []
+def modulesList = rootProject.subprojects.collect { it.project.name }.flatten()
+def executionDataList = []
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+modulesList.each { module ->
+    taskList.add("$module:jacocoTestReport")
+    coverageSourceDirs.add("$module/src/main/java")
+    //coverageClassDirectories.add(fileTree(dir: "$module/build/intermediates/classes/bahia/debug", excludes: coverageExcludes))//Apenas para java
+    coverageClassDirectories.add(fileTree(dir: "$module/build/tmp/kotlin-classes/debug", excludes: coverageExcludes))
+}
+
+task jacocoMergeReport(type: JacocoReport) {
+    dependsOn taskList
+
+    taskList.each { executionDataList.add(tasks.getByPath(it).executionData) }
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    classDirectories = files(coverageClassDirectories)
+    executionData = files(executionDataList)
+
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+    onlyIf = {
+        true
+    }
+
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}

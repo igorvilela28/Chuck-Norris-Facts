@@ -18,6 +18,11 @@ object PreferencesUtils {
             .getParentFile()
 
         val sharedPreferencesFileNames = File(root, "shared_prefs").list()
+
+        if (sharedPreferencesFileNames == null) {
+            return
+        }
+
         for (fileName in sharedPreferencesFileNames) {
             targetContext
                 .getSharedPreferences(fileName.replace(".xml", ""), Context.MODE_PRIVATE)

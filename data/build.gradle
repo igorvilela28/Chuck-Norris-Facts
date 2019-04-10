@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply from: "${project.rootDir}/buildsystem/jacoco.gradle"
+apply from: "$rootDir/tools/jacoco.gradle"
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -17,6 +17,12 @@ android {
             arguments {
                 arg("room.schemaLocation", "$projectDir/schemas".toString())
             }
+        }
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
         }
     }
 
