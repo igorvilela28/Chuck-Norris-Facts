@@ -9,7 +9,7 @@ import org.junit.After
 
 import org.junit.Before
 import org.junit.Test
-import com.igorvd.chuckfacts.utils.PreferencesUtils
+import com.igorvd.chuckfacts.testutils.PreferencesUtils
 
 
 @RunWith(AndroidJUnit4::class)
@@ -29,6 +29,7 @@ class SearchJokeActivityTest {
 
     @After
     fun tearDown() {
+        Intents.release()
         server.shutdown()
     }
 

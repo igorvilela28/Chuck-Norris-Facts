@@ -24,12 +24,14 @@ fun ViewGroup.showContent() {
     }
 }
 
-fun ChipGroup.addChip(context: Context, text: String, onClick: () -> Unit) {
+fun ChipGroup.addChip(context: Context, text: String, onClick: (() -> Unit)? = null) {
 
     val chip = Chip(context).apply {
         setText(text)
         setTextAppearanceResource(R.style.ChipTextStyle)
-        setOnClickListener { onClick() }
+        isClickable = onClick != null
+        isFocusable = onClick != null
+        onClick?.let { setOnClickListener { onClick() } }
     }
 
     this.addView(chip)

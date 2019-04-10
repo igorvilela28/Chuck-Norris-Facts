@@ -16,7 +16,7 @@ android {
         applicationId globalConfiguration["androidApplicationId"]
         versionCode globalConfiguration["androidVersionCode"]
         versionName globalConfiguration["androidVersionName"]
-        testInstrumentationRunner "com.igorvd.chuckfacts.utils.runner.AppRunner"
+        testInstrumentationRunner "com.igorvd.chuckfacts.testutils.runner.AppRunner"
         vectorDrawables.useSupportLibrary = true
     }
 

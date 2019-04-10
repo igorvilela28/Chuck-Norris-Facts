@@ -1,10 +1,8 @@
-package com.igorvd.chuckfacts.utils
+package com.igorvd.chuckfacts.testutils
 
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.data.jokes.repository.SearchHistoricRepositoryImpl
-import com.igorvd.chuckfacts.data.utils.extensions.edit
-import com.igorvd.chuckfacts.data.utils.extensions.sharedPreferences
 import java.io.File
 
 object PreferencesUtils {

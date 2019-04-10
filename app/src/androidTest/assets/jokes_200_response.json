@@ -1,0 +1,20 @@
+{
+  "total": 2,
+  "result": [{
+    "category": null,
+    "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+    "id": "hwWvAN-JQW6Zbndbn6FANg",
+    "url": "https://api.chucknorris.io/jokes/hwWvAN-JQW6Zbndbn6FANg",
+    "value": "To be the person who Chuck Norris is right now, he never learned from his failures because he never commits failure but success."
+  },
+    {
+      "category": [
+        "dev"
+      ],
+      "icon_url": "https://assets.chucknorris.host/img/avatar/chuck-norris.png",
+      "id": "p4tviyvmrbkcjbqsydybuq",
+      "url": "https://api.chucknorris.io/jokes/p4tviyvmrbkcjbqsydybuq",
+      "value": "Chuck Norris can retrieve anything from /dev/null."
+    }
+  ]
+}

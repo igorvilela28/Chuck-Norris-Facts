@@ -6,22 +6,20 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.features.jokes.JokesActivity
-import com.igorvd.chuckfacts.utils.AssetsLoader
-import com.igorvd.chuckfacts.utils.enqueue200Response
-import com.igorvd.chuckfacts.utils.enqueue500Response
+import com.igorvd.chuckfacts.testutils.AssetsLoader
+import com.igorvd.chuckfacts.testutils.enqueue200Response
+import com.igorvd.chuckfacts.testutils.enqueue500Response
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.Matchers.not
 import org.junit.Assert
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
-import com.igorvd.chuckfacts.utils.PreferencesUtils
-import com.igorvd.chuckfacts.utils.matcher.CustomAssertions
-import com.igorvd.chuckfacts.utils.matcher.CustomAssertions.Companion.hasItemCount
+import com.igorvd.chuckfacts.testutils.PreferencesUtils
+import com.igorvd.chuckfacts.testutils.matcher.CustomAssertions.Companion.hasItemCount
 
 
 class SearchJokeActivityRobot(private val server: MockWebServer) {

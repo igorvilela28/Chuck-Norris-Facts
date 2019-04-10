@@ -9,17 +9,17 @@ import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import kotlinx.android.synthetic.main.activity_jokes.*
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
+import com.igorvd.chuckfacts.features.ScreenState
+import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.utils.ViewModelFactory
-import com.igorvd.chuckfacts.utils.extensions.hideContent
-import com.igorvd.chuckfacts.utils.extensions.observeNotNull
-import com.igorvd.chuckfacts.utils.extensions.observeNullable
-import com.igorvd.chuckfacts.utils.extensions.showContent
+import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ import kotlin.coroutines.CoroutineContext
 class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-    get() = lifecycle.job + Dispatchers.Main
+        get() = lifecycle.job + Dispatchers.Main
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelFactory
@@ -38,9 +38,19 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         ViewModelProviders.of(this, viewModelFactory).get(JokesViewModel::class.java)
     }
 
-    private val paramsHolder: Pair<LayoutParams, LayoutParams> by lazy {
-        val originalParams = cvSearchBar.layoutParams as LayoutParams
-        val newParams = LayoutParams(originalParams)
+    private val adapter by lazy {
+        JokesAdapter(this) {
+
+        }
+    }
+
+    private val stateMachine by lazy {
+        JokesActivityStateMachine(clJokesRoot, adapter)
+    }
+
+    private val paramsHolder: Pair<ConstraintLayout.LayoutParams, ConstraintLayout.LayoutParams> by lazy {
+        val originalParams = cvSearchBar.layoutParams as ConstraintLayout.LayoutParams
+        val newParams = ConstraintLayout.LayoutParams(originalParams)
         newParams.setMargins(0, 0, 0, 0)
         originalParams to newParams
     }
@@ -60,26 +70,6 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_jokes)
         setupViews()
         setupObservers()
-
-    }
-
-    private fun setupObservers() = with(viewModel) {
-
-        showEmptyJokesResult.observeNullable(this@JokesActivity) {
-            Timber.d("no jokes result")
-        }
-
-        showNetworkingError.observeNullable(this@JokesActivity) {
-            Timber.d("networking error")
-        }
-
-        showHttpError.observeNullable(this@JokesActivity) {
-            Timber.d("http error")
-        }
-
-        jokes.observeNotNull(this@JokesActivity) {
-            Timber.d("jokes " + it.toString())
-        }
     }
 
     override fun onResume() {
@@ -90,23 +80,15 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     //endregion
 
     //**************************************************************************
-    // region: LIFE CYCLE
+    // region: ACTIVITY METHODS
     //**************************************************************************
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (requestCode == RC_JOKE_QUERY && resultCode == Activity.RESULT_OK) {
-
             val query = data?.getStringExtra(EXTRA_JOKE_QUERY)
-            Timber.d("received query: $query")
-
-            query?.let {
-                launch {
-                    viewModel.retrieveJokes(query)
-                }
-            }
-
+            retrieveJokes(query)
         }
-
 
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -119,11 +101,32 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     private fun setupViews() {
         cvSearchBar.setOnClickListener {
-            val transition = TransitionsFactory.changeBoundsWithActionOnEnd(action = ::startSearchActivity)
+            val transition =
+                TransitionsFactory.changeBoundsWithActionOnEnd(action = ::startSearchActivity)
             TransitionManager.beginDelayedTransition(cvSearchBar as CardView, transition)
             cvSearchBar.layoutParams = paramsHolder.second
             ((cvSearchBar as CardView).getChildAt(0) as ViewGroup).hideContent()
         }
+
+        btTryAgain.setOnClickListener { retrieveJokes(viewModel.lastQuery) }
+
+        rvJokes.setup(context = this, adapter = adapter)
+    }
+
+    private fun setupObservers() = with(viewModel) {
+
+        showProgressEvent.observeNullable(this@JokesActivity) {
+            stateMachine.showProgress()
+        }
+
+        hideProgressEvent.observeNullable(this@JokesActivity) {
+            stateMachine.hideProgress()
+        }
+
+        screenState.observeNotNull(this@JokesActivity) { state ->
+            stateMachine.setState(state)
+        }
+
     }
 
     private fun setOriginalBarProperties() {
@@ -134,6 +137,14 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     private fun startSearchActivity() {
         val intent = SearchJokeActivity.newIntent(this)
         startActivityForResult(intent, RC_JOKE_QUERY)
+    }
+
+    private fun retrieveJokes(query: String?) {
+        query?.let {
+            launch {
+                viewModel.retrieveJokes(query)
+            }
+        }
     }
 
     //endregion

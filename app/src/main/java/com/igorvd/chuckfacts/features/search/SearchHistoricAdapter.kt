@@ -13,13 +13,23 @@ import kotlinx.android.extensions.LayoutContainer
 
 class SearchHistoricAdapter(
     val onItemClicked: (String) -> Unit
-) : ListAdapter<String, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+) : ListAdapter<String, SearchHistoricAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     inner class MyViewHolder(
         override val containerView: View
-    ) : RecyclerView.ViewHolder(containerView), LayoutContainer
+    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        fun bind(historicItem: String) {
+            (containerView as TextView).apply {
+                content = historicItem
+                setOnClickListener {
+                    onItemClicked(historicItem)
+                }
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoricAdapter.MyViewHolder {
 
         val itemView =
             LayoutInflater.from(parent.getContext())
@@ -29,15 +39,9 @@ class SearchHistoricAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: SearchHistoricAdapter.MyViewHolder, position: Int) {
         val historicItem = getItem(position)
-        with(holder.itemView) {
-            (this as TextView).content = historicItem
-            setOnClickListener {
-                onItemClicked(historicItem)
-            }
-        }
+        holder.bind(historicItem)
     }
 
     private object DIFF_CALLBACK : DiffUtil.ItemCallback<String>() {

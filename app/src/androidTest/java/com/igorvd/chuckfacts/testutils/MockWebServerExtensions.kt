@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.utils
+package com.igorvd.chuckfacts.testutils
 
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
