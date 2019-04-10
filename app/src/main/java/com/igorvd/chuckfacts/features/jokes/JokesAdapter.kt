@@ -14,31 +14,19 @@ import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.utils.extensions.addChip
 import com.igorvd.chuckfacts.utils.extensions.content
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_jokes.*
 import kotlinx.android.synthetic.main.item_jokes.view.*
 
 class JokesAdapter(
     private val context: Context,
     private val onShareUrlClicked: (String) -> Unit
-) : ListAdapter<JokeView, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+) : ListAdapter<JokeView, JokesAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     inner class MyViewHolder(
         override val containerView: View
-    ) : RecyclerView.ViewHolder(containerView), LayoutContainer
+    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        val itemView =
-            LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_jokes, parent, false)
-
-        return MyViewHolder(itemView)
-
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-        val jokeView = getItem(position)
-        with(holder.itemView) {
+        fun bind(jokeView: JokeView) {
 
             tvJokeValue.content = jokeView.value
             val textSize = this@JokesAdapter.context.resources.getDimension(jokeView.textSizeRes)
@@ -52,6 +40,22 @@ class JokesAdapter(
             btShare.setOnClickListener { onShareUrlClicked(jokeView.url) }
 
         }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokesAdapter.MyViewHolder {
+
+        val itemView =
+            LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_jokes, parent, false)
+
+        return MyViewHolder(itemView)
+
+    }
+
+    override fun onBindViewHolder(holder: JokesAdapter.MyViewHolder, position: Int) {
+        val jokeView = getItem(position)
+        holder.bind(jokeView)
     }
 
     private object DIFF_CALLBACK : DiffUtil.ItemCallback<JokeView>() {
