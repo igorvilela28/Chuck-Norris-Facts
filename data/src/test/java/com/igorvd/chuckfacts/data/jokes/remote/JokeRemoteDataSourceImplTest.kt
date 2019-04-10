@@ -3,6 +3,7 @@ package com.igorvd.chuckfacts.data.jokes.remote
 import android.content.Context
 import com.igorvd.chuckfacts.data.R
 import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
+import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.data.testutils.enqueue200Response
 import com.igorvd.chuckfacts.data.testutils.loadJsonFromResources
 import io.mockk.MockKAnnotations
@@ -10,10 +11,8 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 
 class JokeRemoteDataSourceImplTest : BaseRemoteTest() {
@@ -21,7 +20,7 @@ class JokeRemoteDataSourceImplTest : BaseRemoteTest() {
     private lateinit var jokeRemoteDataSourceImpl: JokeRemoteDataSourceImpl
     @MockK
     private lateinit var context: Context
-    private val requestMaker = RequestMakerImpl()
+    private val requestMaker = RequestMakerImpl(CallRetryDelays(0, 0))
 
     @Before
     override fun setUp() {

@@ -23,6 +23,7 @@ class ApiClientBuilder {
         fun <S> createService(
                 serviceClass: Class<S>,
                 baseUrl: String,
+                readTimeoutInSecs: Long = 15L,
                 gson: Gson = Gson(),
                 vararg interceptors: Interceptor
         ): S {
@@ -39,7 +40,7 @@ class ApiClientBuilder {
             }
 
             val client = httpClientBuilder
-                    .readTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(readTimeoutInSecs, TimeUnit.SECONDS)
                     .connectTimeout(5, TimeUnit.SECONDS)
                     .build()
             val retrofit = getClientBuilder(baseUrl, gson)

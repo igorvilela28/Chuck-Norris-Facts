@@ -5,6 +5,7 @@ import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
+import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.di.data.LocalModule
 import com.igorvd.chuckfacts.di.data.RemoteModule
 import com.igorvd.chuckfacts.testutils.app.TestApplication
@@ -39,6 +40,10 @@ class TestAppModule {
             MOCK_SERVER_URL
         )
     }
+
+    @Provides
+    @Singleton
+    fun providesRetryDelays() = CallRetryDelays(0L, 0L)
 
     @Provides
     @Singleton

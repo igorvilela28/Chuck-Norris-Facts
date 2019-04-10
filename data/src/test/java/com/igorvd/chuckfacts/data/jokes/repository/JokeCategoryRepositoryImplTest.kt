@@ -21,7 +21,6 @@ class JokeCategoryRepositoryImplTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-
         jokeCategoryRepositoryImpl = JokeCategoryRepositoryImpl(remoteDataSource, localDataSource)
     }
 
