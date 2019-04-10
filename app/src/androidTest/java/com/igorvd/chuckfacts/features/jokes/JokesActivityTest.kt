@@ -144,7 +144,7 @@ class JokesActivityTest {
     }
 
     @Test
-    fun shouldHaveDefaultCategory_WhenJokeJasCategory() {
+    fun shouldHaveDefaultCategory_WhenJokeHasCategory() {
 
         val category = "Uncategorized".toUpperCase()
 
