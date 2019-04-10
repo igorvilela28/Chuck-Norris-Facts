@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.domain.utils
+package com.igorvd.chuckfacts.domain.testutils
 
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 

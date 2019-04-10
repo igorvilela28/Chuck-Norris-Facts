@@ -7,27 +7,23 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.igorvd.chuckfacts.R
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.Matchers.not
-import org.junit.Assert
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.RootMatchers.withDecorView
-import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
-import com.igorvd.chuckfacts.utils.*
-import com.igorvd.chuckfacts.utils.matcher.CustomAssertions.Companion.hasItemCount
-import com.igorvd.chuckfacts.utils.matcher.CustomMatchers.Companion.withDrawable
-import com.igorvd.chuckfacts.utils.matcher.CustomMatchers.Companion.withFontSize
-import com.igorvd.chuckfacts.utils.matcher.CustomMatchers.Companion.withRecyclerViewChildAt
-import kotlinx.android.synthetic.main.activity_jokes.*
+import com.igorvd.chuckfacts.testutils.AssetsLoader
+import com.igorvd.chuckfacts.testutils.enqueue200Response
+import com.igorvd.chuckfacts.testutils.enqueue500Response
+import com.igorvd.chuckfacts.testutils.enqueueIOError
+import com.igorvd.chuckfacts.testutils.matcher.CustomAssertions.Companion.hasItemCount
+import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withDrawable
+import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withFontSize
+import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withRecyclerViewChildAt
 
 
 class JokesActivityRobot(private val server: MockWebServer) {

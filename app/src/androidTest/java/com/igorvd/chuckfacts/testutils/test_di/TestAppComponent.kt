@@ -1,8 +1,7 @@
-package com.igorvd.chuckfacts.utils.test_di
+package com.igorvd.chuckfacts.testutils.test_di
 
-import com.igorvd.chuckfacts.MyApplication
 import com.igorvd.chuckfacts.di.core.BuilderModule
-import com.igorvd.chuckfacts.utils.app.TestApplication
+import com.igorvd.chuckfacts.testutils.app.TestApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule

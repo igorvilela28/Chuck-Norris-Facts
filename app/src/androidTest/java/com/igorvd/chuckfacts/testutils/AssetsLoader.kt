@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.utils
+package com.igorvd.chuckfacts.testutils
 
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.*

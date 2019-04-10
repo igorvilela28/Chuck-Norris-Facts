@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.utils.test_di
+package com.igorvd.chuckfacts.testutils.test_di
 
 import android.content.Context
 import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
@@ -7,7 +7,7 @@ import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
 import com.igorvd.chuckfacts.di.data.LocalModule
 import com.igorvd.chuckfacts.di.data.RemoteModule
-import com.igorvd.chuckfacts.utils.app.TestApplication
+import com.igorvd.chuckfacts.testutils.app.TestApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

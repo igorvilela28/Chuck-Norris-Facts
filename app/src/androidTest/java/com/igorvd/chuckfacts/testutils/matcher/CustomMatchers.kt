@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.utils.matcher
+package com.igorvd.chuckfacts.testutils.matcher
 
 import android.view.View
 import androidx.annotation.DrawableRes
@@ -11,11 +11,11 @@ class CustomMatchers {
     companion object {
 
         fun withDrawable(@DrawableRes drawableRes: Int): TypeSafeMatcher<View> {
-            return DrawableMatcher(drawableRes)
+            return com.igorvd.chuckfacts.testutils.matcher.DrawableMatcher(drawableRes)
         }
 
         fun withFontSize(fontSize: Float): Matcher<View> {
-            return FontSizeMatcher(fontSize)
+            return com.igorvd.chuckfacts.testutils.matcher.FontSizeMatcher(fontSize)
         }
 
         fun withRecyclerViewChildAt(
@@ -23,7 +23,8 @@ class CustomMatchers {
             @IdRes childId: Int,
             position: Int
         ): Matcher<View> {
-            return RecyclerViewMatcher(recyclerViewRes).atPositionOnView(position, childId)
+            return RecyclerViewMatcher(recyclerViewRes)
+                .atPositionOnView(position, childId)
         }
 
     }

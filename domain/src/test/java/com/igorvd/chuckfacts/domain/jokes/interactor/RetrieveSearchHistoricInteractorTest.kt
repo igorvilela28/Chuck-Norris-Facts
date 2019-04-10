@@ -1,14 +1,12 @@
 package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.jokes.repository.SearchHistoricRepository
-import com.igorvd.chuckfacts.domain.utils.DUMMY_CATEGORIES
-import com.igorvd.chuckfacts.domain.utils.DUMMY_SEARCH_HISTORIC
+import com.igorvd.chuckfacts.domain.testutils.DUMMY_SEARCH_HISTORIC
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 

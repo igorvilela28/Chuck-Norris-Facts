@@ -1,4 +1,4 @@
-package com.igorvd.chuckfacts.utils.matcher
+package com.igorvd.chuckfacts.testutils.matcher
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +10,9 @@ import org.hamcrest.CoreMatchers
 class CustomAssertions {
     companion object {
         fun hasItemCount(count: Int): ViewAssertion {
-            return RecyclerViewItemCountAssertion(count)
+            return RecyclerViewItemCountAssertion(
+                count
+            )
         }
     }
 

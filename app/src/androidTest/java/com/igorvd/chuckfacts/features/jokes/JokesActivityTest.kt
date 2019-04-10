@@ -2,7 +2,7 @@ package com.igorvd.chuckfacts.features.jokes
 
 import androidx.test.espresso.intent.Intents
 import com.igorvd.chuckfacts.R
-import com.igorvd.chuckfacts.utils.PreferencesUtils
+import com.igorvd.chuckfacts.testutils.PreferencesUtils
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before

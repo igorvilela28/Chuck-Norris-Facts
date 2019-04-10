@@ -1,11 +1,10 @@
 package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
-import com.igorvd.chuckfacts.domain.utils.DUMMY_JOKES
+import com.igorvd.chuckfacts.domain.testutils.DUMMY_JOKES
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
