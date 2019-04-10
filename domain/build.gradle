@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply from: "${project.rootDir}/buildsystem/jacoco.gradle"
+apply from: "$rootDir/tools/jacoco.gradle"
 
 android {
 
@@ -13,6 +13,12 @@ android {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         versionCode globalConfiguration["androidVersionCode"]
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
     }
 
     lintOptions {

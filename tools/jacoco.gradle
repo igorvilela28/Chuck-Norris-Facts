@@ -1,0 +1,51 @@
+apply plugin: 'jacoco'
+
+def coverageSourceDirs = ['src/main/java']
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports for module"
+
+    def coverageExcludes = [
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*Test*.*',
+            'android/**/*.*',
+            '**/*$ViewInjector*.*',
+            '**/*$ViewBinder*.*',
+            '**/*$Lambda$*.*', // Jacoco can not handle several "$" in class name.
+            '**/*$inlined$*.*', // Kotlin specific, Jacoco can not handle several "$" in class name.
+            '**/*Module.*', // Modules for Dagger.
+            '**/*Dagger*.*', // Dagger auto-generated code.
+            '**/*MembersInjector*.*', // Dagger auto-generated code.
+            '**/*__MembersInjector',
+            '**/*_Provide*Factory*.*'
+    ]
+
+    //def debugTree = fileTree(dir: "build/intermediates/classes/bahia/debug", excludes: coverageExcludes)//apoenas para java
+    def kotlinDebugTree = fileTree(dir: "build/tmp/kotlin-classes/debug", excludes: coverageExcludes)
+    classDirectories = files([kotlinDebugTree])
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "**/*.ec"
+    ])
+
+    onlyIf = {
+        true
+    }
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}

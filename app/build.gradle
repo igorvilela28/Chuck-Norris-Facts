@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply from: "${project.rootDir}/buildsystem/jacoco.gradle"
+apply from: "$rootDir/tools/jacoco.gradle"
 
 android {
 
@@ -33,6 +33,7 @@ android {
             signingConfig signingConfigs.debug
             applicationIdSuffix '.debug'
             multiDexEnabled true
+            testCoverageEnabled true
         }
     }
 
