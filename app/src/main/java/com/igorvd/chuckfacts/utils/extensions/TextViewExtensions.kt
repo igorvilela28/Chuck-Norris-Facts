@@ -16,30 +16,3 @@ var TextView.content
     set(value) {
         text = value
     }
-
-/**
- * Limpa o campo de texto.
- */
-fun TextView.clear() {
-    text = ""
-}
-
-/**
- * Checa se o TextView está em branco
- */
-fun TextView.isBlank() = text.isBlank()
-
-/**
- * Checa se o TextView não está em branco
- */
-fun TextView.isNotBlank() = text.isNotBlank()
-
-/**
- * Checa se o TextView está vazio.
- */
-val TextView.isEmpty get() = length() == 0
-
-/**
- * Checa se o TextView não está vazio.
- */
-val TextView.isNotEmpty get() = length() != 0
