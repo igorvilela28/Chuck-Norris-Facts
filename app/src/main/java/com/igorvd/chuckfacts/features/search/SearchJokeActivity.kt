@@ -3,9 +3,9 @@ package com.igorvd.chuckfacts.features.search
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.app.NavUtils
 import androidx.lifecycle.ViewModelProviders
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_search_joke.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 

@@ -2,6 +2,7 @@ package com.igorvd.chuckfacts.data.network.requests
 
 import com.igorvd.chuckfacts.domain.exceptions.MyException
 import retrofit2.Call
+import retrofit2.Retrofit
 
 
 /**

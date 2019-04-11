@@ -2,9 +2,6 @@ package com.igorvd.chuckfacts.data.testutils
 
 import com.igorvd.chuckfacts.data.jokes.local.database.toJokeEntity
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 val DUMMY_JOKES = run {
 

@@ -3,11 +3,12 @@ package com.igorvd.chuckfacts.domain.jokes.interactor
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import com.igorvd.chuckfacts.domain.testutils.DUMMY_JOKES
 import com.igorvd.chuckfacts.domain.testutils.dummyJokesFlow
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerifySequence
 import io.mockk.impl.annotations.MockK
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

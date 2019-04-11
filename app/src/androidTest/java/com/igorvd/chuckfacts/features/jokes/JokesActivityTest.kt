@@ -1,8 +1,6 @@
 package com.igorvd.chuckfacts.features.jokes
 
-import android.content.Context
 import androidx.test.espresso.intent.Intents
-import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.testutils.JokeTestDatabase
 import com.igorvd.chuckfacts.testutils.PreferencesUtils

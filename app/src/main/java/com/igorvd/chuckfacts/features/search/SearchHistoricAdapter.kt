@@ -29,7 +29,7 @@ class SearchHistoricAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHistoricAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val itemView =
             LayoutInflater.from(parent.getContext())
@@ -39,7 +39,7 @@ class SearchHistoricAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: SearchHistoricAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val historicItem = getItem(position)
         holder.bind(historicItem)
     }

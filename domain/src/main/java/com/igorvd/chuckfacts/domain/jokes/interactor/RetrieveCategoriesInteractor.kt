@@ -16,7 +16,7 @@ private const val DEFAULT_AMOUNT = 8
  */
 class RetrieveCategoriesInteractor @Inject constructor(
     private val jokeCategoryRepository: JokeCategoryRepository
-) : Interactor<List<String>, RetrieveCategoriesInteractor.Params> {
+) : Interactor<List<String>, Params> {
 
     override suspend fun execute(params: Params): List<String> {
 

@@ -5,7 +5,6 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.igorvd.chuckfacts.data.jokes.local.database.JokeDatabase
 import com.igorvd.chuckfacts.data.jokes.local.database.JokeEntity
-import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 
 object JokeTestDatabase {
 

@@ -5,7 +5,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,6 @@ import com.igorvd.chuckfacts.utils.extensions.addChip
 import com.igorvd.chuckfacts.utils.extensions.content
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_jokes.*
-import kotlinx.android.synthetic.main.item_jokes.view.*
 
 class JokesAdapter(
     private val context: Context,
@@ -43,7 +41,7 @@ class JokesAdapter(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokesAdapter.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val itemView =
             LayoutInflater.from(parent.getContext())
@@ -53,7 +51,7 @@ class JokesAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: JokesAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val jokeView = getItem(position)
         holder.bind(jokeView)
     }

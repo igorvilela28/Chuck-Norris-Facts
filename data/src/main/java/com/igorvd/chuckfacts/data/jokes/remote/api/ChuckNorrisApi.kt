@@ -2,7 +2,6 @@ package com.igorvd.chuckfacts.data.jokes.remote.api
 
 import com.igorvd.chuckfacts.data.jokes.remote.response.GetJokesResponse
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 

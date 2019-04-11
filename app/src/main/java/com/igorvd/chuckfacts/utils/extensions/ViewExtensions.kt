@@ -1,18 +1,6 @@
 package com.igorvd.chuckfacts.utils.extensions
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
-import android.graphics.Rect
-import android.graphics.drawable.Drawable
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import com.google.android.material.textfield.TextInputLayout
 
 
 /**

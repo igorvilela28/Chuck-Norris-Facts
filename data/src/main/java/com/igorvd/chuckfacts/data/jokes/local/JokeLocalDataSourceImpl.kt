@@ -1,7 +1,6 @@
 package com.igorvd.chuckfacts.data.jokes.local
 
 import com.igorvd.chuckfacts.data.jokes.local.database.JokeDatabase
-import com.igorvd.chuckfacts.data.jokes.local.database.JokeEntity
 import com.igorvd.chuckfacts.data.jokes.local.database.toJoke
 import com.igorvd.chuckfacts.data.jokes.local.database.toJokeEntity
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke

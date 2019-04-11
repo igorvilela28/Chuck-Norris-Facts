@@ -6,7 +6,6 @@ import com.igorvd.chuckfacts.data.testutils.DUMMY_CATEGORIES
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
