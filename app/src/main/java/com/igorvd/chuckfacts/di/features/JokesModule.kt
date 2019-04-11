@@ -6,8 +6,10 @@ import com.igorvd.chuckfacts.features.jokes.JokesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import kotlinx.coroutines.FlowPreview
 
 
+@FlowPreview
 @Module
 abstract class JokesModule {
 
