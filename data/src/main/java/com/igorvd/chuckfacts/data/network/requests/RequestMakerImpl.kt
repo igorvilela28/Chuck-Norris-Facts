@@ -1,6 +1,7 @@
 package com.igorvd.chuckfacts.data.network.requests
 
-import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
+import com.igorvd.chuckfacts.domain.exceptions.HttpClientErrorException
+import com.igorvd.chuckfacts.domain.exceptions.HttpServerErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import retrofit2.Call
 import retrofit2.HttpException
@@ -15,20 +16,20 @@ import javax.inject.Inject
  * @author Igor Vilela
  * @since 13/10/17
  */
-class RequestMakerImpl @Inject constructor() : RequestMaker {
+class RequestMakerImpl @Inject constructor(private val callRetryDelays: CallRetryDelays) : RequestMaker {
 
-    override suspend fun <T : Any> getResult(call: Call<T>): T {
+    override suspend fun <T : Any> getResult(call: Call<T>): T = withRetry(call, callRetryDelays) {
 
         try {
 
-            val result = call.await()
-            return result
+            val result = it.await()
+            result
 
         } catch (e: HttpException) {
 
             val exception = when (e.code()) {
-                in 400..499 -> MyHttpErrorException.HttpClientErrorException(e.message(), e.code(), e)
-                else -> MyHttpErrorException.HttpServerErrorException(e.message(), e.code(), e)
+                in 400..499 -> HttpClientErrorException(e.message(), e.code(), e)
+                else -> HttpServerErrorException(e.message(), e.code(), e)
             }
             throw exception
 

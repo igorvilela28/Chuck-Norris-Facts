@@ -5,6 +5,7 @@ import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
+import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.di.data.LocalModule
 import com.igorvd.chuckfacts.di.data.RemoteModule
 import com.igorvd.chuckfacts.testutils.app.TestApplication
@@ -36,9 +37,14 @@ class TestAppModule {
 
         return ApiClientBuilder.createService(
             ChuckNorrisApi::class.java,
-            MOCK_SERVER_URL
+            MOCK_SERVER_URL,
+            50L
         )
     }
+
+    @Provides
+    @Singleton
+    fun providesRetryDelays() = CallRetryDelays(0L, 0L)
 
     @Provides
     @Singleton

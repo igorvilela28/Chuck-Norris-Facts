@@ -21,10 +21,11 @@ class ApiClientBuilder {
     companion object {
 
         fun <S> createService(
-                serviceClass: Class<S>,
-                baseUrl: String,
-                gson: Gson = Gson(),
-                vararg interceptors: Interceptor
+            serviceClass: Class<S>,
+            baseUrl: String,
+            readTimeoutInMills: Long = 15000L,
+            gson: Gson = Gson(),
+            vararg interceptors: Interceptor
         ): S {
 
             val httpClientBuilder = OkHttpClient.Builder()
@@ -39,7 +40,7 @@ class ApiClientBuilder {
             }
 
             val client = httpClientBuilder
-                    .readTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(readTimeoutInMills, TimeUnit.MILLISECONDS)
                     .connectTimeout(5, TimeUnit.SECONDS)
                     .build()
             val retrofit = getClientBuilder(baseUrl, gson)

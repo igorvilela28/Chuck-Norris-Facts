@@ -68,7 +68,7 @@ class JokesActivityTest {
     fun shouldShowHttpError_WhenApiResponse500() {
 
         robot
-            .givenJokes500Response()
+            .givenJokes500Response(3)
             .launchActivity()
             .whenActivityResultWithQuery("dev")
             .whenClickOnSearch()
@@ -83,7 +83,7 @@ class JokesActivityTest {
     fun shouldShowNetworkError_WhenIOException() {
 
         robot
-            .givenIOError()
+            .givenIOError(3)
             .launchActivity()
             .whenActivityResultWithQuery("dev")
             .whenClickOnSearch()
@@ -98,7 +98,7 @@ class JokesActivityTest {
     fun shouldRetrieveJokes_WhenClickOnTryAgain() {
 
         robot
-            .givenIOError()
+            .givenJokes500Response(3)
             .givenJokes200Response()
             .launchActivity()
             .whenActivityResultWithQuery("dev")

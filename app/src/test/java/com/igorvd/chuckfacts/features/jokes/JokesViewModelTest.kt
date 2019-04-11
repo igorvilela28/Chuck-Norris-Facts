@@ -2,6 +2,7 @@ package com.igorvd.chuckfacts.features.jokes
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.igorvd.chuckfacts.domain.exceptions.HttpServerErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
@@ -108,8 +109,7 @@ class JokesViewModelTest {
     fun `should notify about http error when retrieving jokes`() = runBlocking {
 
         val params = RetrieveJokesInteractor.Params("dev")
-        coEvery { retrieveJokesInteractor.execute(params) } throws MyHttpErrorException
-            .HttpServerErrorException("server unvailable", 500)
+        coEvery { retrieveJokesInteractor.execute(params) } throws HttpServerErrorException("server unvailable", 500)
 
         viewModel.retrieveJokes("dev")
 

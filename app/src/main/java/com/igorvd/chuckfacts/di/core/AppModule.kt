@@ -6,6 +6,7 @@ import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
+import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.di.data.LocalModule
 import com.igorvd.chuckfacts.di.data.RemoteModule
 import dagger.Module
@@ -47,6 +48,10 @@ class AppModule {
             CHUCK_NORRIS_API_BASE_URL
         )
     }
+
+    @Provides
+    @Singleton
+    fun providesRetryDelays() = CallRetryDelays()
 
     @Provides
     @Singleton

@@ -2,6 +2,7 @@ package com.igorvd.chuckfacts.data.jokes.remote
 
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
+import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.data.testutils.DUMMY_CATEGORIES
 import com.igorvd.chuckfacts.data.testutils.enqueue200Response
 import com.igorvd.chuckfacts.data.testutils.loadJsonFromResources
@@ -14,7 +15,7 @@ import org.junit.Test
 class JokeCategoryRemoteDataSourceImplTest : BaseRemoteTest() {
 
     private lateinit var jokeCategoryRemoteDataSourceImpl: JokeCategoryRemoteDataSourceImpl
-    private val requestMaker: RequestMaker = RequestMakerImpl()
+    private val requestMaker: RequestMaker = RequestMakerImpl(CallRetryDelays(0, 0))
 
     @Before
     override fun setUp() {

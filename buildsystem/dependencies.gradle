@@ -26,6 +26,7 @@ ext {
     zxing = '3.5.0'
 
     //Testing
+    coroutinesTest = '1.2.0-alpha-2'
     androidTestVersion = '1.1.0'
     espresso = '3.1.1'
     espressoIntents = '3.1.1'
@@ -93,6 +94,7 @@ ext {
             mockito        : "org.mockito:mockito-core:${mockito}",
             mockk          : "io.mockk:mockk:${mockk}",
             coroutinesCore : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinCoroutinesVersion}",
+            coroutinesTest : "org.jetbrains.kotlinx:kotlinx-coroutines-test:${coroutinesTest}",
             archCoreTesting: "androidx.arch.core:core-testing:${archLifeCycle}",
             androidTest    : "androidx.test:core:$androidTestVersion",
             mockwebserver  : "com.squareup.okhttp3:mockwebserver:${mockwebserver}",
