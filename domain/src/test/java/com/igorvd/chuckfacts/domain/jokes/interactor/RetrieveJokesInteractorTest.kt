@@ -28,9 +28,7 @@ class RetrieveJokesInteractorTest {
 
         val jokes = retrieveJokesInteractor.execute(RetrieveJokesInteractor.Params("infinite"))
 
-        coVerify (exactly = 1) { repository.retrieveJokes("infinite") }
+        coVerifySequence { repository.retrieveJokes("infinite") }
     }
-
-
 
 }

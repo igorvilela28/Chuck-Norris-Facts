@@ -2,6 +2,8 @@ package com.igorvd.chuckfacts.data.jokes.local
 
 import com.igorvd.chuckfacts.data.jokes.local.database.JokeDatabase
 import com.igorvd.chuckfacts.data.jokes.local.database.JokeEntity
+import com.igorvd.chuckfacts.data.jokes.local.database.toJoke
+import com.igorvd.chuckfacts.data.jokes.local.database.toJokeEntity
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
@@ -24,22 +26,5 @@ class JokeLocalDataSourceImpl @Inject constructor(jokeDb: JokeDatabase) : JokeLo
         dao.retrieveRandomJokes(limit).map { it.toJoke() }
     }
 
-    private fun Joke.toJokeEntity(query: String): JokeEntity {
-        return JokeEntity(
-            id,
-            categories,
-            url,
-            value,
-            query.toLowerCase()
-        )
-    }
 
-    private fun JokeEntity.toJoke(): Joke {
-        return Joke(
-            id,
-            categories,
-            url,
-            value
-        )
-    }
 }
