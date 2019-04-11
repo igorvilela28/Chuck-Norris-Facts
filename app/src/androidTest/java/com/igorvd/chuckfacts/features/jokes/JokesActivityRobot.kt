@@ -13,10 +13,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import okhttp3.mockwebserver.MockWebServer
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
-import com.igorvd.chuckfacts.testutils.AssetsLoader
-import com.igorvd.chuckfacts.testutils.enqueue200Response
-import com.igorvd.chuckfacts.testutils.enqueue500Response
-import com.igorvd.chuckfacts.testutils.enqueueIOError
 import com.igorvd.chuckfacts.testutils.matcher.CustomAssertions.Companion.hasItemCount
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.childViewAt
 import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withDrawable
@@ -25,9 +21,12 @@ import com.igorvd.chuckfacts.testutils.matcher.CustomMatchers.Companion.withRecy
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import com.igorvd.chuckfacts.R
+import com.igorvd.chuckfacts.testutils.*
+import kotlinx.coroutines.FlowPreview
 import org.hamcrest.Matchers.*
 
 
+@FlowPreview
 class JokesActivityRobot(private val server: MockWebServer) {
 
     lateinit var scenario: ActivityScenario<JokesActivity>
@@ -58,6 +57,10 @@ class JokesActivityRobot(private val server: MockWebServer) {
         for (i in 0..amount) {
             server.enqueue500Response("{}")
         }
+    }
+
+    fun givenJokesOnLocalStorage(amount: Int, query: String) = apply {
+        JokeTestDatabase.insertJokes(amount, query)
     }
 
     //endregion

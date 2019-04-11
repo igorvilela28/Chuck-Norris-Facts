@@ -3,8 +3,6 @@ package com.igorvd.chuckfacts.data.jokes.local
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
-import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.data.utils.extensions.edit
 import com.igorvd.chuckfacts.data.utils.extensions.sharedPreferences
 import javax.inject.Inject

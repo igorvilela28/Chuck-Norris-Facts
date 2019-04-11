@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
+import com.igorvd.chuckfacts.features.JokeScreenState
 import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
@@ -20,10 +21,12 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
+@FlowPreview
 class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
@@ -65,6 +68,7 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_jokes)
         setupViews()
         setupObservers()
+        retrieveRandomJokes()
     }
 
     override fun onResume() {
@@ -150,6 +154,14 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
                 viewModel.retrieveJokes(query)
             }
         }
+    }
+
+    private fun retrieveRandomJokes() {
+        val currentScreenState = viewModel.screenState.value
+        if (currentScreenState is JokeScreenState.Result && currentScreenState.result.isNotEmpty()) {
+            return
+        }
+        launch { viewModel.retrieveRandomJokes() }
     }
 
     //endregion

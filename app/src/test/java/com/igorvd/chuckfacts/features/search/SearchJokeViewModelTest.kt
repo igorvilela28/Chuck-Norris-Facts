@@ -2,15 +2,11 @@ package com.igorvd.chuckfacts.features.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.AddQueryToSearchHistoricInteractor
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveCategoriesInteractor
-import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveSearchHistoricInteractor
 import com.igorvd.chuckfacts.features.ScreenState
-import com.igorvd.chuckfacts.features.jokes.JokesViewModel
 import com.igorvd.chuckfacts.testutils.DUMMY_CATEGORIES
-import com.igorvd.chuckfacts.testutils.DUMMY_JOKES
 import com.igorvd.chuckfacts.testutils.DUMMY_SEARCH_HISTORIC
 import io.mockk.*
 import io.mockk.impl.annotations.MockK

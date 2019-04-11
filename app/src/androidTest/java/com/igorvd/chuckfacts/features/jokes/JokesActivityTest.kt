@@ -1,15 +1,16 @@
 package com.igorvd.chuckfacts.features.jokes
 
-import android.content.Context
 import androidx.test.espresso.intent.Intents
-import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.R
+import com.igorvd.chuckfacts.testutils.JokeTestDatabase
 import com.igorvd.chuckfacts.testutils.PreferencesUtils
+import kotlinx.coroutines.FlowPreview
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
+@FlowPreview
 class JokesActivityTest {
 
     lateinit var server: MockWebServer
@@ -17,8 +18,9 @@ class JokesActivityTest {
 
     companion object {
         private const val SHORT_JOKE = "Chuck Norris can retrieve anything from /dev/null."
-        private const val LONG_JOKE ="To be the person who Chuck Norris is right now, he never learned " +
-                "from his failures because he never commits failure but success."
+        private const val LONG_JOKE =
+            "To be the person who Chuck Norris is right now, he never learned " +
+                    "from his failures because he never commits failure but success."
     }
 
     @Before
@@ -34,6 +36,7 @@ class JokesActivityTest {
     fun tearDown() {
         server.shutdown()
         Intents.release()
+        JokeTestDatabase.clearDb()
     }
 
     @Test
@@ -168,5 +171,52 @@ class JokesActivityTest {
             .whenClickOnSearch()
             .whenClickOnShareUrlAtPosition(0)
             .thenJokeUrlIsShared(url)
+    }
+
+    @Test
+    fun shouldShowRandomJokes_WhenHasJokesOnLocalStorage() {
+
+        robot
+            .givenJokesOnLocalStorage(20, "dev")
+            .launchActivity()
+            .thenJokesItemCount(10)
+    }
+
+    @Test
+    fun shouldShowJokesFromLocalStorage_WhenQueryForCachedOnes() {
+
+        robot
+            .givenJokesOnLocalStorage(5, "dev")
+            .givenJokesEmpty200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokesItemCount(5)
+    }
+
+    @Test
+    fun shouldShowJokesFromLocalStorage_WhenWithoutNetwork() {
+
+        robot
+            .givenJokesOnLocalStorage(5, "dev")
+            .givenIOError(3)
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokesItemCount(5)
+    }
+
+    @Test
+    fun shouldMergeJokesFromLocalStorageAndRemoteApi_WhenApiHasNewOnes() {
+
+        robot
+            .givenJokesOnLocalStorage(1, "dev")
+            .givenJokes200Response()
+            .launchActivity()
+            .whenActivityResultWithQuery("dev")
+            .whenClickOnSearch()
+            .thenJokesItemCount(3)
+            .thenJokeAtPositionHasText(0, LONG_JOKE)
+            .thenJokeAtPositionHasText(2, JokeTestDatabase.DEFAULT_JOKE_ENTITY.value)
     }
 }

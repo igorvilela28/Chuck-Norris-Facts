@@ -1,7 +1,9 @@
 package com.igorvd.chuckfacts.di.core
 
 import android.content.Context
+import androidx.room.Room
 import com.igorvd.chuckfacts.MyApplication
+import com.igorvd.chuckfacts.data.jokes.local.database.JokeDatabase
 import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
@@ -22,10 +24,12 @@ import javax.inject.Singleton
  * @author Igor Vilela
  * @since 28/12/17
  */
-@Module(includes = [
-    LocalModule::class,
-    RemoteModule::class
-])
+@Module(
+    includes = [
+        LocalModule::class,
+        RemoteModule::class
+    ]
+)
 class AppModule {
 
     companion object {
@@ -56,4 +60,13 @@ class AppModule {
     @Provides
     @Singleton
     fun providesRequestMaker(requestMaker: RequestMakerImpl): RequestMaker = requestMaker
+
+    @Provides
+    @Singleton
+    fun providesJokesDb(@Named("application") context: Context): JokeDatabase {
+        return Room.databaseBuilder(
+            context,
+            JokeDatabase::class.java, "database-jokes"
+        ).build()
+    }
 }

@@ -35,14 +35,18 @@ abstract class BaseViewModel : ViewModel() {
         _showProgressEvent.call()
         try {
             work()
-        } catch (e: MyIOException) {
-            _screenState.value = NetworkError
-        } catch (e: MyHttpErrorException) {
-            _screenState.value = HttpError
         } catch (e: Exception) {
-            e.throwOrLog()
+            handleProgressException(e)
         } finally {
             _hideProgressEvent.call()
+        }
+    }
+
+    protected fun handleProgressException(e: java.lang.Exception) {
+        when (e) {
+            is MyIOException ->  _screenState.value = NetworkError
+            is MyHttpErrorException -> _screenState.value = HttpError
+            else -> e.throwOrLog()
         }
     }
 }

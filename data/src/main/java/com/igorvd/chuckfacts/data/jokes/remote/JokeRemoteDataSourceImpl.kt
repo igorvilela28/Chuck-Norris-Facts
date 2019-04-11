@@ -6,7 +6,6 @@ import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.jokes.remote.response.JokeResponse
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 

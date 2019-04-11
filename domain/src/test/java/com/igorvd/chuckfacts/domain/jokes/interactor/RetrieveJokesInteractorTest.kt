@@ -2,12 +2,19 @@ package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import com.igorvd.chuckfacts.domain.testutils.DUMMY_JOKES
-import io.mockk.*
+import com.igorvd.chuckfacts.domain.testutils.dummyJokesFlow
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerifySequence
 import io.mockk.impl.annotations.MockK
+import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
+@FlowPreview
 class RetrieveJokesInteractorTest {
 
     private lateinit var retrieveJokesInteractor: RetrieveJokesInteractor
@@ -24,13 +31,14 @@ class RetrieveJokesInteractorTest {
     @Test
     fun `should retrieve jokes`() = runBlocking {
 
-        coEvery { repository.retrieveJokes("infinite") } returns DUMMY_JOKES
+        coEvery { repository.retrieveJokes("infinite") } returns dummyJokesFlow()
 
-        val jokes = retrieveJokesInteractor.execute(RetrieveJokesInteractor.Params("infinite"))
+        val jokes = retrieveJokesInteractor
+            .execute(RetrieveJokesInteractor.Params("infinite")).single()
 
-        coVerify (exactly = 1) { repository.retrieveJokes("infinite") }
+        assertEquals(DUMMY_JOKES, jokes)
+
+        coVerifySequence { repository.retrieveJokes("infinite") }
     }
-
-
 
 }

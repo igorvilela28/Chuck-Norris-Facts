@@ -1,5 +1,6 @@
 package com.igorvd.chuckfacts.data.testutils
 
+import com.igorvd.chuckfacts.data.jokes.local.database.toJokeEntity
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 
 val DUMMY_JOKES = run {
@@ -17,3 +18,6 @@ val DUMMY_JOKES = run {
     }
     list
 }
+
+fun getDummyJokesEntities(query: String) = DUMMY_JOKES.map { it.toJokeEntity(query) }
+

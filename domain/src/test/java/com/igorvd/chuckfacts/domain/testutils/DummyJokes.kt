@@ -1,6 +1,9 @@
 package com.igorvd.chuckfacts.domain.testutils
 
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 val DUMMY_JOKES = run {
 
@@ -16,4 +19,9 @@ val DUMMY_JOKES = run {
         list.add(joke)
     }
     list
+}
+
+@FlowPreview
+fun dummyJokesFlow(): Flow<List<Joke>> = flow {
+    emit(DUMMY_JOKES)
 }

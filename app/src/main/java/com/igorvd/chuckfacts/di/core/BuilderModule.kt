@@ -2,6 +2,7 @@ package com.igorvd.chuckfacts.di.core
 
 import android.app.Activity
 import android.app.Service
+import androidx.fragment.app.Fragment
 import com.igorvd.chuckfacts.di.domain.CategoryModule
 import com.igorvd.chuckfacts.di.domain.JokeModule
 import com.igorvd.chuckfacts.di.domain.SearchHistoricModule
@@ -21,7 +22,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuilderModule {
-
 
     //**************************************************************************
     // region: Modules list

@@ -13,11 +13,11 @@ class CustomMatchers {
     companion object {
 
         fun withDrawable(@DrawableRes drawableRes: Int): TypeSafeMatcher<View> {
-            return com.igorvd.chuckfacts.testutils.matcher.DrawableMatcher(drawableRes)
+            return DrawableMatcher(drawableRes)
         }
 
         fun withFontSize(fontSize: Float): Matcher<View> {
-            return com.igorvd.chuckfacts.testutils.matcher.FontSizeMatcher(fontSize)
+            return FontSizeMatcher(fontSize)
         }
 
         fun withRecyclerViewChildAt(

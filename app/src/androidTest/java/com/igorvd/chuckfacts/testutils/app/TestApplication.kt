@@ -3,14 +3,12 @@ package com.igorvd.chuckfacts.testutils.app
 import android.app.Activity
 import android.app.Application
 import android.app.Service
-import com.igorvd.chuckfacts.BuildConfig
-import com.igorvd.chuckfacts.MyApplication
+import com.igorvd.chuckfacts.testutils.test_di.DaggerTestAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
 import timber.log.Timber
-import com.igorvd.chuckfacts.testutils.test_di.DaggerTestAppComponent
 import javax.inject.Inject
 
 class TestApplication : Application(), HasActivityInjector, HasServiceInjector {

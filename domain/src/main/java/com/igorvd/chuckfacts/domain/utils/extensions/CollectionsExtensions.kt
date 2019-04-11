@@ -1,7 +1,5 @@
 package com.igorvd.chuckfacts.domain.utils.extensions
 
-import java.lang.IllegalArgumentException
-
 /**
  *
  * @author Igor Vilela

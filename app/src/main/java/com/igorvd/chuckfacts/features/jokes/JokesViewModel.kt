@@ -1,30 +1,59 @@
 package com.igorvd.chuckfacts.features.jokes
 
+import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
-import com.igorvd.chuckfacts.features.BaseViewModel
-import com.igorvd.chuckfacts.features.EmptyResult
-import com.igorvd.chuckfacts.features.JokeScreenState
+import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveRandomJokesInteractor
+import com.igorvd.chuckfacts.features.*
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
+import java.lang.Exception
 import javax.inject.Inject
 
+@FlowPreview
 class JokesViewModel @Inject constructor(
-    private val retrieveJokesInteractor: RetrieveJokesInteractor
+    private val retrieveJokesInteractor: RetrieveJokesInteractor,
+    private val retrieveRandomJokesInteractor: RetrieveRandomJokesInteractor
 ) : BaseViewModel() {
 
     var lastQuery: String? = null
 
-    suspend fun retrieveJokes(query: String) = doWorkWithProgress {
-
+    suspend fun retrieveJokes(query: String) {
         lastQuery = query
-
-        val params = RetrieveJokesInteractor.Params(query)
-        val jokes = retrieveJokesInteractor.execute(params)
-
-        val state = if (jokes.isEmpty()) {
-            EmptyResult
-        } else {
-            JokeScreenState.Result(jokes.map { JokesMapper.jokeToJokeView(it) })
-        }
-
-        _screenState.value = state
+        val currentJokes = mutableListOf<Joke>()
+        collectJokes(query, currentJokes)
     }
+
+    private suspend fun collectJokes(query: String, currentJokes: MutableList<Joke>) {
+        try {
+            _showProgressEvent.call()
+
+            val params = RetrieveJokesInteractor.Params(query)
+            val jokesFlow = retrieveJokesInteractor.execute(params)
+
+            jokesFlow.collect { jokes ->
+                currentJokes.addAll(0, jokes)
+                val state = if (currentJokes.isEmpty()) {
+                    EmptyResult
+                } else {
+                    _hideProgressEvent.call()
+                    JokeScreenState.Result(currentJokes.toJokesView())
+                }
+                _screenState.value = state
+            }
+
+        } catch (e: Exception) {
+            handleProgressException(e)
+        } finally {
+            if (currentJokes.isEmpty()) _hideProgressEvent.call()
+        }
+    }
+
+    suspend fun retrieveRandomJokes() {
+        val params = RetrieveRandomJokesInteractor.Params(10)
+        val randomJokes = retrieveRandomJokesInteractor.execute(params)
+        _screenState.value = JokeScreenState.Result(randomJokes.toJokesView())
+    }
+
+    private fun List<Joke>.toJokesView() = this.map { JokesMapper.jokeToJokeView(it) }
+
 }
