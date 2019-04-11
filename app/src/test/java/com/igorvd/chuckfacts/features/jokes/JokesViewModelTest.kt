@@ -7,13 +7,18 @@ import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
 import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
+import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveRandomJokesInteractor
 import com.igorvd.chuckfacts.features.*
 import com.igorvd.chuckfacts.features.jokes.model.JokeView
 import com.igorvd.chuckfacts.testutils.DUMMY_JOKES
 import com.igorvd.chuckfacts.testutils.DUMMY_JOKESVIEW
+import com.igorvd.chuckfacts.testutils.dummyJokesFlow
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
@@ -23,6 +28,7 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import java.net.SocketTimeoutException
 
+@FlowPreview
 class JokesViewModelTest {
 
     @Rule
@@ -32,6 +38,8 @@ class JokesViewModelTest {
     private lateinit var viewModel: JokesViewModel
     @MockK
     private lateinit var retrieveJokesInteractor: RetrieveJokesInteractor
+    @MockK
+    private lateinit var retrieveRandomJokesInteractor: RetrieveRandomJokesInteractor
     @RelaxedMockK
     private lateinit var observerShowProgress: Observer<Void>
     @RelaxedMockK
@@ -43,8 +51,8 @@ class JokesViewModelTest {
     fun setUp() {
 
         MockKAnnotations.init(this)
-        viewModel = JokesViewModel(retrieveJokesInteractor)
-        with (viewModel) {
+        viewModel = JokesViewModel(retrieveJokesInteractor, retrieveRandomJokesInteractor)
+        with(viewModel) {
             showProgressEvent.observeForever(observerShowProgress)
             hideProgressEvent.observeForever(observerHideProgress)
             screenState.observeForever(observerState)
@@ -53,7 +61,7 @@ class JokesViewModelTest {
 
     @After
     fun tearDown() {
-        with (viewModel) {
+        with(viewModel) {
             showProgressEvent.removeObserver(observerShowProgress)
             hideProgressEvent.removeObserver(observerHideProgress)
             screenState.removeObserver(observerState)
@@ -61,25 +69,40 @@ class JokesViewModelTest {
     }
 
     @Test
-    fun `should retrieve jokes when result is not empty`() = runBlocking {
+    fun `should collect all emited Jokes`() = runBlocking {
+
+        val firstJokes = listOf(DUMMY_JOKES.first())
+        val firstJokesView = listOf(DUMMY_JOKESVIEW.first())
+        val secondJokes = DUMMY_JOKES.drop(1)
+        val secondJokesView = DUMMY_JOKESVIEW.drop(1)
+
+        val flow: Flow<List<Joke>> = flow {
+            emit(firstJokes)
+            emit(secondJokes)
+        }
 
         val params = RetrieveJokesInteractor.Params("dev")
-        coEvery { retrieveJokesInteractor.execute(params) } returns DUMMY_JOKES
+        coEvery { retrieveJokesInteractor.execute(params) } returns flow
 
         viewModel.retrieveJokes("dev")
 
         verifySequence {
             observerShowProgress.onChanged(null)
-            observerState.onChanged(JokeScreenState.Result(DUMMY_JOKESVIEW))
             observerHideProgress.onChanged(null)
+            observerState.onChanged(JokeScreenState.Result(firstJokesView))
+            observerHideProgress.onChanged(null)
+            observerState.onChanged(JokeScreenState.Result(secondJokesView + firstJokesView))
         }
     }
+
 
     @Test
     fun `should notify about empty result`() = runBlocking {
 
+        val flow = dummyJokesFlow(emptyList())
+
         val params = RetrieveJokesInteractor.Params("dev")
-        coEvery { retrieveJokesInteractor.execute(params) } returns emptyList()
+        coEvery { retrieveJokesInteractor.execute(params) } returns flow
 
         viewModel.retrieveJokes("dev")
 
@@ -94,7 +117,10 @@ class JokesViewModelTest {
     fun `should notify about networking error when retrieving jokes`() = runBlocking {
 
         val params = RetrieveJokesInteractor.Params("dev")
-        coEvery { retrieveJokesInteractor.execute(params) } throws MyIOException("io error", SocketTimeoutException())
+        coEvery { retrieveJokesInteractor.execute(params) } throws MyIOException(
+            "io error",
+            SocketTimeoutException()
+        )
 
         viewModel.retrieveJokes("dev")
 
@@ -109,7 +135,10 @@ class JokesViewModelTest {
     fun `should notify about http error when retrieving jokes`() = runBlocking {
 
         val params = RetrieveJokesInteractor.Params("dev")
-        coEvery { retrieveJokesInteractor.execute(params) } throws HttpServerErrorException("server unvailable", 500)
+        coEvery { retrieveJokesInteractor.execute(params) } throws HttpServerErrorException(
+            "server unvailable",
+            500
+        )
 
         viewModel.retrieveJokes("dev")
 
