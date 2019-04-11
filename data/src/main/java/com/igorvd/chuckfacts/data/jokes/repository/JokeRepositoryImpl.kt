@@ -2,6 +2,8 @@ package com.igorvd.chuckfacts.data.jokes.repository
 
 import com.igorvd.chuckfacts.data.jokes.local.JokeLocalDataSource
 import com.igorvd.chuckfacts.data.jokes.remote.JokeRemoteDataSource
+import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
+import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import kotlinx.coroutines.FlowPreview
@@ -27,9 +29,18 @@ class JokeRepositoryImpl @Inject constructor(
             emit(localJokes)
         }
 
-        val remoteJokes = remoteDataSource.getJokes(query) - localJokes
-        localDataSource.insertJokes(remoteJokes, query)
-        emit(remoteJokes)
+        try {
+            val remoteJokes = remoteDataSource.getJokes(query) - localJokes
+            localDataSource.insertJokes(remoteJokes, query)
+            emit(remoteJokes)
+        } catch (e: Exception) {
+            when (e) {
+                is MyHttpErrorException, is MyIOException -> {
+                    if (localJokes.isEmpty()) throw e
+                }
+                else -> throw e
+            }
+        }
 
     }
 

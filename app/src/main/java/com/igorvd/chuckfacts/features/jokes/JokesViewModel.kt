@@ -1,12 +1,9 @@
 package com.igorvd.chuckfacts.features.jokes
 
-import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
-import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveRandomJokesInteractor
 import com.igorvd.chuckfacts.features.*
-import com.igorvd.chuckfacts.utils.extensions.throwOrLog
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import java.lang.Exception
@@ -45,7 +42,7 @@ class JokesViewModel @Inject constructor(
             }
 
         } catch (e: Exception) {
-            if (currentJokes.isEmpty()) handleProgressException(e)
+            handleProgressException(e)
         } finally {
             if (currentJokes.isEmpty()) _hideProgressEvent.call()
         }
@@ -59,11 +56,4 @@ class JokesViewModel @Inject constructor(
 
     private fun List<Joke>.toJokesView() = this.map { JokesMapper.jokeToJokeView(it) }
 
-    private fun handleProgressException(e: Exception) {
-        when (e) {
-            is MyIOException ->  _screenState.value = NetworkError
-            is MyHttpErrorException -> _screenState.value = HttpError
-            else -> e.throwOrLog()
-        }
-    }
 }
