@@ -1,6 +1,8 @@
 package com.igorvd.chuckfacts.testutils.test_di
 
 import android.content.Context
+import androidx.room.Room
+import com.igorvd.chuckfacts.data.jokes.local.database.JokeDatabase
 import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
@@ -49,4 +51,13 @@ class TestAppModule {
     @Provides
     @Singleton
     fun providesRequestMaker(requestMaker: RequestMakerImpl): RequestMaker = requestMaker
+
+    @Provides
+    @Singleton
+    fun providesJokesDb(@Named("application") context: Context): JokeDatabase {
+        return Room.inMemoryDatabaseBuilder(
+            context,
+            JokeDatabase::class.java
+        ).build()
+    }
 }
