@@ -6,4 +6,6 @@ interface JokeRepository {
 
     suspend fun retrieveJokes(query: String): List<Joke>
 
+    suspend fun retrieveRandomJokes(limit: Int): List<Joke>
+
 }

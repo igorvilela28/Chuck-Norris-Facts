@@ -11,21 +11,25 @@ import javax.inject.Inject
  */
 class JokeRepositoryImpl @Inject constructor(
     private val remoteDataSource: JokeRemoteDataSource,
-    private val jokeLocalDataSource: JokeLocalDataSource
+    private val localDataSource: JokeLocalDataSource
 ) : JokeRepository {
 
     override suspend fun retrieveJokes(query: String): List<Joke> {
 
-        val localJokes = jokeLocalDataSource.retrieveJokes(query)
+        val localJokes = localDataSource.retrieveJokes(query)
 
         if (localJokes.isNotEmpty()) {
             return localJokes
         }
 
         val remoteJokes = remoteDataSource.getJokes(query)
-        jokeLocalDataSource.insertJokes(remoteJokes, query)
+        localDataSource.insertJokes(remoteJokes, query)
         return remoteJokes
 
+    }
+
+    override suspend fun retrieveRandomJokes(limit: Int): List<Joke> {
+        return localDataSource.retrieveRandomJokes(limit)
     }
 
 }
