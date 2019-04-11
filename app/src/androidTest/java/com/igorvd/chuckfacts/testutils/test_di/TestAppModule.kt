@@ -1,7 +1,6 @@
 package com.igorvd.chuckfacts.testutils.test_di
 
 import android.content.Context
-import androidx.room.Room
 import com.igorvd.chuckfacts.data.jokes.local.database.JokeDatabase
 import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.network.ApiClientBuilder
@@ -10,7 +9,7 @@ import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
 import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.di.data.LocalModule
 import com.igorvd.chuckfacts.di.data.RemoteModule
-import com.igorvd.chuckfacts.testutils.TEST_JOKES_DB
+import com.igorvd.chuckfacts.testutils.JokeTestDatabase
 import com.igorvd.chuckfacts.testutils.app.TestApplication
 import dagger.Module
 import dagger.Provides
@@ -56,6 +55,6 @@ class TestAppModule {
     @Provides
     @Singleton
     fun providesJokesDb(@Named("application") context: Context): JokeDatabase {
-        return TEST_JOKES_DB
+        return JokeTestDatabase.TEST_JOKES_DB
     }
 }
