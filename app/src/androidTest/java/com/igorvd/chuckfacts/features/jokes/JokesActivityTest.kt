@@ -6,11 +6,13 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.testutils.JokeTestDatabase
 import com.igorvd.chuckfacts.testutils.PreferencesUtils
+import kotlinx.coroutines.FlowPreview
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
+@FlowPreview
 class JokesActivityTest {
 
     lateinit var server: MockWebServer

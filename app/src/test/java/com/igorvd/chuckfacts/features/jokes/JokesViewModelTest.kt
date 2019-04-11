@@ -95,7 +95,6 @@ class JokesViewModelTest {
         }
     }
 
-
     @Test
     fun `should notify about empty result`() = runBlocking {
 
@@ -146,6 +145,19 @@ class JokesViewModelTest {
             observerShowProgress.onChanged(null)
             observerState.onChanged(HttpError)
             observerHideProgress.onChanged(null)
+        }
+    }
+
+    @Test
+    fun `should retrieve random jokes`() = runBlocking {
+
+        val params = RetrieveRandomJokesInteractor.Params(10)
+        coEvery { retrieveRandomJokesInteractor.execute(params) } returns DUMMY_JOKES
+
+        viewModel.retrieveRandomJokes()
+
+        verifySequence {
+            observerState.onChanged(JokeScreenState.Result(DUMMY_JOKESVIEW))
         }
     }
 }

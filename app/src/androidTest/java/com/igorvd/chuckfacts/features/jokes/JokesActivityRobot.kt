@@ -22,9 +22,11 @@ import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.*
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.testutils.*
+import kotlinx.coroutines.FlowPreview
 import org.hamcrest.Matchers.*
 
 
+@FlowPreview
 class JokesActivityRobot(private val server: MockWebServer) {
 
     lateinit var scenario: ActivityScenario<JokesActivity>
