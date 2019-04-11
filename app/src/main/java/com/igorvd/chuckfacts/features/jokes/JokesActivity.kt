@@ -21,10 +21,12 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
+@FlowPreview
 class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext

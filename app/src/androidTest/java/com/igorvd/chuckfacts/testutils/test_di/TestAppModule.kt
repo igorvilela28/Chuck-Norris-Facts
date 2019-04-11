@@ -10,6 +10,7 @@ import com.igorvd.chuckfacts.data.network.requests.RequestMakerImpl
 import com.igorvd.chuckfacts.data.network.requests.CallRetryDelays
 import com.igorvd.chuckfacts.di.data.LocalModule
 import com.igorvd.chuckfacts.di.data.RemoteModule
+import com.igorvd.chuckfacts.testutils.TEST_JOKES_DB
 import com.igorvd.chuckfacts.testutils.app.TestApplication
 import dagger.Module
 import dagger.Provides
@@ -55,9 +56,6 @@ class TestAppModule {
     @Provides
     @Singleton
     fun providesJokesDb(@Named("application") context: Context): JokeDatabase {
-        return Room.inMemoryDatabaseBuilder(
-            context,
-            JokeDatabase::class.java
-        ).build()
+        return TEST_JOKES_DB
     }
 }

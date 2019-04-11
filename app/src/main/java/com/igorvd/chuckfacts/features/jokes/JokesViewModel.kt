@@ -1,13 +1,18 @@
 package com.igorvd.chuckfacts.features.jokes
 
+import com.igorvd.chuckfacts.domain.exceptions.MyHttpErrorException
+import com.igorvd.chuckfacts.domain.exceptions.MyIOException
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveJokesInteractor
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveRandomJokesInteractor
-import com.igorvd.chuckfacts.features.BaseViewModel
-import com.igorvd.chuckfacts.features.EmptyResult
-import com.igorvd.chuckfacts.features.JokeScreenState
+import com.igorvd.chuckfacts.features.*
+import com.igorvd.chuckfacts.utils.extensions.throwOrLog
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
+import java.lang.Exception
 import javax.inject.Inject
 
+@FlowPreview
 class JokesViewModel @Inject constructor(
     private val retrieveJokesInteractor: RetrieveJokesInteractor,
     private val retrieveRandomJokesInteractor: RetrieveRandomJokesInteractor
@@ -15,20 +20,35 @@ class JokesViewModel @Inject constructor(
 
     var lastQuery: String? = null
 
-    suspend fun retrieveJokes(query: String) = doWorkWithProgress {
-
+    suspend fun retrieveJokes(query: String) {
         lastQuery = query
+        val currentJokes = mutableListOf<Joke>()
+        collectJokes(query, currentJokes)
+    }
 
-        val params = RetrieveJokesInteractor.Params(query)
-        val jokes = retrieveJokesInteractor.execute(params)
+    private suspend fun collectJokes(query: String, currentJokes: MutableList<Joke>) {
+        try {
+            _showProgressEvent.call()
 
-        val state = if (jokes.isEmpty()) {
-            EmptyResult
-        } else {
-            JokeScreenState.Result(jokes.toJokesView())
+            val params = RetrieveJokesInteractor.Params(query)
+            val jokesFlow = retrieveJokesInteractor.execute(params)
+
+            jokesFlow.collect { jokes ->
+                currentJokes.addAll(0, jokes)
+                val state = if (currentJokes.isEmpty()) {
+                    EmptyResult
+                } else {
+                    _hideProgressEvent.call()
+                    JokeScreenState.Result(currentJokes.toJokesView())
+                }
+                _screenState.value = state
+            }
+
+        } catch (e: Exception) {
+            if (currentJokes.isEmpty()) handleProgressException(e)
+        } finally {
+            if (currentJokes.isEmpty()) _hideProgressEvent.call()
         }
-
-        _screenState.value = state
     }
 
     suspend fun retrieveRandomJokes() {
@@ -38,4 +58,12 @@ class JokesViewModel @Inject constructor(
     }
 
     private fun List<Joke>.toJokesView() = this.map { JokesMapper.jokeToJokeView(it) }
+
+    private fun handleProgressException(e: Exception) {
+        when (e) {
+            is MyIOException ->  _screenState.value = NetworkError
+            is MyHttpErrorException -> _screenState.value = HttpError
+            else -> e.throwOrLog()
+        }
+    }
 }

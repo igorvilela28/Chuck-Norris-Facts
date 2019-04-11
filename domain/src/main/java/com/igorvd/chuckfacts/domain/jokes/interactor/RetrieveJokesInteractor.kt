@@ -5,20 +5,23 @@ import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeCategoryRepository
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import com.igorvd.chuckfacts.domain.utils.extensions.getRandomElements
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
 /**
  * Used to retrieve a list of [Joke]
  */
+@FlowPreview
 class RetrieveJokesInteractor @Inject constructor(
     private val jokesRepository: JokeRepository
-) : Interactor<List<Joke>, RetrieveJokesInteractor.Params> {
+) : Interactor<Flow<List<Joke>>, RetrieveJokesInteractor.Params> {
 
-    override suspend fun execute(params: Params): List<Joke> {
+    override suspend fun execute(params: Params): Flow<List<Joke>> {
 
-        val jokes = jokesRepository.retrieveJokes(params.query)
-        return jokes
+        val jokesFlow = jokesRepository.retrieveJokes(params.query)
+        return jokesFlow
     }
 
     data class Params(val query: String)
