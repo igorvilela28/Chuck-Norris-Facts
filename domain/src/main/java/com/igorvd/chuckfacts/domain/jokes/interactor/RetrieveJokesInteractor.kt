@@ -2,9 +2,7 @@ package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.Interactor
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
-import com.igorvd.chuckfacts.domain.jokes.repository.JokeCategoryRepository
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
-import com.igorvd.chuckfacts.domain.utils.extensions.getRandomElements
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

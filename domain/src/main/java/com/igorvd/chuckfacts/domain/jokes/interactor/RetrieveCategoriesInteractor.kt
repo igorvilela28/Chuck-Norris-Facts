@@ -2,6 +2,7 @@ package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.Interactor
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
+import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveCategoriesInteractor.Params
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeCategoryRepository
 import com.igorvd.chuckfacts.domain.utils.extensions.getRandomElements
 import javax.inject.Inject
