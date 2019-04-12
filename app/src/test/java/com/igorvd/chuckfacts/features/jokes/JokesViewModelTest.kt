@@ -73,7 +73,6 @@ class JokesViewModelTest {
         val firstJokes = listOf(DUMMY_JOKES.first())
         val firstJokesView = listOf(DUMMY_JOKESVIEW.first())
         val secondJokes = DUMMY_JOKES.drop(1)
-        val secondJokesView = DUMMY_JOKESVIEW.drop(1)
 
         val flow: Flow<List<Joke>> = flow {
             emit(firstJokes)
@@ -90,7 +89,7 @@ class JokesViewModelTest {
             observerHideProgress.onChanged(null)
             observerState.onChanged(JokeScreenState.Result(firstJokesView))
             observerHideProgress.onChanged(null)
-            observerState.onChanged(JokeScreenState.Result(secondJokesView + firstJokesView))
+            observerState.onChanged(JokeScreenState.Result(DUMMY_JOKESVIEW))
         }
     }
 

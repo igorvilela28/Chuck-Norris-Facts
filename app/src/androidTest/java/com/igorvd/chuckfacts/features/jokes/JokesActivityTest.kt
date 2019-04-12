@@ -216,7 +216,7 @@ class JokesActivityTest {
             .whenActivityResultWithQuery("dev")
             .whenClickOnSearch()
             .thenJokesItemCount(3)
-            .thenJokeAtPositionHasText(0, LONG_JOKE)
-            .thenJokeAtPositionHasText(2, JokeTestDatabase.DEFAULT_JOKE_ENTITY.value)
+            .thenJokeAtPositionHasText(0, JokeTestDatabase.DEFAULT_JOKE_ENTITY.value)
+            .thenJokeAtPositionHasText(1, LONG_JOKE)
     }
 }

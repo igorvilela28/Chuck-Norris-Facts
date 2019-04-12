@@ -31,7 +31,7 @@ class JokesViewModel @Inject constructor(
             val jokesFlow = retrieveJokesInteractor.execute(params)
 
             jokesFlow.collect { jokes ->
-                currentJokes.addAll(0, jokes)
+                currentJokes.addAll(jokes)
                 val state = if (currentJokes.isEmpty()) {
                     EmptyResult
                 } else {
