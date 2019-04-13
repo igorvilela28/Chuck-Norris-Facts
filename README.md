@@ -18,7 +18,7 @@ The main technologies and concepts used are:
 - Integration tests using [Espresso]() and following the [Robot Pattern](https://jakewharton.com/testing-robots/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 
-For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where ***<module>*** is one of the gradle modules on this project.
+For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where ***module*** is one of the gradle modules on this project.
 
 ## Setup
 
@@ -40,7 +40,7 @@ To install it using the command line, use
 ./gradlew install<BuildType>
 ```
 
-where ***<BuildType>*** is one of the following: *Debug*, *Release*
+where ***BuildType*** is one of the following: *Debug*, *Release*
 
 The following command will run all tests (unit + integration) and generate a coverage report that can be found at `{projectPath}/build/reports/jacoco/jacocoMergeReport/html/index.html`
 
