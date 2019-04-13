@@ -1,0 +1,95 @@
+Name: Pixel_API_27
+
+CPU/ABI: Google APIs Intel Atom (x86)
+
+Target: google_apis [Google APIs] (API level 27)
+
+Skin: pixel_silver
+
+SD Card: 512M
+
+fastboot.chosenSnapshotFile: 
+
+runtime.network.speed: full
+
+hw.accelerometer: yes
+
+hw.device.name: pixel
+
+hw.lcd.width: 1080
+
+hw.initialOrientation: Portrait
+
+image.androidVersion.api: 27
+
+tag.id: google_apis
+
+hw.mainKeys: no
+
+hw.camera.front: webcam0
+
+avd.ini.displayname: Pixel API 27
+
+hw.gpu.mode: auto
+
+hw.ramSize: 1536
+
+PlayStore.enabled: false
+
+fastboot.forceColdBoot: no
+
+hw.cpu.ncore: 4
+
+hw.keyboard: yes
+
+hw.sensors.proximity: yes
+
+hw.dPad: no
+
+hw.lcd.height: 1920
+
+vm.heapSize: 228
+
+skin.dynamic: yes
+
+hw.device.manufacturer: Google
+
+hw.gps: yes
+
+hw.audioInput: yes
+
+image.sysdir.1: system-images/android-27/google_apis/x86/
+
+showDeviceFrame: yes
+
+hw.camera.back: webcam0
+
+AvdId: Pixel_API_27
+
+hw.lcd.density: 420
+
+hw.arc: false
+
+hw.device.hash2: MD5:55acbc835978f326788ed66a5cd4c9a7
+
+fastboot.forceChosenSnapshotBoot: no
+
+fastboot.forceFastBoot: yes
+
+hw.trackBall: no
+
+hw.battery: yes
+
+hw.sdCard: yes
+
+tag.display: Google APIs
+
+runtime.network.latency: none
+
+disk.dataPartition.size: 800M
+
+hw.sensors.orientation: yes
+
+avd.ini.encoding: UTF-8
+
+hw.gpu.enabled: yes
