@@ -1,5 +1,4 @@
 # Chuck Norris Facts
-
 [![Build Status](https://app.bitrise.io/app/9d7d60cad3099158/status.svg?token=6vSPd9qQzmW8lBs3v7wJ2A)](https://app.bitrise.io/app/9d7d60cad3099158)
 
 The goal of this project is to demonstrate skills on Android development as well as to apply some of the best practices in Kotlin development.
@@ -17,6 +16,7 @@ The main technologies and concepts used are:
 - Multi gradle modules
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) along with the experimental [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) (ViewModel + LiveData + Room)
+- Dependency injection using [Dagger 2.16](https://google.github.io/dagger/)
 - Unit tests using [Junit](https://junit.org/junit4/) + [MockK](https://mockk.io/) + [Robolectric](http://robolectric.org/)
 - Integration tests using [Espresso]() and following the [Robot Pattern](https://jakewharton.com/testing-robots/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
