@@ -7,8 +7,6 @@ The project aims to replicate real world development scenarios, with a well defi
 
 The product requirements for the application can be found at the [GithubProjects](https://github.com/igorvilela28/Chuck-Norris-Facts/projects/1) page. 
 
-Check the artifacts on the latest successful build on [Bitrise](https://app.bitrise.io/app/9d7d60cad3099158) to download the latest APK.
-
 ## Stack
 
 The main technologies and concepts used are:
