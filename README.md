@@ -3,9 +3,11 @@
 
 The goal of this project is to demonstrate skills on Android development as well as to apply some of the best practices in Kotlin development.
 
-The project aims to replicate real world development scenarios, with a well defined architecture, unit and integration tests. It also has the setup for generate a integrated test coverage report and to obfuscate the code on production builds, using proguard.
+The project aims to replicate real world development scenarios, with a well defined architecture, a continuous integration setup, unit and integration tests. It also has the setup for generate a integrated test coverage report and to obfuscate the code on production builds, using proguard.
 
-To download the latest APK, you could check the artifacts on the latest successful build on [Bitrise](https://app.bitrise.io/app/9d7d60cad3099158)
+The product requirements for the application can be found at the [GithubProjects](https://github.com/igorvilela28/Chuck-Norris-Facts/projects/1) page. 
+
+Check the artifacts on the latest successful build on [Bitrise](https://app.bitrise.io/app/9d7d60cad3099158) to download the latest APK.
 
 ## Stack
 
@@ -21,7 +23,7 @@ The main technologies and concepts used are:
 - Integration tests using [Espresso]() and following the [Robot Pattern](https://jakewharton.com/testing-robots/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 
-For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where *<module>* is one of the gradle modules on this project.
+For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where ***module*** is one of the gradle modules on this project.
 
 ## Setup
 
@@ -29,21 +31,21 @@ This application was build using the Android Gradle Plugin 3.3.2, Gradle 4.10.1 
 
 ## Build and tests
 
-The follow gradle command will assembles and unit test this project
+The follow gradle command will assembles and unit test the application
 
 ```
 ./gradlew build
 ```
 
-After building the project, you will be able to grab the generated artifact apks from `{projectPath}/app/build/outputs/apk` and install on some device.
+After building the application, you will be able to grab the generated artifact apks from `{projectPath}/app/build/outputs/apk` and install on some device.
 
-To install it using the command line, use
+To install it using the command line, use:
 
 ```
 ./gradlew install<BuildType>
 ```
 
-where *<BuildType>* is one of the following: *Debug*, *Release*
+Where ***BuildType*** is one of the following: *Debug*, *Release*.
 
 The following command will run all tests (unit + integration) and generate a coverage report that can be found at `{projectPath}/build/reports/jacoco/jacocoMergeReport/html/index.html`
 
@@ -51,9 +53,9 @@ The following command will run all tests (unit + integration) and generate a cov
 ./gradlew jacocoMergeReport
 ```
 
-***IMPORTANT:*** For run the integration tests, you'll need to have an online AVD or Android Device. I recommend that your device or AVD follows at least this [setup](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/.github/avd_setup.txt).
+***IMPORTANT:*** For run the integration tests, you'll need to have an online AVD or Android Device. I recommend that your device or AVD follows at least this [setup](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/.github/avd_setup.txt). Also, make sure to disable the device animations, as described on the [Espresso setup instructions](https://developer.android.com/training/testing/espresso/setup#set-up-environment)
 
-You also could run all commands together, ensuring the build and tests are okay before installing it, using:
+You may want to run all commands together, ensuring the build and tests are okay before installing the application, by using:
 
 ```
 ./gradlew build jacocoMergeReport install<BuildType>
@@ -83,4 +85,3 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
-
