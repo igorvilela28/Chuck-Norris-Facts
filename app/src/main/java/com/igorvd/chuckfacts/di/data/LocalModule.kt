@@ -7,12 +7,6 @@ import com.igorvd.chuckfacts.data.jokes.local.JokeLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 
-/**
- *
- * @author Igor Vilela
- * @since 24/01/2018
- */
-
 @Module
 class LocalModule {
 

@@ -12,7 +12,7 @@ private const val DEFAULT_AMOUNT = 8
 
 /**
  * Used to retrieve a list of [Joke] categories. It will randomize an amount of categories to be
- * retrieved, using the amount passed on [Params.amount]
+ * returned, using the amount passed on [Params.amount]
  */
 class RetrieveCategoriesInteractor @Inject constructor(
     private val jokeCategoryRepository: JokeCategoryRepository

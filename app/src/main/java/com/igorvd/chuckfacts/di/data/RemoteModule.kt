@@ -8,13 +8,6 @@ import com.igorvd.chuckfacts.data.jokes.remote.JokeRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 
-/**
- *
- * @author Igor Vilela
- * @since 09/01/2018
- */
-
-
 @Module
 class RemoteModule {
 
