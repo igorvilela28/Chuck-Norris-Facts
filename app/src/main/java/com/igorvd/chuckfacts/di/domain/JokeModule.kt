@@ -4,7 +4,9 @@ import com.igorvd.chuckfacts.data.jokes.repository.JokeRepositoryImpl
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
 @Module
 class JokeModule {
 

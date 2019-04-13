@@ -12,6 +12,7 @@ import com.igorvd.chuckfacts.features.jokes.JokesActivity
 import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import kotlinx.coroutines.FlowPreview
 
 /**
  * Module that contains the [ContributesAndroidInjector] implementations for injecting the concrete
@@ -20,6 +21,7 @@ import dagger.android.ContributesAndroidInjector
  * @since 27/12/17
  */
 
+@FlowPreview
 @Module
 abstract class BuilderModule {
 

@@ -79,7 +79,7 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
             finishAnimatingToolbar()
         }
 
-        etSearchJoke.setOnEditorActionListener { tv, actionId, event ->
+        etSearchJoke.setOnEditorActionListener { _, actionId, _ ->
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (etSearchJoke.content.isEmpty()) {

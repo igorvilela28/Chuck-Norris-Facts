@@ -41,7 +41,7 @@ class SearchJokeViewModel @Inject constructor(
 
     suspend fun addQueryToSearchHistoric(query: String) {
         val params = AddQueryToSearchHistoricInteractor.Params(query)
-        val isAdded = addQueryToSearchHistoricInteractor.execute(params)
+        addQueryToSearchHistoricInteractor.execute(params)
         _onQueryAddedToHistoric.call()
     }
 }
