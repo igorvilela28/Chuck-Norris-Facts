@@ -8,6 +8,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
+import kotlinx.coroutines.FlowPreview
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,6 +17,7 @@ import javax.inject.Inject
  * @author Igor Vilela
  * @since 26/07/2018
  */
+@FlowPreview
 class MyApplication : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject

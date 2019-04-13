@@ -4,12 +4,14 @@ import com.igorvd.chuckfacts.MyApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Singleton
 
 /**
  * @author Igor Vilela
  * @since 27/12/17
  */
+@FlowPreview
 @Singleton
 @Component(modules = arrayOf(
         AndroidSupportInjectionModule::class,
