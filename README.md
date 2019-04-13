@@ -3,9 +3,9 @@
 
 The goal of this project is to demonstrate skills on Android development as well as to apply some of the best practices in Kotlin development.
 
-The project aims to replicate real world development scenarios, with a well defined architecture, unit and integration tests. It also has the setup for generate a integrated test coverage report and to obfuscate the code on production builds, using proguard.
+The project aims to replicate real world development scenarios, with a well defined architecture, a continuous integration setup, unit and integration tests. It also has the setup for generating an integrated test coverage report and to obfuscate the code on production builds, using proguard.
 
-To download the latest APK, you could check the artifacts on the latest successful build on [Bitrise](https://app.bitrise.io/app/9d7d60cad3099158)
+The product requirements for the application can be found at the [GithubProjects](https://github.com/igorvilela28/Chuck-Norris-Facts/projects/1) page. 
 
 ## Stack
 
@@ -21,29 +21,29 @@ The main technologies and concepts used are:
 - Integration tests using [Espresso]() and following the [Robot Pattern](https://jakewharton.com/testing-robots/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 
-For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where *<module>* is one of the gradle modules on this project.
+For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where ***module*** is one of the gradle modules on this project.
 
 ## Setup
 
-This application was build using the Android Gradle Plugin 3.3.2, Gradle 4.10.1 and Kotlin 1.3.30. In order to import it on Android Studio, make sure your setup meet these requirements. It also makes heavy use of the AndroidX libraries and it's important that the [jetifier](https://developer.android.com/studio/command-line/jetifier) is enabled on the [gradle.properties](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/gradle.properties) file.
+This application was built using the Android Gradle Plugin 3.3.2, Gradle 4.10.1 and Kotlin 1.3.30. In order to import it into Android Studio, make sure your setup meets these requirements. It also makes heavy use of the AndroidX libraries and it is important that the [jetifier](https://developer.android.com/studio/command-line/jetifier) is enabled on the [gradle.properties](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/gradle.properties) file.
 
 ## Build and tests
 
-The follow gradle command will assembles and unit test this project
+The follow gradle command will assemble and unit test the application
 
 ```
 ./gradlew build
 ```
 
-After building the project, you will be able to grab the generated artifact apks from `{projectPath}/app/build/outputs/apk` and install on some device.
+After building the application, you will be able to grab the generated artifact apks from `{projectPath}/app/build/outputs/apk` and install on some device.
 
-To install it using the command line, use
+To install it using the command line, use:
 
 ```
 ./gradlew install<BuildType>
 ```
 
-where *<BuildType>* is one of the following: *Debug*, *Release*
+Where ***BuildType*** is one of the following: *Debug*, *Release*.
 
 The following command will run all tests (unit + integration) and generate a coverage report that can be found at `{projectPath}/build/reports/jacoco/jacocoMergeReport/html/index.html`
 
@@ -51,9 +51,9 @@ The following command will run all tests (unit + integration) and generate a cov
 ./gradlew jacocoMergeReport
 ```
 
-***IMPORTANT:*** For run the integration tests, you'll need to have an online AVD or Android Device. I recommend that your device or AVD follows at least this [setup](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/.github/avd_setup.txt).
+***IMPORTANT:*** In order to run the integration tests, you will need to have an online AVD or Android Device. I recommend that your device or AVD follows at least this [setup](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/.github/avd_setup.txt). Also, make sure to disable the device animations, as described in the [Espresso setup instructions](https://developer.android.com/training/testing/espresso/setup#set-up-environment).
 
-You also could run all commands together, ensuring the build and tests are okay before installing it, using:
+You may want to run all commands together, ensuring the build and tests are okay before installing the application, by using:
 
 ```
 ./gradlew build jacocoMergeReport install<BuildType>
