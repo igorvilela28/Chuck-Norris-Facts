@@ -1,9 +1,12 @@
 # Chuck Norris Facts
+
 [![Build Status](https://app.bitrise.io/app/9d7d60cad3099158/status.svg?token=6vSPd9qQzmW8lBs3v7wJ2A)](https://app.bitrise.io/app/9d7d60cad3099158)
 
 The goal of this project is to demonstrate skills on Android development as well as to apply some of the best practices in Kotlin development.
 
 The project aims to replicate real world development scenarios, with a well defined architecture, unit and integration tests. It also has the setup for generate a integrated test coverage report and to obfuscate the code on production builds, using proguard.
+
+To download the latest APK, you could check the artifacts on the latest successful build on [Bitrise](https://app.bitrise.io/app/9d7d60cad3099158)
 
 ## Stack
 
@@ -18,7 +21,7 @@ The main technologies and concepts used are:
 - Integration tests using [Espresso]() and following the [Robot Pattern](https://jakewharton.com/testing-robots/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 
-For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where ***module*** is one of the gradle modules on this project.
+For a list of all project dependencies, you may run this gradle command: `./gradlew <module>:dependencies` where *<module>* is one of the gradle modules on this project.
 
 ## Setup
 
@@ -40,7 +43,7 @@ To install it using the command line, use
 ./gradlew install<BuildType>
 ```
 
-where ***BuildType*** is one of the following: *Debug*, *Release*
+where *<BuildType>* is one of the following: *Debug*, *Release*
 
 The following command will run all tests (unit + integration) and generate a coverage report that can be found at `{projectPath}/build/reports/jacoco/jacocoMergeReport/html/index.html`
 
@@ -80,3 +83,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
+
