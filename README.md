@@ -1,5 +1,6 @@
 # Chuck Norris Facts
 [![Build Status](https://app.bitrise.io/app/9d7d60cad3099158/status.svg?token=6vSPd9qQzmW8lBs3v7wJ2A)](https://app.bitrise.io/app/9d7d60cad3099158)
+[![codebeat badge](https://codebeat.co/badges/ed39b16c-5ee4-4144-9407-c3fcc72017bc)](https://codebeat.co/projects/github-com-igorvilela28-chuck-norris-facts-master)
 
 The goal of this project is to demonstrate skills on Android development as well as to apply some of the best practices in Kotlin development.
 
