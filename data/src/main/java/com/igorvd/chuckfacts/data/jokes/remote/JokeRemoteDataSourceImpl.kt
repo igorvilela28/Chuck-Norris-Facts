@@ -6,11 +6,9 @@ import com.igorvd.chuckfacts.data.jokes.remote.api.ChuckNorrisApi
 import com.igorvd.chuckfacts.data.jokes.remote.response.JokeResponse
 import com.igorvd.chuckfacts.data.network.requests.RequestMaker
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
-import javax.inject.Inject
-import javax.inject.Named
 
-class JokeRemoteDataSourceImpl @Inject constructor(
-    @Named("application") private val context: Context,
+class JokeRemoteDataSourceImpl constructor(
+    private val context: Context,
     private val chuckNorrisApi: ChuckNorrisApi,
     private val requestMaker: RequestMaker
 ) : JokeRemoteDataSource {

@@ -9,13 +9,12 @@ import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
 /**
  * Repository that fetch jokes.
  */
 @FlowPreview
-class JokeRepositoryImpl @Inject constructor(
+class JokeRepositoryImpl constructor(
     private val remoteDataSource: JokeRemoteDataSource,
     private val localDataSource: JokeLocalDataSource
 ) : JokeRepository {

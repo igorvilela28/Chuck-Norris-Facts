@@ -6,13 +6,9 @@ import com.google.gson.reflect.TypeToken
 import com.igorvd.chuckfacts.data.utils.extensions.edit
 import com.igorvd.chuckfacts.data.utils.extensions.sharedPreferences
 import com.igorvd.chuckfacts.domain.jokes.repository.SearchHistoricRepository
-import javax.inject.Inject
-import javax.inject.Named
 
-
-
-class SearchHistoricRepositoryImpl @Inject constructor(
-    @Named("application") private val context: Context
+class SearchHistoricRepositoryImpl  constructor(
+    private val context: Context
 ) : SearchHistoricRepository {
 
     private val preferences by lazy { context.sharedPreferences(SEARCH_HISTORY_KEY) }

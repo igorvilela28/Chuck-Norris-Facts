@@ -7,9 +7,8 @@ import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveCategoriesInteracto
 import com.igorvd.chuckfacts.domain.jokes.interactor.RetrieveSearchHistoricInteractor
 import com.igorvd.chuckfacts.features.BaseViewModel
 import com.igorvd.chuckfacts.utils.SingleLiveEvent
-import javax.inject.Inject
 
-class SearchJokeViewModel @Inject constructor(
+class SearchJokeViewModel constructor(
     private val retrieveCategoriesInteractor: RetrieveCategoriesInteractor,
     private val retrieveSearchHistoricInteractor: RetrieveSearchHistoricInteractor,
     private val addQueryToSearchHistoricInteractor: AddQueryToSearchHistoricInteractor

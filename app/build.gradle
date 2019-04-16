@@ -70,10 +70,10 @@ dependencies {
     def appTestDependencies = rootProject.ext.appTestDependencies
     def appAndroidTestDependencies = rootProject.ext.appAndroidTestDependencies
     def appKapt = rootProject.ext.appKapt
-    def appAndroidTestKapt = rootProject.ext.appAndroidKapt
+//    def appAndroidTestKapt = rootProject.ext.appAndroidKapt
 
     appDependencies.each { v -> implementation v }
-    //developmentDependencies.each { v -> implementation v }
+//    developmentDependencies.each { v -> implementation v }
     appKapt.each { v -> kapt v }
 
     //unit test
@@ -86,7 +86,7 @@ dependencies {
         exclude group: 'com.google.android.material', module: 'material'
     }
     androidTestUtil "androidx.test:orchestrator:1.1.1"
-    appAndroidTestKapt.each { v -> kaptAndroidTest v }
+//    appAndroidTestKapt.each { v -> kaptAndroidTest v }
 
 }
 

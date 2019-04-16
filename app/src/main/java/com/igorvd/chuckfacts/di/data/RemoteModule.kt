@@ -1,30 +1,15 @@
-package com.igorvd.chuckfacts.di.data
-
-
 import com.igorvd.chuckfacts.data.jokes.remote.JokeCategoryRemoteDataSource
 import com.igorvd.chuckfacts.data.jokes.remote.JokeCategoryRemoteDataSourceImpl
 import com.igorvd.chuckfacts.data.jokes.remote.JokeRemoteDataSource
 import com.igorvd.chuckfacts.data.jokes.remote.JokeRemoteDataSourceImpl
-import dagger.Module
-import dagger.Provides
+import org.koin.dsl.module
 
-/**
- *
- * @author Igor Vilela
- * @since 09/01/2018
- */
+val remoteDataSourceModule = module {
+    factory {
+        JokeCategoryRemoteDataSourceImpl(get(), get()) as JokeCategoryRemoteDataSource
+    }
 
-
-@Module
-class RemoteModule {
-
-    @Provides
-    fun providesCategoryRemoteDataSource(
-        dataSource: JokeCategoryRemoteDataSourceImpl
-    ): JokeCategoryRemoteDataSource = dataSource
-
-    @Provides
-    fun providesJokeRemoteDataSource(
-        dataSource: JokeRemoteDataSourceImpl
-    ): JokeRemoteDataSource = dataSource
+    factory {
+        JokeRemoteDataSourceImpl(get(), get(), get()) as JokeRemoteDataSource
+    }
 }

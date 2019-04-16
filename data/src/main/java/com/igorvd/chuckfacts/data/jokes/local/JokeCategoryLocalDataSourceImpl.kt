@@ -5,11 +5,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.igorvd.chuckfacts.data.utils.extensions.edit
 import com.igorvd.chuckfacts.data.utils.extensions.sharedPreferences
-import javax.inject.Inject
-import javax.inject.Named
 
-class JokeCategoryLocalDataSourceImpl @Inject constructor(
-    @Named("application") private val context: Context
+class JokeCategoryLocalDataSourceImpl  constructor(
+    private val context: Context
 ) : JokeCategoryLocalDataSource {
 
     private val preferences by lazy { context.sharedPreferences(CATEGORY_KEY) }
