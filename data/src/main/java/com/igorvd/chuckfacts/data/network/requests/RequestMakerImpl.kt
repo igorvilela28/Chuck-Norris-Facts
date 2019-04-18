@@ -8,7 +8,6 @@ import retrofit2.HttpException
 import ru.gildor.coroutines.retrofit.await
 import timber.log.Timber
 import java.io.IOException
-import javax.inject.Inject
 
 
 /**
@@ -16,7 +15,7 @@ import javax.inject.Inject
  * @author Igor Vilela
  * @since 13/10/17
  */
-class RequestMakerImpl @Inject constructor(private val callRetryDelays: CallRetryDelays) : RequestMaker {
+class RequestMakerImpl constructor(private val callRetryDelays: CallRetryDelays) : RequestMaker {
 
     override suspend fun <T : Any> getResult(call: Call<T>): T = withRetry(call, callRetryDelays) {
 

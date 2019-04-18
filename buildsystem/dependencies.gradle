@@ -13,7 +13,6 @@ ext {
     archRoom = '2.0.0'
     archwork = "2.0.0"
     crashlytics = '2.7.1@aar'
-    dagger = '2.16'
     gson = '2.8.5'
     jobQueue = '2.0.1'
     multiDex = '2.0.0'
@@ -24,6 +23,7 @@ ext {
     simpleXml = '2.7.1'
     timber = '4.6.0'
     zxing = '3.5.0'
+    koin = '2.0.0-rc-2'
 
     //Testing
     coroutinesTest = '1.2.0-alpha-2'
@@ -60,10 +60,9 @@ ext {
             constraintLayout        : "androidx.constraintlayout:constraintlayout:${constraintLayout}",
             multiDex                : "androidx.multidex:multidex:${multiDex}",
             //dependency injection
-            dagger                  : "com.google.dagger:dagger:${dagger}",
-            daggerAndroid           : "com.google.dagger:dagger-android-support:${dagger}",
-            daggerCompiler          : "com.google.dagger:dagger-compiler:${dagger}",
-            daggerAndroidProcessor  : "com.google.dagger:dagger-android-processor:${dagger}",
+            koinCore                : "org.koin:koin-core:${koin}",
+            koinAndroid             : "org.koin:koin-android:${koin}",
+            koinViewModel           : "org.koin:koin-android-viewmodel:${koin}",
             //Architecture Components
             room                    : "androidx.room:room-runtime:${archRoom}",
             roomCompiler            : "androidx.room:room-compiler:${archRoom}",
@@ -126,8 +125,9 @@ ext {
             allDependencies.cardView,
             allDependencies.constraintLayout,
             //dependency injection
-            allDependencies.dagger,
-            allDependencies.daggerAndroid,
+            allDependencies.koinCore,
+            allDependencies.koinAndroid,
+            allDependencies.koinViewModel,
             //AAC
             allDependencies.room,
             allDependencies.lifeCycle,
@@ -139,8 +139,6 @@ ext {
     ]
 
     appKapt = [
-            allDependencies.daggerCompiler,
-            allDependencies.daggerAndroidProcessor,
             allDependencies.roomCompiler,
             allDependencies.lifeCycleCompiler
     ]
@@ -163,25 +161,13 @@ ext {
             allTestDependencies.mockwebserver
     ]
 
-    appAndroidKapt = [
-            allDependencies.daggerCompiler,
-            allDependencies.daggerAndroidProcessor,
-    ]
-
     //**************************************************************************
     // DOMAIN DEPENDENCIES
     //**************************************************************************
 
     domainDependencies = [
             allDependencies.kotlin,
-            allDependencies.kotlinCoroutines,
-            allDependencies.dagger,
-            allDependencies.daggerAndroid
-    ]
-
-    domainKapt = [
-            allDependencies.daggerCompiler,
-            allDependencies.daggerAndroidProcessor
+            allDependencies.kotlinCoroutines
     ]
 
     domainTestDependencies = [
@@ -199,8 +185,6 @@ ext {
     dataDependencies = [
             allDependencies.kotlin,
             allDependencies.kotlinCoroutines,
-            allDependencies.dagger,
-            allDependencies.daggerAndroid,
             allDependencies.lifeCycle,
             allDependencies.room,
             allDependencies.retrofit2,
@@ -212,8 +196,6 @@ ext {
     ]
 
     dataKapt = [
-            allDependencies.daggerCompiler,
-            allDependencies.daggerAndroidProcessor,
             allDependencies.roomCompiler,
             allDependencies.lifeCycleCompiler
     ]

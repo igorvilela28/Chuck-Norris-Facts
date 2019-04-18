@@ -8,20 +8,17 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.app.NavUtils
-import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
 import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.features.jokes.JokesActivity
-import com.igorvd.chuckfacts.utils.ViewModelFactory
 import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search_joke.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.coroutines.CoroutineContext
 
 class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
@@ -29,11 +26,14 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = lifecycle.job + Dispatchers.Main
 
-    @Inject
-    protected lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(SearchJokeViewModel::class.java)
-    }
+
+//    private lateinit var viewModelFactory: ViewModelFactory
+//
+//    private val viewModel by lazy {
+//        ViewModelProviders.of(this, viewModelFactory).get(SearchJokeViewModel::class.java)
+//    }
+
+    private val viewModel: SearchJokeViewModel by viewModel()
 
     private val adapter by lazy { SearchHistoricAdapter(::finishWithQueryResult) }
 
@@ -53,7 +53,6 @@ class SearchJokeActivity : AppCompatActivity(), CoroutineScope {
     //**************************************************************************
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_joke)
         setupViews()

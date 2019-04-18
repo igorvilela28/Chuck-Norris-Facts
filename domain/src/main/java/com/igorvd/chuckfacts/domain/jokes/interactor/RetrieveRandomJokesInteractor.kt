@@ -4,17 +4,16 @@ import com.igorvd.chuckfacts.domain.Interactor
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeRepository
 import kotlinx.coroutines.FlowPreview
-import javax.inject.Inject
-
 
 /**
  * Used to retrieve a list of random [Joke]
  */
-@FlowPreview
-class RetrieveRandomJokesInteractor @Inject constructor(
+class RetrieveRandomJokesInteractor @FlowPreview
+constructor(
     private val jokesRepository: JokeRepository
 ) : Interactor<List<Joke>, RetrieveRandomJokesInteractor.Params> {
 
+    @FlowPreview
     override suspend fun execute(params: Params): List<Joke> {
 
         val jokes = jokesRepository.retrieveRandomJokes(params.limit)

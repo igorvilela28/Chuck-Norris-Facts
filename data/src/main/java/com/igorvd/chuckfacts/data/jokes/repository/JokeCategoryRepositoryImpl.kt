@@ -3,12 +3,11 @@ package com.igorvd.chuckfacts.data.jokes.repository
 import com.igorvd.chuckfacts.data.jokes.local.JokeCategoryLocalDataSource
 import com.igorvd.chuckfacts.data.jokes.remote.JokeCategoryRemoteDataSource
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeCategoryRepository
-import javax.inject.Inject
 
 /**
  * Repository that fetch categories. It has a local first policy.
  */
-class JokeCategoryRepositoryImpl @Inject constructor(
+class JokeCategoryRepositoryImpl constructor(
     private val remoteDataSource: JokeCategoryRemoteDataSource,
     private val localDataSource: JokeCategoryLocalDataSource
 ) : JokeCategoryRepository {

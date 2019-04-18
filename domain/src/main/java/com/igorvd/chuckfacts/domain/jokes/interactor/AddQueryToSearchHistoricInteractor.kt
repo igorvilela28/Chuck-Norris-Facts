@@ -2,13 +2,12 @@ package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.Interactor
 import com.igorvd.chuckfacts.domain.jokes.repository.SearchHistoricRepository
-import javax.inject.Inject
 
 
 /**
  * Add a new item to the user search historic
  */
-class AddQueryToSearchHistoricInteractor @Inject constructor(
+class AddQueryToSearchHistoricInteractor  constructor(
     private val searchHistoricRepository: SearchHistoricRepository
 ) : Interactor<Boolean, AddQueryToSearchHistoricInteractor.Params> {
 
