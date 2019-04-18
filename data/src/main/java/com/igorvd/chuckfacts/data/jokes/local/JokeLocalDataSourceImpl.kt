@@ -6,9 +6,8 @@ import com.igorvd.chuckfacts.data.jokes.local.database.toJokeEntity
 import com.igorvd.chuckfacts.domain.jokes.entity.Joke
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class JokeLocalDataSourceImpl @Inject constructor(jokeDb: JokeDatabase) : JokeLocalDataSource {
+class JokeLocalDataSourceImpl constructor(jokeDb: JokeDatabase) : JokeLocalDataSource {
 
     private val dao by lazy { jokeDb.jokeDao() }
 

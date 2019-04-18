@@ -2,13 +2,11 @@ package com.igorvd.chuckfacts.domain.jokes.interactor
 
 import com.igorvd.chuckfacts.domain.Interactor
 import com.igorvd.chuckfacts.domain.jokes.repository.SearchHistoricRepository
-import javax.inject.Inject
-
 
 /**
  * Used to retrieve a list that contains the user search historic
  */
-class RetrieveSearchHistoricInteractor @Inject constructor(
+class RetrieveSearchHistoricInteractor constructor(
     private val searchHistoricRepository: SearchHistoricRepository
 ) : Interactor<List<String>, Void?> {
 

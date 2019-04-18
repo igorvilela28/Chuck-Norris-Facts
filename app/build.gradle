@@ -69,7 +69,6 @@ dependencies {
     def appTestDependencies = rootProject.ext.appTestDependencies
     def appAndroidTestDependencies = rootProject.ext.appAndroidTestDependencies
     def appKapt = rootProject.ext.appKapt
-    def appAndroidTestKapt = rootProject.ext.appAndroidKapt
 
     appDependencies.each { v -> implementation v }
     appKapt.each { v -> kapt v }
@@ -79,7 +78,6 @@ dependencies {
 
     //integration tests
     appAndroidTestDependencies.each { v -> androidTestImplementation v }
-    appAndroidTestKapt.each { v -> kaptAndroidTest v }
     androidTestImplementation('androidx.test:runner:1.1.1') {
         exclude group: 'androidx.legacy', module: 'legacy-support-v4'
         exclude group: 'com.google.android.material', module: 'material'

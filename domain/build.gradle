@@ -32,14 +32,14 @@ android {
 
 dependencies {
 
-    def domainKapt = rootProject.ext.domainKapt
+//    def domainKapt = rootProject.ext.domainKapt
     def domainDependencies = rootProject.ext.domainDependencies
     def domainTestDependencies = rootProject.ext.domainTestDependencies
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     domainDependencies.each { v -> implementation v }
-    domainKapt.each { v -> kapt v }
+//    domainKapt.each { v -> kapt v }
 
     //unit test
     domainTestDependencies.each { v -> testImplementation v }

@@ -1,15 +1,12 @@
-package com.igorvd.chuckfacts.di.domain
-
 import com.igorvd.chuckfacts.data.jokes.repository.JokeCategoryRepositoryImpl
 import com.igorvd.chuckfacts.domain.jokes.repository.JokeCategoryRepository
-import dagger.Module
-import dagger.Provides
+import kotlinx.coroutines.FlowPreview
+import org.koin.dsl.module
 
-@Module
-class CategoryModule {
 
-    @Provides
-    fun providesCategoryRepository(
-        jokeCategoryRepositoryImpl: JokeCategoryRepositoryImpl
-    ): JokeCategoryRepository = jokeCategoryRepositoryImpl
+@FlowPreview
+val jokeCategoryRepositoryModule = module {
+    factory {
+        JokeCategoryRepositoryImpl(get(), get()) as JokeCategoryRepository
+    }
 }

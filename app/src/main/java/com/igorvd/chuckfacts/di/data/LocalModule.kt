@@ -1,24 +1,16 @@
-package com.igorvd.chuckfacts.di.data
-
 import com.igorvd.chuckfacts.data.jokes.local.JokeCategoryLocalDataSource
 import com.igorvd.chuckfacts.data.jokes.local.JokeCategoryLocalDataSourceImpl
 import com.igorvd.chuckfacts.data.jokes.local.JokeLocalDataSource
 import com.igorvd.chuckfacts.data.jokes.local.JokeLocalDataSourceImpl
-import dagger.Module
-import dagger.Provides
+import org.koin.dsl.module
 
-@Module
-class LocalModule {
+val localDataSourceModule = module {
 
-    @Provides
-    fun providesCategoryLocalDataSource(
-        dataSource: JokeCategoryLocalDataSourceImpl
-    ): JokeCategoryLocalDataSource = dataSource
+    factory {
+        JokeLocalDataSourceImpl(get()) as JokeLocalDataSource
+    }
 
-    @Provides
-    fun providesJokeLocalDataSource(
-        dataSource: JokeLocalDataSourceImpl
-    ): JokeLocalDataSource = dataSource
-
-
+    factory {
+        JokeCategoryLocalDataSourceImpl(get()) as JokeCategoryLocalDataSource
+    }
 }

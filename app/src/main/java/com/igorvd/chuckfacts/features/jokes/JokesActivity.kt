@@ -5,25 +5,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.igorvd.chuckfacts.R
-import com.igorvd.chuckfacts.features.search.SearchJokeActivity
-import kotlinx.android.synthetic.main.activity_jokes.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
-import androidx.lifecycle.ViewModelProviders
 import androidx.transition.TransitionManager
+import com.igorvd.chuckfacts.R
 import com.igorvd.chuckfacts.features.JokeScreenState
-import com.igorvd.chuckfacts.utils.ViewModelFactory
+import com.igorvd.chuckfacts.features.search.SearchJokeActivity
 import com.igorvd.chuckfacts.utils.extensions.*
 import com.igorvd.chuckfacts.utils.lifecycle.job
 import com.igorvd.chuckfacts.utils.transition.TransitionsFactory
-import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_jokes.*
 import kotlinx.android.synthetic.main.error_layout.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.coroutines.CoroutineContext
 
 @FlowPreview
@@ -32,11 +29,7 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = lifecycle.job + Dispatchers.Main
 
-    @Inject
-    protected lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory).get(JokesViewModel::class.java)
-    }
+    private val viewModel: JokesViewModel by viewModel()
 
     private val adapter by lazy {
         JokesAdapter(this, ::shareJokeUrl)
@@ -63,7 +56,6 @@ class JokesActivity : AppCompatActivity(), CoroutineScope {
     //**************************************************************************
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jokes)
         setupViews()

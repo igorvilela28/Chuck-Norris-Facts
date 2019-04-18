@@ -118,9 +118,6 @@
 -keep class androidx.** { *; }
 -keep interface androidx.** { *; }
 
-#dagger 2.16
--dontwarn com.google.errorprone.annotations.*
-
 # Retrofit 2.X
 ## https://square.github.io/retrofit/ ##
 -dontwarn retrofit2.**

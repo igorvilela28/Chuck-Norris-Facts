@@ -18,7 +18,7 @@ The main technologies and concepts used are:
 - Multi gradle modules
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) along with the experimental [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) (ViewModel + LiveData + Room)
-- Dependency injection using [Dagger 2.16](https://google.github.io/dagger/)
+- Dependency injection using [Koin 2.0.0-rc-2](https://insert-koin.io/)
 - Unit tests using [Junit](https://junit.org/junit4/) + [MockK](https://mockk.io/) + [Robolectric](http://robolectric.org/)
 - Integration tests using [Espresso]() and following the [Robot Pattern](https://jakewharton.com/testing-robots/)
 - [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
