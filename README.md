@@ -27,7 +27,7 @@ For a list of all project dependencies, you may run this gradle command: `./grad
 
 ## Setup
 
-This application was built using the Android Gradle Plugin 3.3.2, Gradle 4.10.1 and Kotlin 1.3.30. In order to import it into Android Studio, make sure your setup meets these requirements. It also makes heavy use of the AndroidX libraries and it is important that the [jetifier](https://developer.android.com/studio/command-line/jetifier) is enabled on the [gradle.properties](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/gradle.properties) file.
+This application was built using the Android Gradle Plugin 3.5.3, Gradle 5.4.1 and Kotlin 1.3.61. In order to import it into Android Studio, make sure your setup meets these requirements. It also makes heavy use of the AndroidX libraries and it is important that the [jetifier](https://developer.android.com/studio/command-line/jetifier) is enabled on the [gradle.properties](https://github.com/igorvilela28/Chuck-Norris-Facts/blob/master/gradle.properties) file.
 
 ## Build and tests
 
