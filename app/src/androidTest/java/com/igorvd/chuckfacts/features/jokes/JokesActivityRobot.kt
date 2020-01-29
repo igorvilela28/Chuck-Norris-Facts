@@ -26,7 +26,6 @@ import kotlinx.coroutines.FlowPreview
 import org.hamcrest.Matchers.*
 
 
-@FlowPreview
 class JokesActivityRobot(private val server: MockWebServer) {
 
     lateinit var scenario: ActivityScenario<JokesActivity>

@@ -21,7 +21,6 @@ import kotlinx.coroutines.FlowPreview
  * @since 27/12/17
  */
 
-@FlowPreview
 @Module
 abstract class BuilderModule {
 

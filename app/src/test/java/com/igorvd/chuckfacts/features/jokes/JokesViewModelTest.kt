@@ -27,7 +27,6 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import java.net.SocketTimeoutException
 
-@FlowPreview
 class JokesViewModelTest {
 
     @Rule

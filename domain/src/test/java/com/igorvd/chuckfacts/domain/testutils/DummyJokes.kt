@@ -21,7 +21,6 @@ val DUMMY_JOKES = run {
     list
 }
 
-@FlowPreview
 fun dummyJokesFlow(): Flow<List<Joke>> = flow {
     emit(DUMMY_JOKES)
 }

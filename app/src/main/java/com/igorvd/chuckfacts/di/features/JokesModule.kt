@@ -9,7 +9,6 @@ import dagger.multibindings.IntoMap
 import kotlinx.coroutines.FlowPreview
 
 
-@FlowPreview
 @Module
 abstract class JokesModule {
 

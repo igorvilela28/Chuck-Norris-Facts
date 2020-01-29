@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.collect
 import java.lang.Exception
 import javax.inject.Inject
 
-@FlowPreview
 class JokesViewModel @Inject constructor(
     private val retrieveJokesInteractor: RetrieveJokesInteractor,
     private val retrieveRandomJokesInteractor: RetrieveRandomJokesInteractor

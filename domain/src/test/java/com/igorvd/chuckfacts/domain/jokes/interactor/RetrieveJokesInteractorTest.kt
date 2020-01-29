@@ -14,7 +14,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-@FlowPreview
 class RetrieveJokesInteractorTest {
 
     private lateinit var retrieveJokesInteractor: RetrieveJokesInteractor

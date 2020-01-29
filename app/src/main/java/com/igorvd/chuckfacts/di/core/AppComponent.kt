@@ -11,7 +11,6 @@ import javax.inject.Singleton
  * @author Igor Vilela
  * @since 27/12/17
  */
-@FlowPreview
 @Singleton
 @Component(modules = arrayOf(
         AndroidSupportInjectionModule::class,

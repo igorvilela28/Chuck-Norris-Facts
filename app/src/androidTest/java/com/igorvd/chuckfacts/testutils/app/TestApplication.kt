@@ -12,7 +12,6 @@ import kotlinx.coroutines.FlowPreview
 import timber.log.Timber
 import javax.inject.Inject
 
-@FlowPreview
 class TestApplication : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject

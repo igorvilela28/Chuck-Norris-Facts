@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-@FlowPreview
 class JokesActivity : AppCompatActivity(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext

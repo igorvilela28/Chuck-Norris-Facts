@@ -14,7 +14,6 @@ import javax.inject.Inject
 /**
  * Repository that fetch jokes.
  */
-@FlowPreview
 class JokeRepositoryImpl @Inject constructor(
     private val remoteDataSource: JokeRemoteDataSource,
     private val localDataSource: JokeLocalDataSource

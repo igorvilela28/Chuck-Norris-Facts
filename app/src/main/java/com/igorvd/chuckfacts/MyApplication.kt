@@ -17,7 +17,6 @@ import javax.inject.Inject
  * @author Igor Vilela
  * @since 26/07/2018
  */
-@FlowPreview
 class MyApplication : Application(), HasActivityInjector, HasServiceInjector {
 
     @Inject

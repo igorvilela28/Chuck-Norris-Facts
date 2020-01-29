@@ -10,7 +10,6 @@ import javax.inject.Inject
 /**
  * Used to retrieve a list of random [Joke]
  */
-@FlowPreview
 class RetrieveRandomJokesInteractor @Inject constructor(
     private val jokesRepository: JokeRepository
 ) : Interactor<List<Joke>, RetrieveRandomJokesInteractor.Params> {

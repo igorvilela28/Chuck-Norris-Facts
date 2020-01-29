@@ -61,7 +61,6 @@ val DUMMY_JOKESVIEW = run {
     list
 }
 
-@FlowPreview
 fun dummyJokesFlow(jokes: List<Joke>): Flow<List<Joke>> = flow {
     emit(jokes)
 }

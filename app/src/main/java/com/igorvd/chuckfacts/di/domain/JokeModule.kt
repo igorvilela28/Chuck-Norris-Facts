@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.FlowPreview
 
-@FlowPreview
 @Module
 class JokeModule {
 

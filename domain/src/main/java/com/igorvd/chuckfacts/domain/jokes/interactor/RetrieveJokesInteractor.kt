@@ -11,7 +11,6 @@ import javax.inject.Inject
 /**
  * Used to retrieve a list of [Joke]. It will return a [Flow] that may emit a list of [Joke]
  */
-@FlowPreview
 class RetrieveJokesInteractor @Inject constructor(
     private val jokesRepository: JokeRepository
 ) : Interactor<Flow<List<Joke>>, RetrieveJokesInteractor.Params> {
